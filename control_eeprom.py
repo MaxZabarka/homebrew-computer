@@ -1,28 +1,11 @@
 
 import sys
 import re
+from constants import ENABLES, LOADS
 
 MIN_PYTHON = (3, 7)
 if sys.version_info < MIN_PYTHON:
     sys.exit("Python %s.%s or later is required.\n" % MIN_PYTHON)
-
-
-ENABLES = {
-    "001": "AHigh",
-    "010": "ALow",
-    "011": "B",
-    "100": "C",
-    "101": "RAM",
-    "110": "IRHigh",
-    # "111": "ALU"
-}
-LOADS = {
-    "001": "AHigh",
-    "010": "ALow",
-    "011": "B",
-    "100": "C",
-    "101": "RAM",
-}
 
 
 def set_bit(n, index, bit):
@@ -99,6 +82,7 @@ def generate_controls(input):
     # Execute the instruction
     if microcode == "10":
         controls["enableA"] = 1
+        controls["enablePC"] = 0
         controls["clearMicrocode"] = 1
 
     # if enable == "111":
@@ -116,7 +100,7 @@ def generate_controls(input):
 # print(generate_bits(controls))
 # generate_bits(controls)
 
-with open("control_eeprom.txt", "w") as f:
+with open("./out/control_eeprom.txt", "w") as f:
     f.write("v3.0 hex words plain\n")
     for i in range(0, 2**11):
         # 8 instruction + 3 microcode clock = 11

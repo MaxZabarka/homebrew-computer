@@ -1,0 +1,62 @@
+eeellljjj aaaaaa
+
+e = ENABLES
+L = LOADS
+a = ALU
+j = JUMP
+c - enable jump
+x = dont care
+s = set bootloader mode and jump // can be removed by checking for a magic number 
+
+
+ENABLES:
+
+None    000
+A High  001
+A low   010
+B       011
+C       100
+ram     101
+IR high 110
+alu     111
+
+LOADS:
+None    000
+A High  001
+A low   010
+B       011
+C       100
+ram     101
+
+ALU:
+a - zero x
+a - negate x
+a - zero y
+a - negate y
+a - negate output
+     
+
+jump if eq
+jump if carry
+jump if zero
+jump if negative
+jump if not eq
+jump if not carry
+jump if not zero
+jump if not negative
+unconditional jump
+
+
+overflow
+carry/borrow
+
+
+# add 5 + 4
+# b = 5
+1 111 010 0 0000 0101
+# c = 4
+1 111 011 0 0000 0100
+# output = b + c
+0 110 101 00000 000 0
+# jmp
+0 000 111 00000 111 0

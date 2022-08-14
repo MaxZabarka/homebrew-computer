@@ -68,7 +68,7 @@ def generate_controls(input):
 # print(generate_bits(controls))
 # generate_bits(controls)
 
-with open("memory_control.txt", "w") as f:
+with open("./out/memory_control.txt", "w") as f:
     f.write("v3.0 hex words plain\n")
     for i in range(0, 2**15):
         # 13 address + 1 write + 1 enable = 15

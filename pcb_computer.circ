@@ -83,11 +83,7 @@
     <a name="appearance" val="logisim_evolution"/>
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="4.0"/>
-    <comp lib="0" loc="(1010,610)" name="Constant">
-      <a name="value" val="0x24"/>
-      <a name="width" val="8"/>
-    </comp>
+    <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(1020,470)" name="Splitter">
       <a name="bit0" val="1"/>
       <a name="bit10" val="0"/>
@@ -150,19 +146,7 @@
       <a name="facing" val="east"/>
       <a name="label" val="NotEnablePC16"/>
     </comp>
-    <comp lib="0" loc="(1200,1410)" name="Constant">
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="0" loc="(1200,1430)" name="Constant"/>
-    <comp lib="0" loc="(1210,1390)" name="Constant">
-      <a name="value" val="0x0"/>
-      <a name="width" val="13"/>
-    </comp>
     <comp lib="0" loc="(1210,140)" name="Constant"/>
-    <comp lib="0" loc="(1280,560)" name="Probe">
-      <a name="appearance" val="classic"/>
-      <a name="facing" val="west"/>
-    </comp>
     <comp lib="0" loc="(1300,410)" name="Splitter">
       <a name="bit0" val="1"/>
       <a name="bit10" val="0"/>
@@ -182,26 +166,6 @@
       <a name="incoming" val="16"/>
       <a name="spacing" val="2"/>
     </comp>
-    <comp lib="0" loc="(1310,1400)" name="Splitter">
-      <a name="appear" val="center"/>
-      <a name="bit0" val="2"/>
-      <a name="bit10" val="0"/>
-      <a name="bit11" val="0"/>
-      <a name="bit12" val="0"/>
-      <a name="bit13" val="0"/>
-      <a name="bit14" val="0"/>
-      <a name="bit2" val="0"/>
-      <a name="bit3" val="0"/>
-      <a name="bit4" val="0"/>
-      <a name="bit5" val="0"/>
-      <a name="bit6" val="0"/>
-      <a name="bit7" val="0"/>
-      <a name="bit8" val="0"/>
-      <a name="bit9" val="0"/>
-      <a name="facing" val="west"/>
-      <a name="fanout" val="3"/>
-      <a name="incoming" val="15"/>
-    </comp>
     <comp lib="0" loc="(140,290)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="Clk"/>
@@ -218,49 +182,14 @@
       <a name="fanout" val="4"/>
       <a name="incoming" val="4"/>
     </comp>
-    <comp lib="0" loc="(1620,360)" name="Splitter">
-      <a name="appear" val="center"/>
-      <a name="bit10" val="none"/>
-      <a name="bit11" val="none"/>
-      <a name="bit12" val="none"/>
-      <a name="bit13" val="none"/>
-      <a name="bit14" val="none"/>
-      <a name="bit15" val="none"/>
-      <a name="bit2" val="none"/>
-      <a name="bit3" val="none"/>
-      <a name="bit4" val="none"/>
-      <a name="bit5" val="none"/>
-      <a name="bit6" val="none"/>
-      <a name="bit7" val="none"/>
-      <a name="bit8" val="none"/>
-      <a name="bit9" val="none"/>
-      <a name="incoming" val="16"/>
-    </comp>
     <comp lib="0" loc="(1630,120)" name="Probe">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
     </comp>
-    <comp lib="0" loc="(1660,1460)" name="Splitter">
-      <a name="appear" val="center"/>
-      <a name="fanout" val="4"/>
-      <a name="incoming" val="4"/>
-    </comp>
-    <comp lib="0" loc="(1660,360)" name="Splitter">
-      <a name="appear" val="center"/>
-      <a name="facing" val="west"/>
-    </comp>
-    <comp lib="0" loc="(1660,400)" name="Tunnel">
+    <comp lib="0" loc="(1640,660)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="Clk"/>
-    </comp>
-    <comp lib="0" loc="(1680,530)" name="Constant">
-      <a name="facing" val="north"/>
-      <a name="value" val="0x0"/>
-      <a name="width" val="2"/>
-    </comp>
-    <comp lib="0" loc="(1690,460)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="NotLoadRam"/>
+      <a name="label" val="Bus8"/>
+      <a name="width" val="8"/>
     </comp>
     <comp lib="0" loc="(170,1010)" name="Splitter">
       <a name="appear" val="center"/>
@@ -268,22 +197,22 @@
       <a name="fanout" val="4"/>
       <a name="incoming" val="4"/>
     </comp>
-    <comp lib="0" loc="(170,1100)" name="Probe">
+    <comp lib="0" loc="(1710,440)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="Clk"/>
+    </comp>
+    <comp lib="0" loc="(1730,250)" name="Probe">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+    </comp>
+    <comp lib="0" loc="(1760,380)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NotLoadRam"/>
+    </comp>
+    <comp lib="0" loc="(1760,620)" name="Probe">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="radix" val="16"/>
-    </comp>
-    <comp lib="0" loc="(1700,430)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="NotEnableRam"/>
-    </comp>
-    <comp lib="0" loc="(1720,290)" name="Probe">
-      <a name="appearance" val="classic"/>
-      <a name="facing" val="west"/>
-    </comp>
-    <comp lib="0" loc="(1740,540)" name="Constant">
-      <a name="facing" val="north"/>
-      <a name="value" val="0x0"/>
     </comp>
     <comp lib="0" loc="(1770,1020)" name="Tunnel">
       <a name="label" val="NotLoadC"/>
@@ -310,6 +239,10 @@
       <a name="label" val="NotLoadRam"/>
     </comp>
     <comp lib="0" loc="(1770,1260)" name="Tunnel">
+      <a name="label" val="NotEnableRam"/>
+    </comp>
+    <comp lib="0" loc="(1770,410)" name="Tunnel">
+      <a name="facing" val="east"/>
       <a name="label" val="NotEnableRam"/>
     </comp>
     <comp lib="0" loc="(1770,720)" name="Tunnel">
@@ -347,20 +280,41 @@
     </comp>
     <comp lib="0" loc="(200,1040)" name="Constant">
       <a name="facing" val="north"/>
-      <a name="value" val="0x0"/>
+      <a name="value" val="0x3"/>
       <a name="width" val="4"/>
     </comp>
-    <comp lib="0" loc="(2010,400)" name="Tunnel">
+    <comp lib="0" loc="(2020,1020)" name="Constant"/>
+    <comp lib="0" loc="(2020,1050)" name="Constant"/>
+    <comp lib="0" loc="(2020,1080)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(2020,1110)" name="Constant"/>
+    <comp lib="0" loc="(2020,1140)" name="Constant"/>
+    <comp lib="0" loc="(2020,1170)" name="Constant"/>
+    <comp lib="0" loc="(2020,1200)" name="Constant"/>
+    <comp lib="0" loc="(2020,1230)" name="Constant"/>
+    <comp lib="0" loc="(2020,1260)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(2020,720)" name="Constant"/>
+    <comp lib="0" loc="(2020,750)" name="Constant"/>
+    <comp lib="0" loc="(2020,780)" name="Constant"/>
+    <comp lib="0" loc="(2020,810)" name="Constant"/>
+    <comp lib="0" loc="(2020,840)" name="Constant"/>
+    <comp lib="0" loc="(2020,870)" name="Constant"/>
+    <comp lib="0" loc="(2020,900)" name="Constant"/>
+    <comp lib="0" loc="(2020,930)" name="Constant"/>
+    <comp lib="0" loc="(2020,960)" name="Constant"/>
+    <comp lib="0" loc="(2020,990)" name="Constant"/>
+    <comp lib="0" loc="(2100,250)" name="Tunnel">
+      <a name="facing" val="east"/>
       <a name="label" val="Bus8"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="0" loc="(2030,320)" name="Probe">
+    <comp lib="0" loc="(2100,430)" name="Probe">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
-    </comp>
-    <comp lib="0" loc="(2030,450)" name="Probe">
-      <a name="appearance" val="classic"/>
-      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
     </comp>
     <comp lib="0" loc="(220,900)" name="Splitter">
       <a name="appear" val="center"/>
@@ -375,10 +329,11 @@
     </comp>
     <comp lib="0" loc="(240,910)" name="Constant">
       <a name="facing" val="north"/>
+      <a name="value" val="0x0"/>
     </comp>
     <comp lib="0" loc="(240,970)" name="Constant">
       <a name="facing" val="north"/>
-      <a name="value" val="0x8"/>
+      <a name="value" val="0x3"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(250,290)" name="Clock">
@@ -483,11 +438,6 @@
       <a name="facing" val="east"/>
       <a name="label" val="NotEnableB"/>
     </comp>
-    <comp lib="0" loc="(90,1100)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="Bus8"/>
-      <a name="width" val="8"/>
-    </comp>
     <comp lib="0" loc="(920,220)" name="Tunnel">
       <a name="label" val="Bus8"/>
       <a name="width" val="8"/>
@@ -512,18 +462,19 @@
       <a name="label" val="Bus8"/>
       <a name="width" val="8"/>
     </comp>
+    <comp lib="1" loc="(1280,560)" name="XOR Gate"/>
     <comp lib="4" loc="(1260,650)" name="ROM">
       <a name="addrWidth" val="11"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 11 19
-512*3effd 512*36ffe 8*6efff 8*6efef 8*6efdf 8*6eeff 8*6ebff 8*4efff
-16*6efff 8*6efbf 8*6efaf 8*6ef9f 8*6eebf 8*6ebbf 8*4efbf 16*6efbf
-8*6ef7f 8*6ef6f 8*6ef5f 8*6ee7f 8*6eb7f 8*4ef7f 16*6ef7f 8*6edff
-8*6edef 8*6eddf 8*6ecff 8*6e9ff 8*4edff 16*6edff 8*6e7ff 8*6e7ef
-8*6e7df 8*6e6ff 8*6e3ff 8*4e7ff 16*6e7ff 8*2efff 8*2efef 8*2efdf
-8*2eeff 8*2ebff 8*efff 16*2efff 8*6effb 8*6efeb 8*6efdb 8*6eefb
-8*6ebfb 8*4effb 16*6effb 8*6efff 8*6efef 8*6efdf 8*6eeff 8*6ebff
-8*4efff 16*6efff 8*7efff 8*7efef 8*7efdf 8*7eeff 8*7ebff 8*5efff
+512*3effd 512*36ffe 8*6dfff 8*6dfef 8*6dfdf 8*6deff 8*6dbff 8*4dfff
+16*6dfff 8*6dfbf 8*6dfaf 8*6df9f 8*6debf 8*6dbbf 8*4dfbf 16*6dfbf
+8*6df7f 8*6df6f 8*6df5f 8*6de7f 8*6db7f 8*4df7f 16*6df7f 8*6ddff
+8*6ddef 8*6dddf 8*6dcff 8*6d9ff 8*4ddff 16*6ddff 8*6d7ff 8*6d7ef
+8*6d7df 8*6d6ff 8*6d3ff 8*4d7ff 16*6d7ff 8*2dfff 8*2dfef 8*2dfdf
+8*2deff 8*2dbff 8*dfff 16*2dfff 8*6dffb 8*6dfeb 8*6dfdb 8*6defb
+8*6dbfb 8*4dffb 16*6dffb 8*6dfff 8*6dfef 8*6dfdf 8*6deff 8*6dbff
+8*4dfff 16*6dfff 8*7efff 8*7efef 8*7efdf 8*7eeff 8*7ebff 8*5efff
 16*7efff 8*7efbf 8*7efaf 8*7ef9f 8*7eebf 8*7ebbf 8*5efbf 16*7efbf
 8*7ef7f 8*7ef6f 8*7ef5f 8*7ee7f 8*7eb7f 8*5ef7f 16*7ef7f 8*7edff
 8*7edef 8*7eddf 8*7ecff 8*7e9ff 8*5edff 16*7edff 8*7e7ff 8*7e7ef
@@ -535,2577 +486,9 @@
       <a name="dataWidth" val="19"/>
       <a name="labelvisible" val="true"/>
     </comp>
-    <comp lib="4" loc="(1360,1410)" name="ROM">
-      <a name="addrWidth" val="15"/>
-      <a name="appearance" val="logisim_evolution"/>
-      <a name="contents">addr/data: 15 4
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-d d f f d d f f
-b b f f 7 f 7 12281*f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-e f e f e f e f
-</a>
-      <a name="dataWidth" val="4"/>
-    </comp>
     <comp loc="(1530,120)" name="ProgramCounter"/>
-    <comp loc="(1540,360)" name="MemoryHelper"/>
-    <comp loc="(1960,400)" name="RAM_IDT7134"/>
+    <comp loc="(1540,360)" name="MemoryBridge"/>
+    <comp loc="(2030,360)" name="Memory"/>
     <comp loc="(230,810)" name="fixed74181"/>
     <comp loc="(680,1110)" name="Microcode"/>
     <comp loc="(820,220)" name="Register8">
@@ -3130,7 +513,6 @@ e f e f e f e f
     <wire from="(1000,440)" to="(1320,440)"/>
     <wire from="(1000,500)" to="(1000,540)"/>
     <wire from="(1000,540)" to="(1110,540)"/>
-    <wire from="(1010,610)" to="(1070,610)"/>
     <wire from="(1010,750)" to="(1010,1110)"/>
     <wire from="(1010,750)" to="(1040,750)"/>
     <wire from="(1020,230)" to="(1020,470)"/>
@@ -3149,7 +531,7 @@ e f e f e f e f
     <wire from="(1160,120)" to="(1310,120)"/>
     <wire from="(1160,160)" to="(1310,160)"/>
     <wire from="(1160,190)" to="(1180,190)"/>
-    <wire from="(1160,660)" to="(1230,660)"/>
+    <wire from="(1160,660)" to="(1260,660)"/>
     <wire from="(1180,180)" to="(1180,190)"/>
     <wire from="(1180,180)" to="(1310,180)"/>
     <wire from="(1180,420)" to="(1320,420)"/>
@@ -3157,26 +539,14 @@ e f e f e f e f
     <wire from="(120,700)" to="(120,970)"/>
     <wire from="(120,700)" to="(240,700)"/>
     <wire from="(120,970)" to="(150,970)"/>
-    <wire from="(1200,1410)" to="(1220,1410)"/>
-    <wire from="(1200,1430)" to="(1240,1430)"/>
-    <wire from="(1210,1390)" to="(1290,1390)"/>
     <wire from="(1210,140)" to="(1310,140)"/>
-    <wire from="(1220,1400)" to="(1220,1410)"/>
-    <wire from="(1220,1400)" to="(1290,1400)"/>
-    <wire from="(1230,560)" to="(1230,660)"/>
-    <wire from="(1230,560)" to="(1280,560)"/>
-    <wire from="(1230,660)" to="(1260,660)"/>
-    <wire from="(1240,1410)" to="(1240,1430)"/>
-    <wire from="(1240,1410)" to="(1290,1410)"/>
     <wire from="(1270,320)" to="(1270,410)"/>
     <wire from="(1270,320)" to="(1550,320)"/>
     <wire from="(1270,410)" to="(1300,410)"/>
     <wire from="(130,730)" to="(130,960)"/>
     <wire from="(130,730)" to="(220,730)"/>
     <wire from="(130,960)" to="(160,960)"/>
-    <wire from="(1310,1400)" to="(1360,1400)"/>
     <wire from="(1310,200)" to="(1310,230)"/>
-    <wire from="(1360,1400)" to="(1360,1420)"/>
     <wire from="(140,290)" to="(250,290)"/>
     <wire from="(140,760)" to="(140,930)"/>
     <wire from="(140,760)" to="(230,760)"/>
@@ -3185,7 +555,7 @@ e f e f e f e f
     <wire from="(150,970)" to="(150,990)"/>
     <wire from="(1500,710)" to="(1570,710)"/>
     <wire from="(1530,120)" to="(1550,120)"/>
-    <wire from="(1540,360)" to="(1620,360)"/>
+    <wire from="(1540,360)" to="(1670,360)"/>
     <wire from="(1550,120)" to="(1550,320)"/>
     <wire from="(1550,120)" to="(1630,120)"/>
     <wire from="(1590,1020)" to="(1770,1020)"/>
@@ -3211,15 +581,10 @@ e f e f e f e f
     <wire from="(160,770)" to="(190,770)"/>
     <wire from="(160,950)" to="(240,950)"/>
     <wire from="(160,960)" to="(160,990)"/>
-    <wire from="(1600,1460)" to="(1600,1470)"/>
-    <wire from="(1600,1460)" to="(1660,1460)"/>
-    <wire from="(1660,360)" to="(1670,360)"/>
-    <wire from="(1660,400)" to="(1790,400)"/>
-    <wire from="(1670,290)" to="(1670,360)"/>
-    <wire from="(1670,290)" to="(1720,290)"/>
-    <wire from="(1670,360)" to="(1700,360)"/>
-    <wire from="(1680,530)" to="(1710,530)"/>
-    <wire from="(1690,460)" to="(1720,460)"/>
+    <wire from="(1640,660)" to="(1720,660)"/>
+    <wire from="(1670,250)" to="(1670,360)"/>
+    <wire from="(1670,250)" to="(1730,250)"/>
+    <wire from="(1670,360)" to="(1810,360)"/>
     <wire from="(170,1010)" to="(200,1010)"/>
     <wire from="(170,780)" to="(170,920)"/>
     <wire from="(170,780)" to="(200,780)"/>
@@ -3227,46 +592,42 @@ e f e f e f e f
     <wire from="(170,930)" to="(190,930)"/>
     <wire from="(170,960)" to="(170,990)"/>
     <wire from="(170,960)" to="(200,960)"/>
-    <wire from="(1700,360)" to="(1700,380)"/>
-    <wire from="(1700,380)" to="(1780,380)"/>
-    <wire from="(1700,430)" to="(1770,430)"/>
-    <wire from="(1710,500)" to="(1710,530)"/>
-    <wire from="(1710,500)" to="(1730,500)"/>
-    <wire from="(1720,420)" to="(1720,460)"/>
-    <wire from="(1720,420)" to="(1790,420)"/>
-    <wire from="(1730,440)" to="(1730,500)"/>
-    <wire from="(1730,440)" to="(1790,440)"/>
-    <wire from="(1740,460)" to="(1740,540)"/>
-    <wire from="(1740,460)" to="(1790,460)"/>
-    <wire from="(1770,430)" to="(1770,450)"/>
-    <wire from="(1770,450)" to="(1790,450)"/>
-    <wire from="(1780,380)" to="(1780,430)"/>
-    <wire from="(1780,430)" to="(1790,430)"/>
-    <wire from="(1790,410)" to="(1910,410)"/>
+    <wire from="(1710,440)" to="(1780,440)"/>
+    <wire from="(1720,620)" to="(1720,660)"/>
+    <wire from="(1720,620)" to="(1760,620)"/>
+    <wire from="(1760,380)" to="(1810,380)"/>
+    <wire from="(1770,410)" to="(1780,410)"/>
+    <wire from="(1780,400)" to="(1780,410)"/>
+    <wire from="(1780,400)" to="(1810,400)"/>
+    <wire from="(1780,420)" to="(1780,440)"/>
+    <wire from="(1780,420)" to="(1810,420)"/>
     <wire from="(180,660)" to="(260,660)"/>
     <wire from="(180,840)" to="(180,940)"/>
     <wire from="(180,940)" to="(190,940)"/>
     <wire from="(180,990)" to="(190,990)"/>
+    <wire from="(1810,440)" to="(1960,440)"/>
     <wire from="(190,770)" to="(190,790)"/>
     <wire from="(190,840)" to="(190,930)"/>
     <wire from="(190,940)" to="(190,990)"/>
-    <wire from="(1910,400)" to="(1910,410)"/>
-    <wire from="(1910,400)" to="(1960,400)"/>
-    <wire from="(1960,400)" to="(1980,400)"/>
-    <wire from="(1960,410)" to="(1970,410)"/>
-    <wire from="(1970,410)" to="(1970,420)"/>
-    <wire from="(1970,420)" to="(1990,420)"/>
-    <wire from="(1980,320)" to="(1980,400)"/>
-    <wire from="(1980,320)" to="(2030,320)"/>
-    <wire from="(1980,400)" to="(2010,400)"/>
-    <wire from="(1990,420)" to="(1990,450)"/>
-    <wire from="(1990,450)" to="(2030,450)"/>
+    <wire from="(1960,400)" to="(1960,440)"/>
+    <wire from="(1960,400)" to="(2020,400)"/>
     <wire from="(200,1010)" to="(200,1040)"/>
     <wire from="(200,780)" to="(200,790)"/>
     <wire from="(200,840)" to="(200,880)"/>
     <wire from="(200,920)" to="(200,960)"/>
+    <wire from="(2010,450)" to="(2010,470)"/>
+    <wire from="(2020,360)" to="(2020,400)"/>
+    <wire from="(2020,400)" to="(2060,400)"/>
+    <wire from="(2030,360)" to="(2090,360)"/>
+    <wire from="(2060,400)" to="(2060,430)"/>
+    <wire from="(2060,400)" to="(2090,400)"/>
+    <wire from="(2060,430)" to="(2100,430)"/>
+    <wire from="(2090,360)" to="(2090,400)"/>
+    <wire from="(2090,360)" to="(2110,360)"/>
     <wire from="(210,750)" to="(210,790)"/>
     <wire from="(210,840)" to="(210,880)"/>
+    <wire from="(2100,250)" to="(2110,250)"/>
+    <wire from="(2110,250)" to="(2110,360)"/>
     <wire from="(220,730)" to="(220,790)"/>
     <wire from="(220,840)" to="(220,880)"/>
     <wire from="(220,900)" to="(220,910)"/>
@@ -3355,7 +716,7 @@ e f e f e f e f
     <wire from="(760,800)" to="(760,860)"/>
     <wire from="(760,800)" to="(820,800)"/>
     <wire from="(820,220)" to="(920,220)"/>
-    <wire from="(820,240)" to="(1070,240)"/>
+    <wire from="(820,240)" to="(980,240)"/>
     <wire from="(820,370)" to="(920,370)"/>
     <wire from="(820,390)" to="(880,390)"/>
     <wire from="(820,520)" to="(920,520)"/>
@@ -3365,7 +726,8 @@ e f e f e f e f
     <wire from="(820,800)" to="(920,800)"/>
     <wire from="(880,390)" to="(880,440)"/>
     <wire from="(880,440)" to="(1000,440)"/>
-    <wire from="(90,1100)" to="(170,1100)"/>
+    <wire from="(980,240)" to="(980,610)"/>
+    <wire from="(980,610)" to="(1070,610)"/>
   </circuit>
   <circuit name="OctalTransceiver74245">
     <a name="appearance" val="custom"/>
@@ -4343,9 +1705,9 @@ e f e f e f e f
     <wire from="(900,400)" to="(1000,400)"/>
     <wire from="(900,400)" to="(900,420)"/>
   </circuit>
-  <circuit name="MemoryHelper">
+  <circuit name="MemoryBridge">
     <a name="appearance" val="logisim_evolution"/>
-    <a name="circuit" val="MemoryHelper"/>
+    <a name="circuit" val="MemoryBridge"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(430,210)" name="Pin">
@@ -4774,35 +2136,79 @@ e f e f e f e f
     <a name="circuit" val="RAM_IDT7134"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
-    <comp lib="0" loc="(380,560)" name="Pin">
-      <a name="appearance" val="classic"/>
-      <a name="label" val="Clock"/>
-    </comp>
-    <comp lib="0" loc="(410,600)" name="Pin">
+    <comp lib="0" loc="(150,590)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="label" val="NotWriteRamL"/>
     </comp>
-    <comp lib="0" loc="(410,620)" name="Pin">
-      <a name="appearance" val="classic"/>
-      <a name="label" val="AddressL"/>
-      <a name="width" val="2"/>
-    </comp>
-    <comp lib="0" loc="(410,640)" name="Pin">
-      <a name="appearance" val="classic"/>
-      <a name="label" val="AddressR"/>
-      <a name="width" val="2"/>
-    </comp>
-    <comp lib="0" loc="(420,580)" name="Pin">
+    <comp lib="0" loc="(170,570)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="label" val="DataInL"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="0" loc="(760,670)" name="Pin">
+    <comp lib="0" loc="(170,620)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="AddressL"/>
+      <a name="width" val="16"/>
+    </comp>
+    <comp lib="0" loc="(170,660)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="AddressR"/>
+      <a name="width" val="16"/>
+    </comp>
+    <comp lib="0" loc="(200,530)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="Clock"/>
+    </comp>
+    <comp lib="0" loc="(230,700)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="CEL"/>
+    </comp>
+    <comp lib="0" loc="(330,620)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="bit1" val="0"/>
+      <a name="bit10" val="none"/>
+      <a name="bit11" val="none"/>
+      <a name="bit12" val="none"/>
+      <a name="bit13" val="none"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="none"/>
+      <a name="bit2" val="none"/>
+      <a name="bit3" val="none"/>
+      <a name="bit4" val="none"/>
+      <a name="bit5" val="none"/>
+      <a name="bit6" val="none"/>
+      <a name="bit7" val="none"/>
+      <a name="bit8" val="none"/>
+      <a name="bit9" val="none"/>
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="16"/>
+    </comp>
+    <comp lib="0" loc="(330,640)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="bit1" val="0"/>
+      <a name="bit10" val="none"/>
+      <a name="bit11" val="none"/>
+      <a name="bit12" val="none"/>
+      <a name="bit13" val="none"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="none"/>
+      <a name="bit2" val="none"/>
+      <a name="bit3" val="none"/>
+      <a name="bit4" val="none"/>
+      <a name="bit5" val="none"/>
+      <a name="bit6" val="none"/>
+      <a name="bit7" val="none"/>
+      <a name="bit8" val="none"/>
+      <a name="bit9" val="none"/>
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="16"/>
+    </comp>
+    <comp lib="0" loc="(760,800)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="north"/>
       <a name="label" val="NotOutputEnableL"/>
     </comp>
-    <comp lib="0" loc="(800,720)" name="Pin">
+    <comp lib="0" loc="(800,850)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="north"/>
       <a name="label" val="NotOutputEnableR"/>
@@ -4821,8 +2227,12 @@ e f e f e f e f
       <a name="output" val="true"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="1" loc="(760,640)" name="NOT Gate">
+    <comp lib="1" loc="(340,690)" name="OR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(750,690)" name="NOR Gate">
       <a name="facing" val="north"/>
+      <a name="size" val="30"/>
     </comp>
     <comp lib="1" loc="(770,560)" name="Controlled Buffer">
       <a name="width" val="8"/>
@@ -4834,18 +2244,41 @@ e f e f e f e f
       <a name="width" val="8"/>
     </comp>
     <comp loc="(690,560)" name="RAM_4"/>
-    <wire from="(380,560)" to="(470,560)"/>
-    <wire from="(410,600)" to="(470,600)"/>
-    <wire from="(410,620)" to="(470,620)"/>
-    <wire from="(410,640)" to="(470,640)"/>
-    <wire from="(420,580)" to="(470,580)"/>
+    <wire from="(150,590)" to="(230,590)"/>
+    <wire from="(170,570)" to="(180,570)"/>
+    <wire from="(170,620)" to="(330,620)"/>
+    <wire from="(170,660)" to="(240,660)"/>
+    <wire from="(180,570)" to="(180,580)"/>
+    <wire from="(180,580)" to="(470,580)"/>
+    <wire from="(200,530)" to="(210,530)"/>
+    <wire from="(210,530)" to="(210,560)"/>
+    <wire from="(210,560)" to="(470,560)"/>
+    <wire from="(230,590)" to="(230,600)"/>
+    <wire from="(230,600)" to="(280,600)"/>
+    <wire from="(230,700)" to="(270,700)"/>
+    <wire from="(240,640)" to="(240,660)"/>
+    <wire from="(240,640)" to="(330,640)"/>
+    <wire from="(270,700)" to="(270,770)"/>
+    <wire from="(270,700)" to="(310,700)"/>
+    <wire from="(270,770)" to="(740,770)"/>
+    <wire from="(280,600)" to="(280,680)"/>
+    <wire from="(280,680)" to="(310,680)"/>
+    <wire from="(340,690)" to="(370,690)"/>
+    <wire from="(350,620)" to="(470,620)"/>
+    <wire from="(350,640)" to="(470,640)"/>
+    <wire from="(370,600)" to="(370,690)"/>
+    <wire from="(370,600)" to="(470,600)"/>
     <wire from="(470,640)" to="(480,640)"/>
     <wire from="(690,560)" to="(750,560)"/>
     <wire from="(690,580)" to="(790,580)"/>
-    <wire from="(760,570)" to="(760,640)"/>
+    <wire from="(740,730)" to="(740,770)"/>
+    <wire from="(750,680)" to="(750,690)"/>
+    <wire from="(750,680)" to="(760,680)"/>
+    <wire from="(760,570)" to="(760,680)"/>
+    <wire from="(760,730)" to="(760,800)"/>
     <wire from="(770,560)" to="(840,560)"/>
     <wire from="(800,590)" to="(800,640)"/>
-    <wire from="(800,670)" to="(800,720)"/>
+    <wire from="(800,670)" to="(800,850)"/>
     <wire from="(810,580)" to="(840,580)"/>
     <wire from="(840,540)" to="(840,560)"/>
     <wire from="(840,540)" to="(850,540)"/>
@@ -5542,5 +2975,371 @@ e f e f e f e f
     <wire from="(960,740)" to="(980,740)"/>
     <wire from="(960,860)" to="(960,880)"/>
     <wire from="(960,860)" to="(980,860)"/>
+  </circuit>
+  <circuit name="Memory">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="Memory"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="1.0"/>
+    <comp lib="0" loc="(1090,860)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+    </comp>
+    <comp lib="0" loc="(1120,480)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NotChipEnableROM"/>
+    </comp>
+    <comp lib="0" loc="(1360,840)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NotChipEnableVRAM"/>
+    </comp>
+    <comp lib="0" loc="(1360,890)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(1400,1000)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="5"/>
+      <a name="incoming" val="5"/>
+    </comp>
+    <comp lib="0" loc="(1460,1010)" name="Tunnel">
+      <a name="label" val="NotChipEnableRAM"/>
+    </comp>
+    <comp lib="0" loc="(1460,950)" name="Tunnel">
+      <a name="label" val="NotChipEnableVRAM"/>
+    </comp>
+    <comp lib="0" loc="(1460,980)" name="Tunnel">
+      <a name="label" val="NotChipEnableROM"/>
+    </comp>
+    <comp lib="0" loc="(1660,620)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="DataOut"/>
+      <a name="output" val="true"/>
+      <a name="radix" val="16"/>
+      <a name="tristate" val="true"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(500,640)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="NotLoad"/>
+    </comp>
+    <comp lib="0" loc="(570,660)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="NotEnable"/>
+    </comp>
+    <comp lib="0" loc="(600,540)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="AddressL"/>
+      <a name="width" val="16"/>
+    </comp>
+    <comp lib="0" loc="(690,540)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="bit1" val="0"/>
+      <a name="bit10" val="0"/>
+      <a name="bit11" val="0"/>
+      <a name="bit12" val="0"/>
+      <a name="bit13" val="0"/>
+      <a name="bit14" val="0"/>
+      <a name="bit15" val="none"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="incoming" val="16"/>
+    </comp>
+    <comp lib="0" loc="(710,680)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="Clock"/>
+    </comp>
+    <comp lib="0" loc="(790,470)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="south"/>
+    </comp>
+    <comp lib="0" loc="(800,700)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="DataIn"/>
+      <a name="tristate" val="true"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(830,740)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NotChipEnableRAM"/>
+    </comp>
+    <comp lib="0" loc="(840,940)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="bit1" val="0"/>
+      <a name="bit10" val="0"/>
+      <a name="bit11" val="0"/>
+      <a name="bit12" val="0"/>
+      <a name="bit13" val="0"/>
+      <a name="bit14" val="none"/>
+      <a name="bit15" val="0"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="16"/>
+    </comp>
+    <comp lib="4" loc="(1100,950)" name="ROM">
+      <a name="addrWidth" val="15"/>
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="contents">addr/data: 15 5
+1024*1d 17 f 3070*1f 4096*1e 8192*1f 16384*1b
+</a>
+      <a name="dataWidth" val="5"/>
+    </comp>
+    <comp loc="(1110,620)" name="RAM_62256"/>
+    <comp loc="(1520,460)" name="EEPROM_ROM"/>
+    <comp loc="(1600,790)" name="RAM_IDT7134"/>
+    <wire from="(1010,860)" to="(1010,940)"/>
+    <wire from="(1010,860)" to="(1090,860)"/>
+    <wire from="(1010,940)" to="(1100,940)"/>
+    <wire from="(1100,940)" to="(1100,960)"/>
+    <wire from="(1110,620)" to="(1560,620)"/>
+    <wire from="(1120,480)" to="(1300,480)"/>
+    <wire from="(1300,480)" to="(1310,480)"/>
+    <wire from="(1340,1000)" to="(1340,1010)"/>
+    <wire from="(1340,1000)" to="(1400,1000)"/>
+    <wire from="(1360,840)" to="(1430,840)"/>
+    <wire from="(1360,890)" to="(1400,890)"/>
+    <wire from="(1380,850)" to="(1380,870)"/>
+    <wire from="(1380,850)" to="(1430,850)"/>
+    <wire from="(1400,860)" to="(1400,890)"/>
+    <wire from="(1400,860)" to="(1430,860)"/>
+    <wire from="(1420,1000)" to="(1450,1000)"/>
+    <wire from="(1420,980)" to="(1430,980)"/>
+    <wire from="(1420,990)" to="(1440,990)"/>
+    <wire from="(1430,950)" to="(1430,980)"/>
+    <wire from="(1430,950)" to="(1460,950)"/>
+    <wire from="(1440,980)" to="(1440,990)"/>
+    <wire from="(1440,980)" to="(1460,980)"/>
+    <wire from="(1450,1000)" to="(1450,1010)"/>
+    <wire from="(1450,1010)" to="(1460,1010)"/>
+    <wire from="(1520,460)" to="(1560,460)"/>
+    <wire from="(1560,460)" to="(1560,620)"/>
+    <wire from="(1560,620)" to="(1630,620)"/>
+    <wire from="(1600,790)" to="(1630,790)"/>
+    <wire from="(1630,620)" to="(1630,790)"/>
+    <wire from="(1630,620)" to="(1660,620)"/>
+    <wire from="(500,640)" to="(550,640)"/>
+    <wire from="(550,640)" to="(550,810)"/>
+    <wire from="(550,640)" to="(590,640)"/>
+    <wire from="(550,810)" to="(1430,810)"/>
+    <wire from="(570,660)" to="(610,660)"/>
+    <wire from="(590,620)" to="(590,640)"/>
+    <wire from="(590,620)" to="(670,620)"/>
+    <wire from="(590,640)" to="(590,990)"/>
+    <wire from="(590,990)" to="(920,990)"/>
+    <wire from="(600,540)" to="(640,540)"/>
+    <wire from="(610,640)" to="(610,660)"/>
+    <wire from="(610,640)" to="(860,640)"/>
+    <wire from="(610,660)" to="(610,870)"/>
+    <wire from="(610,870)" to="(1380,870)"/>
+    <wire from="(610,870)" to="(610,950)"/>
+    <wire from="(640,540)" to="(640,820)"/>
+    <wire from="(640,540)" to="(690,540)"/>
+    <wire from="(640,820)" to="(1430,820)"/>
+    <wire from="(640,820)" to="(640,940)"/>
+    <wire from="(640,940)" to="(840,940)"/>
+    <wire from="(670,620)" to="(670,660)"/>
+    <wire from="(670,660)" to="(890,660)"/>
+    <wire from="(700,540)" to="(710,540)"/>
+    <wire from="(710,530)" to="(730,530)"/>
+    <wire from="(710,680)" to="(860,680)"/>
+    <wire from="(730,530)" to="(730,620)"/>
+    <wire from="(730,620)" to="(790,620)"/>
+    <wire from="(790,470)" to="(790,620)"/>
+    <wire from="(790,620)" to="(830,620)"/>
+    <wire from="(800,700)" to="(840,700)"/>
+    <wire from="(830,460)" to="(1300,460)"/>
+    <wire from="(830,460)" to="(830,620)"/>
+    <wire from="(830,620)" to="(890,620)"/>
+    <wire from="(830,740)" to="(850,740)"/>
+    <wire from="(840,700)" to="(840,800)"/>
+    <wire from="(840,700)" to="(890,700)"/>
+    <wire from="(840,800)" to="(1430,800)"/>
+    <wire from="(850,720)" to="(850,740)"/>
+    <wire from="(850,720)" to="(890,720)"/>
+    <wire from="(860,500)" to="(1300,500)"/>
+    <wire from="(860,500)" to="(860,640)"/>
+    <wire from="(860,640)" to="(890,640)"/>
+    <wire from="(860,680)" to="(860,790)"/>
+    <wire from="(860,680)" to="(890,680)"/>
+    <wire from="(860,790)" to="(1430,790)"/>
+    <wire from="(860,940)" to="(1010,940)"/>
+    <wire from="(890,720)" to="(900,720)"/>
+    <wire from="(920,970)" to="(920,990)"/>
+    <wire from="(920,970)" to="(980,970)"/>
+    <wire from="(980,950)" to="(980,970)"/>
+  </circuit>
+  <circuit name="RAM_62256">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="RAM_62256"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="1.0"/>
+    <comp lib="0" loc="(1070,440)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="DataOut"/>
+      <a name="output" val="true"/>
+      <a name="tristate" val="true"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(140,440)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="NotLoad"/>
+    </comp>
+    <comp lib="0" loc="(210,580)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="NotChipEnable"/>
+    </comp>
+    <comp lib="0" loc="(260,420)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="NotEnable"/>
+    </comp>
+    <comp lib="0" loc="(310,440)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="Clock"/>
+    </comp>
+    <comp lib="0" loc="(380,370)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="Address"/>
+      <a name="width" val="15"/>
+    </comp>
+    <comp lib="0" loc="(410,470)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="DataIn"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(420,800)" name="POR"/>
+    <comp lib="1" loc="(220,470)" name="NOT Gate"/>
+    <comp lib="1" loc="(270,480)" name="AND Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(290,580)" name="NOT Gate"/>
+    <comp lib="1" loc="(450,420)" name="NOT Gate"/>
+    <comp lib="1" loc="(450,600)" name="AND Gate">
+      <a name="facing" val="south"/>
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(990,440)" name="Controlled Buffer">
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="4" loc="(680,350)" name="RAM">
+      <a name="addrWidth" val="15"/>
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="asyncread" val="true"/>
+    </comp>
+    <wire from="(140,440)" to="(180,440)"/>
+    <wire from="(180,440)" to="(180,470)"/>
+    <wire from="(180,470)" to="(190,470)"/>
+    <wire from="(200,490)" to="(200,550)"/>
+    <wire from="(200,490)" to="(240,490)"/>
+    <wire from="(200,550)" to="(310,550)"/>
+    <wire from="(210,580)" to="(260,580)"/>
+    <wire from="(220,470)" to="(240,470)"/>
+    <wire from="(260,420)" to="(420,420)"/>
+    <wire from="(270,400)" to="(270,480)"/>
+    <wire from="(270,400)" to="(670,400)"/>
+    <wire from="(290,580)" to="(310,580)"/>
+    <wire from="(310,440)" to="(330,440)"/>
+    <wire from="(310,550)" to="(310,580)"/>
+    <wire from="(310,580)" to="(350,580)"/>
+    <wire from="(330,430)" to="(330,440)"/>
+    <wire from="(330,430)" to="(670,430)"/>
+    <wire from="(350,550)" to="(350,580)"/>
+    <wire from="(350,550)" to="(440,550)"/>
+    <wire from="(380,370)" to="(670,370)"/>
+    <wire from="(410,470)" to="(420,470)"/>
+    <wire from="(420,450)" to="(420,470)"/>
+    <wire from="(420,450)" to="(670,450)"/>
+    <wire from="(440,550)" to="(440,570)"/>
+    <wire from="(450,420)" to="(490,420)"/>
+    <wire from="(450,600)" to="(450,670)"/>
+    <wire from="(450,670)" to="(980,670)"/>
+    <wire from="(460,540)" to="(460,570)"/>
+    <wire from="(460,540)" to="(490,540)"/>
+    <wire from="(490,420)" to="(490,540)"/>
+    <wire from="(490,420)" to="(660,420)"/>
+    <wire from="(660,410)" to="(660,420)"/>
+    <wire from="(660,410)" to="(680,410)"/>
+    <wire from="(670,360)" to="(670,370)"/>
+    <wire from="(670,360)" to="(680,360)"/>
+    <wire from="(670,390)" to="(670,400)"/>
+    <wire from="(670,390)" to="(680,390)"/>
+    <wire from="(670,420)" to="(670,430)"/>
+    <wire from="(670,420)" to="(680,420)"/>
+    <wire from="(670,440)" to="(670,450)"/>
+    <wire from="(670,440)" to="(680,440)"/>
+    <wire from="(680,390)" to="(680,400)"/>
+    <wire from="(680,420)" to="(690,420)"/>
+    <wire from="(920,440)" to="(970,440)"/>
+    <wire from="(980,450)" to="(980,670)"/>
+    <wire from="(990,440)" to="(1070,440)"/>
+  </circuit>
+  <circuit name="EEPROM_ROM">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="EEPROM_ROM"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="1.0"/>
+    <comp lib="0" loc="(290,340)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="Address"/>
+      <a name="width" val="15"/>
+    </comp>
+    <comp lib="0" loc="(560,590)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="ChipEnable"/>
+    </comp>
+    <comp lib="0" loc="(560,620)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="OutputEnable"/>
+    </comp>
+    <comp lib="0" loc="(840,390)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="Data"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="1" loc="(770,450)" name="NOT Gate">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="1" loc="(780,420)" name="AND Gate">
+      <a name="facing" val="north"/>
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(790,390)" name="Controlled Buffer">
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="1" loc="(790,450)" name="NOT Gate">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="4" loc="(430,330)" name="ROM">
+      <a name="addrWidth" val="15"/>
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="contents">addr/data: 15 8
+c4 10 d4 55 c8 1 d4 aa
+c8 2 d4 2 c8 3 d4 3
+</a>
+    </comp>
+    <wire from="(290,340)" to="(430,340)"/>
+    <wire from="(560,590)" to="(770,590)"/>
+    <wire from="(560,620)" to="(790,620)"/>
+    <wire from="(670,390)" to="(770,390)"/>
+    <wire from="(770,480)" to="(770,590)"/>
+    <wire from="(780,400)" to="(780,420)"/>
+    <wire from="(790,390)" to="(840,390)"/>
+    <wire from="(790,480)" to="(790,620)"/>
   </circuit>
 </project>

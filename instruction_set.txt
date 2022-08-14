@@ -1,0 +1,61 @@
+CONSTANT INSTRUCTION:
+load a register with b
+1111 lllx bbbb bbbb
+bit 15 disables jump basically
+
+COMPUTATION INSTRUCTION
+          bbbb bbbb
+0eee llla aaaa jjjx
+
+
+
+e = ENABLES
+L = LOADS
+a = ALU
+j = JUMP
+
+ENABLES:
+
+a high  000
+a low   001
+b       010
+c       011
+ram     100
+input   101
+alu     110
+bus     111
+
+LOADS:
+a high 		000
+a low  		001
+b     	        010
+c               011
+ram             100
+output          101
+none   		110
+none            111
+
+ALU:
+a - zero x
+a - negate x
+a - zero y
+a - negate y
+a - negate output
+     
+
+lte  zr or ng
+lt   ng
+eq   zr
+gt   zr nor ng
+gte  not ng
+
+
+# add 5 + 4
+# b = 5
+1 111 010 0 0000 0101
+# c = 4
+1 111 011 0 0000 0100
+# output = b + c
+0 110 101 00000 000 0
+# jmp
+0 000 111 00000 111 0
