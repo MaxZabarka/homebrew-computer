@@ -14,19 +14,23 @@ for instruction in data.split("\n"):
     [destination, source] = instruction.split("=")
     source = source.strip()
     destination = destination.strip()
-
-    if (source.isdigit()):
-        source_bits = ENABLES["IRHigh"]
-    else:
-        source_bits = ENABLES[source]
-
     destination_bits = LOADS[destination]
 
-    output = source_bits + destination_bits + "00"
-    print(hex(int(output, 2))[2:], end=" ")
-    if (source.isdigit()):
-        print(hex(int(source))[2:], end=" ")
+    if (source.startswith("c")):
+        computation_bits = source.split("c")[1]
+        low_byte = "1" + destination_bits + "0000"
+        high_byte = computation_bits + "00"
     else:
-        print("0", end=" ") 
+        if (source.isdigit()):
+            source_bits = ENABLES["IRHigh"]
+        else:
+            source_bits = ENABLES[source]
+        low_byte = "0" + destination_bits + source_bits + "0"
+        if (source.isdigit()):
+            high_byte = bin(int(source))[2:].zfill(8)
+        else:
+            high_byte = "0"*8
 
-    # source_bits = ENABLES[]
+    # print(low_byte, high_byte)
+    print(hex(int(low_byte, 2))[2:], end=" ")
+    print(hex(int(high_byte, 2))[2:], end=" ")

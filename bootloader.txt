@@ -1,2 +1,2 @@
 v3.0 hex words plain
-c4 10 d4 55 c8 1 d4 aa c8 2 d4 2 c8 3 d4 3 
+3c 57 05 

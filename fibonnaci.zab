@@ -1,0 +1,7 @@
+B = C
+B = 0
+C = 1
+B = (B+C)
+C = (B+C)
+ALow = 4
+JMP

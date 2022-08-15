@@ -1,0 +1,5 @@
+B = hello.l
+
+#origin 0x55
+hello:
+  0005
