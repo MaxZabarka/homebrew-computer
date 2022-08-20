@@ -28,13 +28,13 @@ class VarDecWithValue:
         return f"VarDec {self.type} {self.name} {self.expression}"
 
 
-class Op:
+class UnOp:
     def __init__(self, op, a):
         self.a = a
         self.op = op
 
     def __repr__(self):
-        return f"Op {self.op} {self.a}"
+        return f"UnOp {self.op} ({self.a})"
 
 
 class BinOp:
@@ -44,4 +44,9 @@ class BinOp:
         self.op = op
 
     def __repr__(self):
-        return f"Op {self.op} \n\tA: {self.a}, \n\tB: {self.b}"
+        return f"{self.a}\n{self.b}\n{self.op}"
+
+class Type:
+    def __init__(self, type, pointer_amount):
+        self.type = type
+        self.pointer_amount = pointer_amount

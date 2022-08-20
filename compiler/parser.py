@@ -1,5 +1,8 @@
 from lexer import Lexer
 from AST_types import *
+import inspect
+
+
 
 
 class Parser:
@@ -49,7 +52,11 @@ class Parser:
         self.verify(self.lexer.token_value() in self.lexer.TYPES)
         type = self.lexer.token_value()
         self.lexer.advance()
-        return type
+        pointer_amount = 0
+        while self.lexer.token_value() == "*":
+            pointer_amount += 1
+            self.lexer.advance()
+        return Type(type, pointer_amount)
 
     def parse_var_dec_with_value(self, type):
         # name
@@ -58,7 +65,7 @@ class Parser:
         self.lexer.advance()
 
         self.eat("=")
-        expression = self.parse_expression()
+        expression = parse_expression(self)
         self.eat(";")
         return VarDecWithValue(type, name, expression)
 
@@ -96,30 +103,28 @@ class Parser:
                 varDec = self.parse_var_dec(self.parse_type())
                 statements.append(varDec)
             else:
-                print(self.parse_expression())
+                print(parse_expression(self))
                 self.eat(";")
         self.eat("}")
         return statements
 
     def parse_expression(self):
-        return BinOp(None, self.parse_term(), self.parse_expression_r())
-
-    def parse_expression_r(self):
-        if (self.lexer.token_value() in ["+", "-"]):
+        term = self.parse_term()
+        while (self.lexer.token_value() in ["+", "-"]):
             op = self.lexer.token_value()
             self.lexer.advance()
-            return BinOp(self.lexer.token_value(), self.parse_term(), self.parse_expression_r())
+            next_term = self.parse_term()
+            term = BinOp(op, term, next_term)
+        return term
 
     def parse_term(self):
-        return BinOp(None, self.parse_factor(), self.parse_term_r())
-
-    def parse_term_r(self):
-        if (self.lexer.token_value() in ["*", "/"]):
+        factor = self.parse_factor()
+        while (self.lexer.token_value() in ["*", "/"]):
             op = self.lexer.token_value()
             self.lexer.advance()
-            self.parse_factor()
-            self.parse_term_r()
-            print(op)
+            next_factor = self.parse_factor()
+            factor = BinOp(op, factor, next_factor)
+        return factor
 
     def parse_factor(self):
         if (self.lexer.token_value() == "("):
@@ -127,11 +132,15 @@ class Parser:
             expression = self.parse_expression()
             self.eat(")")
             return expression
+        elif self.lexer.token_value() in ["-", "~", "!", "*", "&"]:
+            op = self.lexer.token_value()
+            self.lexer.advance()
+            factor = self.parse_factor()
+            return UnOp(op, factor)
         else:
             self.verify(self.lexer.token_type() == "integerConstant")
             constant = self.lexer.token_value()
             self.lexer.advance()
-            print(constant)
             return constant
 
     def eat(self, value):
