@@ -1,0 +1,33 @@
+keywords:  "int", "int16", "char", "bool", "void", "true", "false", "if", "else", "while", "return", "struct"
+symbols: "{", "}", "(", ")", "[", "]", "." ",", ";", "+", "-", "*", "/", "&", "|", "<", ">", "=", "~", "!"
+
+
+file: (functionDec | varDec)*
+
+
+declarations:
+    varDec: varDecWithoutValue | varDecWithValue
+    varDecWithoutValue: type varName ';'
+    varDecWithValue: type varName '=' expression ';'
+    structDec: 'struct' structName '{' varDecWithoutValue* '}'
+    functionDec: (type | void) functionName  parameterList  '{' statements '}'
+
+statement: varDec | expression
+statements: statement*
+
+parameterList: '(' (type varName)* (',' type varName)* ')' 
+
+type: 'int' | 'int16' | 'char' | 'bool' | structName
+structName: identifier
+varName: identifier
+functionName: identifier
+
+
+
+
+
+features:
+ - pointers
+ - structs
+ - int16 (represented as two items on the stack, make vm add/sub take four arguments)
+ - floating point numbers
