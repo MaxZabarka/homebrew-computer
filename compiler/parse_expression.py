@@ -21,8 +21,8 @@ def parse_factor(self):
         expression = parse_expression(self)
         self.eat(")")
         return expression
-    elif self.lexer.token_value() in ["-", "~", "!", "*", "&"]:
-        op = self.lexer.token_value()
+    elif self.lexer.token_value() in UNARY_OPS.keys():
+        op = UNARY_OPS[self.lexer.token_value()]
         self.lexer.advance()
         factor = parse_factor(self)
         return UnOp(op, factor)
@@ -32,14 +32,13 @@ def parse_factor(self):
         self.lexer.advance()
         return str(constant)
 
-
 def generate_expression_parsers():
     expression_parsers = [parse_factor]
     for i, operations in enumerate(PRECEDENCE[::-1]):
         def parse_arbitrary_expression(self, i=i, operations=operations, expression_parsers=expression_parsers):
             expr = expression_parsers[i](self)
             while (self.lexer.token_value() in operations.keys()):
-                op = self.lexer.token_value()
+                op = operations[self.lexer.token_value()]
                 self.lexer.advance()
                 expr_term = expression_parsers[i](self)
                 expr = BinOp(op, expr, expr_term)

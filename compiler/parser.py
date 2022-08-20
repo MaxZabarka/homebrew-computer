@@ -1,8 +1,9 @@
+#!/usr/bin/env python3.10
+
 from lexer import Lexer
 from AST_types import *
 from parse_expression import parse_expression
 from draw_ast import draw_ast
-import json
 
 class Parser:
     def __init__(self, lexer):
@@ -21,13 +22,8 @@ class Parser:
             else:
                 self.AST.append(self.parse_var_dec(type))
 
-
         draw_ast(self.AST)
-        # for child in self.AST:
-        #     print(child)
-        # Serialization
-        # json_data = json.dumps(self.AST, default=lambda o: o.__dict__, indent=4)
-        # print(json_data)
+
     def parse_function_dec(self, type):
         # type
         return_type = type

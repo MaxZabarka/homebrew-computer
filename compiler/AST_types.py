@@ -6,13 +6,10 @@ class FunctionDec:
         self.statements = statements
 
    
-
-
 class VarDecWithoutValue:
     def __init__(self, type, name):
         self.type = type
         self.name = name
-
 
 
 class VarDecWithValue:
@@ -20,8 +17,6 @@ class VarDecWithValue:
         self.type = type
         self.name = name
         self.expression = expression
-
-
 
 class UnOp:
     def __init__(self, op, a):
@@ -34,9 +29,6 @@ class BinOp:
         self.a = a
         self.b = b
         self.op = op
-
-    # def __repr__(self):
-    #     return f"{self.a}\n{self.b}\n{self.op}"
 
 
 class Type:
@@ -53,3 +45,4 @@ class Parameter:
 class Constant:
     def __init__(self, value):
         self.value = value
+

@@ -1,14 +1,28 @@
+#!/usr/bin/env python3.10
+
+from curses.ascii import isdigit
+from typing import Set
 import helpers
 import os
 import tempfile
 
+SYMBOLS = {"{", "}", "(", ")", "[", "]", ".", ",", ";",
+            "+", "-", "*", "/", "&&", "||", "<", ">", "<=",
+            ">=", "=", "==", "~", "!"}
 
+SYMBOL_CHARS = set()
+
+for symbol in SYMBOLS:
+    for char in symbol:
+        SYMBOL_CHARS.add(char)
+
+print(SYMBOL_CHARS)
+
+TYPES = ["int", "int16", "char", "bool", "void"]
+KEYWORDS = [ "true", "false", "if", "void"
+            "else", "while", "return", "struct"] + TYPES
 class Lexer:
-    SYMBOLS = ["{", "}", "(", ")", "[", "]", ".", ",", ";",
-               "+", "-", "*", "/", "&", "|", "<", ">", "=", "~", "!"]
-    TYPES = ["int", "int16", "char", "bool", "void"]
-    KEYWORDS = [ "true", "false", "if", "void"
-                "else", "while", "return", "struct"] + TYPES
+
 
     def __init__(self, input_file):
         temp_file = os.path.join(tempfile.gettempdir(), "removed_comments")
@@ -19,49 +33,82 @@ class Lexer:
             token = ""
             isString = False
             lineNumber = 1
+            c = f.read(1)
             while True:
-                c = f.read(1)
                 if not c:
                     break
+                
 
-                if c == "\n":
-                    lineNumber += 1
-
-                if c == "\"":
-                    if isString:
-                        self.tokens.append(
-                            (token, "stringConstant", lineNumber))
-                        token = ""
-                    isString = not isString
+                if (c.isspace()):
+                    c = f.read(1)
                     continue
-
-                if isString:
+                if (c.isalpha()):
                     token += c
+                    c = f.read(1)
+                    while (c.isalnum()):
+                        token+=c
+                        c = f.read(1)
+                    print(token)
+                    token = ""
                     continue
-
-                if c in self.SYMBOLS or c.isspace():
-                    token = token.strip()
-                    if (len(token) > 0):
-                        if (token in self.KEYWORDS):
-                            self.tokens.append((token, "keyword", lineNumber))
-                            token = ""
-                        elif (token.isidentifier()):
-                            self.tokens.append(
-                                (token, "identifier", lineNumber))
-                            token = ""
-                        elif (token.isnumeric()):
-                            self.tokens.append(
-                                (token, "integerConstant", lineNumber))
-                            token = ""
-                        elif token.isspace():
-                            pass
-                        else:
-                            raise SyntaxError("Unknown token: " + token)
-
-                    if c in self.SYMBOLS:
-                        self.tokens.append((c, "symbol", lineNumber))
+                elif (c.isdigit()):
+                    pass
+                elif (c in SYMBOL_CHARS):
+                    token += c
+                    c = f.read(1)
+                    while (c in SYMBOL_CHARS):
+                        token+=c
+                        c = f.read(1)
+                    if token not in SYMBOLS:
+                        raise Exception
+                    token = ""
                     continue
-                token += c
+                else:
+                    raise Exception
+                token +=  c
+            # while True:
+            #     c = f.read(1)
+            #     if not c:
+            #         break
+
+            #     if c == "\n":
+            #         lineNumber += 1
+
+            #     if c == "\"":
+            #         if isString:
+            #             self.tokens.append(
+            #                 (token, "stringConstant", lineNumber))
+            #             token = ""
+            #         isString = not isString
+            #         continue
+
+            #     if isString:
+            #         token += c
+            #         continue
+
+            #     if c in self.SYMBOLS or c.isspace():
+            #         token = token.strip()
+            #         if (len(token) > 0):
+            #             if (token in self.KEYWORDS):
+            #                 self.tokens.append((token, "keyword", lineNumber))
+            #                 token = ""
+            #             elif (token.isidentifier()):
+            #                 self.tokens.append(
+            #                     (token, "identifier", lineNumber))
+            #                 token = ""
+            #             elif (token.isnumeric()):
+            #                 self.tokens.append(
+            #                     (token, "integerConstant", lineNumber))
+            #                 token = ""
+            #             elif token.isspace():
+            #                 pass
+            #             else:
+            #                 raise SyntaxError("Unknown token: " + token)
+
+            #         if c in self.SYMBOLS:
+            #             self.tokens.append((c, "symbol", lineNumber))
+            #         continue
+            #     token += c
             self.currentToken = 0
         os.remove(temp_file)
 
@@ -85,3 +132,8 @@ class Lexer:
 
     def future_token_value(self, i=1):
         return self.tokens[self.currentToken+i][0]
+
+
+if __name__ == "__main__":
+    with open("example.c") as f:
+        lexer = Lexer(f)
