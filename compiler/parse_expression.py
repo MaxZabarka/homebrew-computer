@@ -1,3 +1,5 @@
+from AST_types import *
+
 UNARY_OPS = {"-": "ARITHMETIC_NEGATION", "~": "BITWISE_NEGATION",
              "!": "LOGICAL_NEGATION", "*": "DEREFERENCE", "&": "ADDRESS_OF"}
 
@@ -16,19 +18,19 @@ PRECEDENCE = [ADDITIVE, MULTIPLICATIVE]
 def parse_factor(self):
     if (self.lexer.token_value() == "("):
         self.eat("(")
-        expression = self.parse_expression()
+        expression = parse_expression(self)
         self.eat(")")
         return expression
     elif self.lexer.token_value() in ["-", "~", "!", "*", "&"]:
         op = self.lexer.token_value()
         self.lexer.advance()
-        factor = self.parse_factor()
+        factor = parse_factor(self)
         return UnOp(op, factor)
     else:
         self.verify(self.lexer.token_type() == "integerConstant")
         constant = self.lexer.token_value()
         self.lexer.advance()
-        return constant
+        return str(constant)
 
 
 def generate_expression_parsers():

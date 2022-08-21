@@ -21,9 +21,9 @@ type: 'int' | 'int16' | 'char' | 'bool' | structName
 structName: identifier
 varName: identifier
 functionName: identifier
+typeName: identifier
 
-
-
+typeDefinition: 'typedef' type typeName
 
 
 features:

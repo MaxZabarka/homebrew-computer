@@ -5,8 +5,7 @@ class FunctionDec:
         self.params = params
         self.statements = statements
 
-    def __repr__(self):
-        return f"FunctionDec {self.return_type} {self.name} {self.params} \n\t{self.statements}"
+   
 
 
 class VarDecWithoutValue:
@@ -14,8 +13,6 @@ class VarDecWithoutValue:
         self.type = type
         self.name = name
 
-    def __repr__(self):
-        return f"VarDec {self.type} {self.name}"
 
 
 class VarDecWithValue:
@@ -24,17 +21,12 @@ class VarDecWithValue:
         self.name = name
         self.expression = expression
 
-    def __repr__(self):
-        return f"VarDec {self.type} {self.name} {self.expression}"
 
 
 class UnOp:
     def __init__(self, op, a):
         self.a = a
         self.op = op
-
-    def __repr__(self):
-        return f"UnOp {self.op} ({self.a})"
 
 
 class BinOp:
@@ -43,10 +35,21 @@ class BinOp:
         self.b = b
         self.op = op
 
-    def __repr__(self):
-        return f"{self.a}\n{self.b}\n{self.op}"
+    # def __repr__(self):
+    #     return f"{self.a}\n{self.b}\n{self.op}"
+
 
 class Type:
     def __init__(self, type, pointer_amount):
         self.type = type
         self.pointer_amount = pointer_amount
+
+
+class Parameter:
+    def __init__(self, type, identifier):
+        self.type = type
+        self.identifier = identifier
+
+class Constant:
+    def __init__(self, value):
+        self.value = value

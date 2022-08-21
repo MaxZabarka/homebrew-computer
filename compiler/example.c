@@ -1,15 +1,12 @@
 
-// int b = 5;
+int b = 5;
+int* a;
+
 // int b;
-int main(int a, int b)
+int main(int param1, int param2)
 {
-    // int test;
-    // int test = 3;
-    // 5+5;
-    // (1+2*3);
-    // 1+2-3;
-    ((1+4)*4+5*5-3); // 42
-    // (0);
+    int test = ~(1+2*3-(9+5));
+
 }
 // void a;
 // void test() {}

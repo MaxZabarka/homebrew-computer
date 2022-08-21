@@ -42,7 +42,7 @@ class Tokenizer:
                         elif (token.isidentifier()):
                             self.tokens.append((token, "identifier"))
                             token = ""
-                        elif (helpers.parse_number(token)):
+                        elif (not helpers.parse_number(token) is False):
                             self.tokens.append((token, "constant"))
                             token = ""
                         elif token.isspace():
@@ -276,4 +276,4 @@ class Assembler:
         self.tokenizer.advance()
 
 
-Assembler("symbols.zab")
+Assembler("mult.zab")
