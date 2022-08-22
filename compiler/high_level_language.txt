@@ -24,6 +24,7 @@ functionName: identifier
 typeName: identifier
 
 typeDefinition: 'typedef' type typeName
+ifStatement 'if' expression statements ('else' 'if' expression statements)* ('else' expression statements)?
 
 
 features:

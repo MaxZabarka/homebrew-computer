@@ -15,3 +15,16 @@ def remove_comments(string):
         else:  # otherwise, we will return the 1st group
             return match.group(1)  # captured quoted-string
     return regex.sub(_replacer, string)
+
+def parse_number(number):
+    try:
+        if (number.lower().startswith("0x")):
+            return int(number[2:], 16)
+        elif (number.lower().startswith("0b")):
+            return int(number[2:], 2)
+        elif (number.isnumeric()):
+            return int(number)
+        else:
+            return False
+    except:
+        return False

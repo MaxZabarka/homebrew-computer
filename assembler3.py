@@ -1,8 +1,9 @@
+#!/usr/bin/env python3.10
+
 import tempfile
 import os
 from constants import ENABLES, JUMPS, LOADS, JUMP_NAMES
 import helpers
-
 # Reverse keys and values
 ENABLES = {v: k for k, v in ENABLES.items()}
 LOADS = {v: k for k, v in LOADS.items()}
@@ -122,6 +123,15 @@ class Assembler:
         self.output = "v3.0 hex words plain\n"
         while self.tokenizer.has_more_tokens():
             self.assemble_instruction()
+        self.symbol_table["STACK_POINTER_LOW"] = 0 + self.origin
+        self.symbol_table["STACK_POINTER_HIGH"] = 1 + self.origin
+
+        self.symbol_table["LOCAL_LOW"] = 2 + self.origin
+        self.symbol_table["LOCAL_HIGH"] = 3 + self.origin
+
+        self.symbol_table["ARGUMEN_LOW"] = 4 + self.origin
+        self.symbol_table["ARGUMENT_HIGH"] = 5 + self.origin
+
 
     def assemble_instruction(self):
         self.compiled_instruction = list("0"*16)
@@ -208,7 +218,7 @@ class Assembler:
                 self.tokenizer.advance()
                 if (self.tokenizer.future_token_value() == "l"):
                     self.compiled_instruction[8:16] = low_byte
-                elif (self.tokenizer.future_token_value() == "r"):
+                elif (self.tokenizer.future_token_value() == "h"):
                     self.compiled_instruction[8:16] = high_byte
                 else:
                     raise Exception("Unexpected token: " +
@@ -276,4 +286,4 @@ class Assembler:
         self.tokenizer.advance()
 
 
-Assembler("mult.zab")
+Assembler("source.zab")

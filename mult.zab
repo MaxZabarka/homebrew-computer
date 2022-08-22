@@ -1,3 +1,4 @@
+#origin 0x8000
 // Load values 5 and 4 into RAM
 AHigh = 128
 ALow = 0 // x
