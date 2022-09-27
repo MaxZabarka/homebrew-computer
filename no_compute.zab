@@ -1,0 +1,23 @@
+AHigh = 85
+ALow = AHigh
+B = ALow
+C = B
+
+// RAM[0], RAM[1] = 1, 2
+AHigh = 128
+ALow = 0
+RAM = 1
+ALow = 1
+RAM = 2
+
+// VRAM[0], VRAM[1] = 3, 4
+AHigh = 16
+ALow = 0
+RAM = 3
+ALow = 1
+RAM = 4
+
+// ROM[0] = 170
+// ERROR!
+AHigh = 0
+RAM = 170

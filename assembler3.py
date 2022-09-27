@@ -129,7 +129,7 @@ class Assembler:
         self.symbol_table["LOCAL_LOW"] = 2 + self.origin
         self.symbol_table["LOCAL_HIGH"] = 3 + self.origin
 
-        self.symbol_table["ARGUMEN_LOW"] = 4 + self.origin
+        self.symbol_table["ARGUMENT_LOW"] = 4 + self.origin
         self.symbol_table["ARGUMENT_HIGH"] = 5 + self.origin
 
 
@@ -286,4 +286,4 @@ class Assembler:
         self.tokenizer.advance()
 
 
-Assembler("source.zab")
+Assembler("no_compute.zab")
