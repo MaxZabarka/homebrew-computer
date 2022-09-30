@@ -42,7 +42,7 @@
   <lib desc="#BFH-Praktika" name="9"/>
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
-  <lib desc="file#..\..\Downloads\logi7400dip.circ" name="12"/>
+  <lib desc="file#../../Downloads/logi7400-master/logi7400dip.circ" name="12"/>
   <main name="main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -7439,14 +7439,8 @@ beffd b6ffe 6dfff 7efff beffd b6ffe 6dfff 7efff
       <a name="addrWidth" val="15"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 15 8
-1c 80 2c 0 5c 5 2c 1
-5c 4 2c 2 5c 0 2c 3
-5c 0 1c 80 1c 80 2c 0
-3a 0 2c 3 4a 0 d0 98
-2c 2 3a 0 d0 0 2c 1
-3a 0 2c 2 4a 0 1c 0
-2c 58 83 60 1c 0 2c 12
-88
+3c 0 4c 1 b0 98 c0 98
+2c 2 88
 </a>
     </comp>
     <wire from="(290,340)" to="(430,340)"/>

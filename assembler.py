@@ -4,6 +4,9 @@ import tempfile
 import os
 from constants import ENABLES, JUMPS, LOADS, JUMP_NAMES
 import helpers
+import check_file
+import argparse
+
 # Reverse keys and values
 ENABLES = {v: k for k, v in ENABLES.items()}
 LOADS = {v: k for k, v in LOADS.items()}
@@ -82,10 +85,13 @@ class Tokenizer:
 
 
 class Assembler:
-    def __init__(self, input_file):
+    def __init__(self, input_file, logisim_format=False):
         self.tokenizer = Tokenizer(input_file)
+        self.input_file = input_file
+        self.logisim_format = logisim_format
         self.symbol_table = {}
         self.current_byte = 0
+        
         # assemble everything twice to build symbol table lol
         self.step = 0
         self.assemble()
@@ -95,8 +101,16 @@ class Assembler:
 
     def write_to_file(self):
         print(self.symbol_table)
-        with open("bootloader.txt", "w") as file:
-            file.write(self.output)
+        if (self.logisim_format):
+            with open(os.path.splitext(self.input_file)[0]+'.txt', "w") as file:
+                file.write("v3.0 hex words plain\n")
+                file.write(self.output)
+        else:
+            with open(os.path.splitext(self.input_file)[0]+".bin", "wb") as file:
+                for hex_byte in self.output.strip().split(" "):
+                    print(hex_byte)
+                    # print(int(hex_byte, 16).to_bytes(1, byteorder="little"))
+                    file.write(int(hex_byte, 16).to_bytes(1, byteorder="little"))
 
     def write_instruction(self, bits):
         if len(bits) == 8:
@@ -120,7 +134,8 @@ class Assembler:
     def assemble(self):
         self.origin = 0
         self.tokenizer.current_token = 0
-        self.output = "v3.0 hex words plain\n"
+        self.output = ""
+        # self.output = "v3.0 hex words plain\n"
         while self.tokenizer.has_more_tokens():
             self.assemble_instruction()
         self.symbol_table["STACK_POINTER_LOW"] = 0 + self.origin
@@ -129,15 +144,14 @@ class Assembler:
         self.symbol_table["LOCAL_LOW"] = 2 + self.origin
         self.symbol_table["LOCAL_HIGH"] = 3 + self.origin
 
-        self.symbol_table["ARGUMENT_LOW"] = 4 + self.origin
+        self.symbol_table["ARGUMEN_LOW"] = 4 + self.origin
         self.symbol_table["ARGUMENT_HIGH"] = 5 + self.origin
-
 
     def assemble_instruction(self):
         self.compiled_instruction = list("0"*16)
 
         if (self.tokenizer.token_type() == "keyword" and
-                self.tokenizer.token_value() in LOADS
+            self.tokenizer.token_value() in LOADS
             ):
             if self.tokenizer.future_token_value(2) != "(":
                 self.assemble_move()
@@ -153,7 +167,7 @@ class Assembler:
               self.tokenizer.token_value() in JUMP_NAMES):
             self.assemble_jump()
         elif (self.tokenizer.token_type() == "keyword" and
-         self.tokenizer.token_value() == "#origin"):
+              self.tokenizer.token_value() == "#origin"):
             self.assemble_origin()
             return
         elif self.tokenizer.token_value() == "(":
@@ -209,7 +223,7 @@ class Assembler:
 
             else:
                 self.compiled_instruction[4:7] = ENABLES["IRHigh"]
-                symbol_value = self.symbol_table[self.tokenizer.token_value()] 
+                symbol_value = self.symbol_table[self.tokenizer.token_value()]
                 high_byte = bin(symbol_value & 0xFF00)[2:].zfill(8)
                 low_byte = bin(symbol_value & 0x00FF)[2:].zfill(8)
                 if (self.tokenizer.future_token_value() != "."):
@@ -234,8 +248,6 @@ class Assembler:
             self.tokenizer.token_value()))[2:].zfill(8)
         self.compiled_instruction = binary_value
         self.tokenizer.advance()
-
-
 
     def assemble_compute(self):
         self.compiled_instruction[0] = "1"
@@ -286,4 +298,14 @@ class Assembler:
         self.tokenizer.advance()
 
 
-Assembler("no_compute.zab")
+parser = argparse.ArgumentParser(
+    description="Assemble a source file into machine code")
+
+parser.add_argument("file", help="The source file to assemble")
+parser.add_argument('-l', '--logisim', action='store_true',
+                    help="Assemble into a format compatible with Logisim")
+
+args = parser.parse_args()
+
+file_name = check_file.check_file(args.file)
+Assembler(file_name, args.logisim)

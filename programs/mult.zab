@@ -2,9 +2,9 @@
 // Load values 5 and 4 into RAM
 AHigh = 128
 ALow = 0 // x
-RAM = 5
+RAM = 30
 ALow = 1 // y
-RAM = 4
+RAM = 5
 ALow = 2 // i
 RAM = 0
 ALow = 3 // p
@@ -32,7 +32,6 @@ ALow = 2
 B = RAM
 RAM = (B+1)
 
-
 /*   If (y-i == 0) goto end */
 // B = y
 ALow = 1
@@ -44,11 +43,16 @@ C = RAM
 
 
 AHigh = 0
-ALow = 88 // END
+ALow = end.l // END
 (B-C), JEQ
 
 
 // goto start
 AHigh = 0
 ALow = start.l
+JMP
+
+end:
+AHigh = 0
+ALow = end.l
 JMP

@@ -1,0 +1,11 @@
+.Paper {
+    border-radius: 5px;
+    padding: 1rem;
+    background: #454545;
+    display: inline-block;
+    .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+}

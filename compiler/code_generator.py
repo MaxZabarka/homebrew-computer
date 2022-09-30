@@ -183,6 +183,7 @@ class CodeGenerator:
 
     def SET_A_TO_ADDRESS_OF_SP_LOW(self):
         instructions = ["// Set A to to SP_LOW"]
+        instructions.append("#origin 0x8000")
         instructions.append("AHigh = STACK_POINTER_LOW.h")
         instructions.append("ALow = STACK_POINTER_LOW.l")
         return instructions
