@@ -1,21 +1,20 @@
-// init
-// Set A to to SP_LOW
+// init (Stack starts at 0x8009)
 #origin 0x8000
+// Set A to to &SP_LOW
 AHigh = STACK_POINTER_LOW.h
 ALow = STACK_POINTER_LOW.l
-RAM = 3
-// Set A to to SP_LOW
+RAM = 9    
+// Set A to &SP_HIGH
 AHigh = STACK_POINTER_HIGH.h
 ALow = STACK_POINTER_HIGH.l
 RAM = 128
 main:
-// Set A to to SP_LOW
-#origin 0x8000
-AHigh = STACK_POINTER_LOW.h
-ALow = STACK_POINTER_LOW.l
-B = RAM
-C = 0
-RAM = (B+C)
+// generate bin operation
+// generate bin operation
+// generate bin operation
+// generate bin operation
+// generate bin operation
+// generate bin operation
 // generate bin operation
 // generate constant
 // point A to top of stack
@@ -26,9 +25,8 @@ AHigh = STACK_POINTER_HIGH.h
 ALow = STACK_POINTER_HIGH.l
 AHigh = RAM
 ALow = B
-RAM = 15
-// Set A to to SP_LOW
-#origin 0x8000
+RAM = 10
+// Set A to to &SP_LOW
 AHigh = STACK_POINTER_LOW.h
 ALow = STACK_POINTER_LOW.l
 B = RAM
@@ -42,33 +40,399 @@ AHigh = STACK_POINTER_HIGH.h
 ALow = STACK_POINTER_HIGH.l
 AHigh = RAM
 ALow = B
-RAM = 30
-// Set A to to SP_LOW
-#origin 0x8000
+RAM = 7
+// Set A to to &SP_LOW
 AHigh = STACK_POINTER_LOW.h
 ALow = STACK_POINTER_LOW.l
 B = RAM
 RAM = (B+1)
 // gen bin operator
-// Set A to to SP_LOW
-#origin 0x8000
+// Set A to to &SP_LOW
 AHigh = STACK_POINTER_LOW.h
 ALow = STACK_POINTER_LOW.l
 B = RAM
-C = 2
-RAM = (B-C)
-B = RAM
-// Set A to to SP_LOW
-#origin 0x8000
+RAM = (B-1)
+// point A to top of stack
 AHigh = STACK_POINTER_LOW.h
 ALow = STACK_POINTER_LOW.l
 B = RAM
-RAM = (B+1)
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
 C = RAM
-// Set A to to SP_LOW
-#origin 0x8000
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
+RAM = (B-C)
+// Set A to to &SP_LOW
 AHigh = STACK_POINTER_LOW.h
 ALow = STACK_POINTER_LOW.l
 B = RAM
 RAM = (B+1)
+// generate constant
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+RAM = 3
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// gen bin operator
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+C = RAM
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
 RAM = (B+C)
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// generate bin operation
+// generate constant
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+RAM = 4
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// generate constant
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+RAM = 1
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// gen bin operator
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+C = RAM
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
+RAM = (B-C)
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// gen bin operator
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+C = RAM
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
+RAM = (B+C)
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// generate constant
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+RAM = 1
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// gen bin operator
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+C = RAM
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
+RAM = (B-C)
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// generate constant
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+RAM = 1
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// gen bin operator
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+C = RAM
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
+RAM = (B+C)
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// generate constant
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+RAM = 3
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// gen bin operator
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+C = RAM
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
+RAM = (B+C)
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// generate constant
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+RAM = 1
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+// gen bin operator
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+C = RAM
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B-1)
+// point A to top of stack
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+AHigh = STACK_POINTER_HIGH.h
+ALow = STACK_POINTER_HIGH.l
+AHigh = RAM
+ALow = B
+B = RAM
+RAM = (B-C)
+// Set A to to &SP_LOW
+AHigh = STACK_POINTER_LOW.h
+ALow = STACK_POINTER_LOW.l
+B = RAM
+RAM = (B+1)
+halt:
+AHigh = 2
+ALow = halt.l
+JMP

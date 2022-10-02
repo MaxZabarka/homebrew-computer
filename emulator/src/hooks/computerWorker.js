@@ -2,7 +2,7 @@ const Computer = require("../core/Computer");
 
 let computer = new Computer();
 
-postMessage(computer)
+postMessage(computer);
 
 onmessage = (e) => {
   const data = e.data;
@@ -15,7 +15,12 @@ onmessage = (e) => {
     e.data.shouldRun[0] = 1;
 
     while (e.data.shouldRun[0]) {
-      computer.clock();
+      try {
+        computer.clock();
+      } catch (e) {
+        console.log(e);
+        break
+      }
     }
     postMessage(computer);
   }
@@ -31,13 +36,13 @@ onmessage = (e) => {
     postMessage(computer);
   }
   if (action === "reset") {
-    const newComputer = new Computer();
-    newComputer.memory.ROM = computer.memory.ROM;
-    postMessage(newComputer);
+    const ROM = computer.memory.ROM
+    computer = new Computer();
+    computer.loadROM(ROM);
+    postMessage(computer);
   }
 
   if (action === "get") {
     postMessage(computer);
-
   }
 };

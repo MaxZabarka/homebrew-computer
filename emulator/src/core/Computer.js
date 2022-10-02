@@ -7,17 +7,16 @@ const {
 } = require("./constants");
 const ALUCircuit = require("./ALUCircuit");
 const { toBinary } = require("../lib/toBinary");
-const START_ROM = 0x0;
-const ROM_SIZE = 0x400;
-
-const START_VRAM = 0x1000;
-const VRAM_SIZE = 0x1000;
-
-const START_RAM = 0x8000;
-const RAM_SIZE = 0x8000;
-
 
 class Computer {
+  static STACK_START = 0x9;
+  static START_RAM = 0x8000;
+  static RAM_SIZE = 0x8000;
+  static START_ROM = 0x0;
+  static ROM_SIZE = 0x400;
+  static START_VRAM = 0x1000;
+  static VRAM_SIZE = 0x1000;
+
   constructor() {
     this.programCounter = 0;
     this.registers = {
@@ -76,7 +75,7 @@ class Computer {
       }
 
       if (!load && jump) {
-        return `(${computation}), ${jump}`
+        return `(${computation}), ${jump}`;
       }
 
       return highByte + " " + lowByte;
@@ -91,33 +90,33 @@ class Computer {
   // }
 
   writeMemory(address, data) {
-    if (address >= START_ROM && address < START_ROM + ROM_SIZE) {
+    if (address >= Computer.START_ROM && address < Computer.START_ROM + Computer.ROM_SIZE) {
       throw Error("Cannot write to ROM");
     }
 
-    if (address >= START_RAM && address < START_RAM + RAM_SIZE) {
-      this.memory.RAM[address - START_RAM] = data;
+    if (address >= Computer.START_RAM && address < Computer.START_RAM + Computer.RAM_SIZE) {
+      this.memory.RAM[address - Computer.START_RAM] = data;
       return;
     }
 
-    if (address >= START_VRAM && address < START_VRAM + VRAM_SIZE) {
-      this.memory.VRAM[address - START_VRAM] = data;
+    if (address >= Computer.START_VRAM && address < Computer.START_VRAM + Computer.VRAM_SIZE) {
+      this.memory.VRAM[address - Computer.START_VRAM] = data;
       return;
     }
     throw Error("Memory location does not exist");
   }
 
   readMemory(address) {
-    if (address >= START_ROM && address < START_ROM + ROM_SIZE) {
-      return this.memory.ROM[address - START_ROM];
+    if (address >= Computer.START_ROM && address < Computer.START_ROM + Computer.ROM_SIZE) {
+      return this.memory.ROM[address - Computer.START_ROM];
     }
 
-    if (address >= START_RAM && address < START_RAM + RAM_SIZE) {
-      return this.memory.RAM[address - START_RAM];
+    if (address >= Computer.START_RAM && address < Computer.START_RAM + Computer.RAM_SIZE) {
+      return this.memory.RAM[address - Computer.START_RAM];
     }
 
-    if (address >= START_VRAM && address < START_VRAM + VRAM_SIZE) {
-      return this.memory.VRAM[address - START_VRAM];
+    if (address >= Computer.START_VRAM && address < Computer.START_VRAM + Computer.VRAM_SIZE) {
+      return this.memory.VRAM[address - Computer.START_VRAM];
     }
     throw Error("Memory location does not exist");
   }

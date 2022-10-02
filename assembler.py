@@ -138,13 +138,12 @@ class Assembler:
         # self.output = "v3.0 hex words plain\n"
         while self.tokenizer.has_more_tokens():
             self.assemble_instruction()
-        self.symbol_table["STACK_POINTER_LOW"] = 0 + self.origin
-        self.symbol_table["STACK_POINTER_HIGH"] = 1 + self.origin
+        self.symbol_table["STACK_POINTER"] = 0 + self.origin
 
         self.symbol_table["LOCAL_LOW"] = 2 + self.origin
         self.symbol_table["LOCAL_HIGH"] = 3 + self.origin
 
-        self.symbol_table["ARGUMEN_LOW"] = 4 + self.origin
+        self.symbol_table["ARGUMENT_LOW"] = 4 + self.origin
         self.symbol_table["ARGUMENT_HIGH"] = 5 + self.origin
 
     def assemble_instruction(self):

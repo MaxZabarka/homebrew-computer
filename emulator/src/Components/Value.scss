@@ -8,10 +8,13 @@
     display: flex;
     gap: 1rem;
     & > div {
+      width: 7rem;
+      &.binary {
+        width: 12rem;
+      }
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
-      width: 7rem;
       .label {
         opacity: 0.7;
       }

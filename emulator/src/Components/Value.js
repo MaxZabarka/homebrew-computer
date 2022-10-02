@@ -3,7 +3,7 @@ import { toBinary } from "../lib/toBinary";
 import "./Value.scss";
 
 const Value = (props) => {
-  const binary = toBinary(props.value);
+  const binary = toBinary(props.value, 16);
   const hex = props.value.toString(16);
 
   return (
@@ -14,7 +14,7 @@ const Value = (props) => {
           <p className="label">Decimal</p>
           <p className="num">{props.value}</p>
         </div>
-        <div>
+        <div className="binary">
           <p className="label">Binary</p>
           <p className="num">{binary}</p>
         </div>

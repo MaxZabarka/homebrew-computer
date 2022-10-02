@@ -1,0 +1,30 @@
+Max stack size will be 256 to avoid having to handle overflow of stack pointer 
+Or add option to carry stack pointer to have a larger stack (see carry.zab)
+
+
+Stack pointer low = RAM[0]
+Stack pointer high = 128
+
+argument pointer low = RAM[2]
+arugment pointer high = RAM[3]
+
+local pointer low = RAM[4]
+local pointer high = RAM[5]
+
+PUSH CONSTANT
+push constant x
+
+BINARY OPERATON
+<op> (eg. add)
+
+UNARY OPERATION
+<op> (eg. neg)
+
+FUNCTION CALL
+call <function> <# of args>
+
+FUNCTION DECLARATION
+def <function> <#of local vars>
+
+RETURN
+return

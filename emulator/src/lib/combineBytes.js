@@ -1,1 +1,1 @@
-export const combineBytes = (highByte, lowByte) => (highByte << 4) + lowByte;
+export const combineBytes = (highByte, lowByte, size=8) => (highByte << size) + lowByte;

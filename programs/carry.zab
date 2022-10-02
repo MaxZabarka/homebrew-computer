@@ -1,0 +1,27 @@
+// Only use if stack needs to be more than 256 (unlikely)
+
+ALow = STACK_POINTER_LOW.l
+AHigh = STACK_POINTER_LOW.h
+RAM = 253
+#origin 0x8000
+start:
+// Incrementing stack pointer
+ALow = STACK_POINTER_LOW.l
+AHigh = STACK_POINTER_LOW.h
+B = RAM
+C = (B+1)
+ALow = STACK_POINTER_LOW.l
+AHigh = STACK_POINTER_LOW.h
+RAM = C
+ALow = nocarry.l
+AHigh = 0
+(B+1), JNC
+// if there is a carry
+ALow = STACK_POINTER_HIGH.l
+AHigh = STACK_POINTER_HIGH.h
+B = RAM
+RAM = (B+1)
+nocarry:
+ALow = start.l
+AHigh = 0
+JMP

@@ -1,0 +1,32 @@
+// Pushing constant 55
+A = SP
+RAM = 55
+A = SPP
+RAM++
+
+// Incrementing stack pointer
+ALow = STACK_POINTER_LOW.l
+AHigh = STACK_POINTER_LOW.h
+B = RAM
+ALow = nocarry.l
+AHigh = nocarry.h
+C = (B+1), JNC
+// if there is a carry
+ALow = STACK_POINTER_LOW.l
+AHigh = STACK_POINTER_LOW.h
+RAM = C
+ALow = STACK_POINTER_HIGH.l
+AHigh = STACK_POINTER_HIGH.h
+B = RAM
+RAM = (B+1)
+nocarry:
+ALow = STACK_POINTER_LOW.l
+AHigh = STACK_POINTER_LOW.h
+RAM = C
+
+ALow: 1
+AHigh: 128
+B: 5
+C: 0
+RAM[0] = 0
+RAM[1] = 6

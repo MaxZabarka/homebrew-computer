@@ -1,6 +1,5 @@
 import re
 
-
 def remove_comments(string):
     pattern = r"(\".*?\"|\'.*?\')|(/\*.*?\*/|//[^\r\n]*$)"
     # first group captures quoted strings (double or single)

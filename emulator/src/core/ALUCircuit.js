@@ -106,7 +106,7 @@ const ALUCircuit = (a, b, controlBits) => {
   
   return {
     result,
-    carryOut: high181Output.carryOut,
+    carryOut: !high181Output.carryOut,
     negative: !!(high181Output & 0b1000),
     zero: result === 0,
   };

@@ -20,12 +20,11 @@ export const useComputerWorker = ({ ROM, onChange }) => {
     );
 
     workerRef.current.onmessage = (e) => {
-      const newComputer = e.data;
+      const newComputer = { ...e.data };
       Object.setPrototypeOf(newComputer, Computer.prototype);
       onChange(newComputer);
     };
   }, [onChange, ROM]);
-
 
   const run = () => {
     workerRef.current.postMessage({

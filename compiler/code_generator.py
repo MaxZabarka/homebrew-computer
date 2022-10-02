@@ -11,7 +11,6 @@ class CodeGenerator:
         self.global_var_symbol_table = {}
         self.function_symbol_table = {}
         self.instructions = []
-        self.stack_pointer_valid = False
 
     def generate(self):
         instructions = []
@@ -20,8 +19,10 @@ class CodeGenerator:
             if isinstance(child, FunctionDec):
                 instructions += self.generate_function_dec(child)
         print(self.function_symbol_table)
+        instructions += self.generate_halt()
         for instruction in instructions:
             print(instruction)
+        
         self.write_file(instructions)
 
     def write_file(self, instructions):
@@ -31,6 +32,10 @@ class CodeGenerator:
 
     def generate_file_var_dec(self):
         pass
+
+    def generate_halt(self):
+        # TODO set back to 0
+        return ["halt:", "AHigh = 2", "ALow = halt.l", "JMP"]
 
     def generate_statement(self, statement, local_symbol_table):
         if isinstance(statement, VarDec):
@@ -53,10 +58,11 @@ class CodeGenerator:
         return ["// generate constant"] + self.PUSH_CONSTANT(constant.value)
 
     def generate_init(self):
-        instructions = ["// init"]
-        instructions += self.SET_A_TO_ADDRESS_OF_SP_LOW()
-        instructions.append("RAM = 3")
-        instructions += self.SET_A_TO_ADDRESS_OF_SP_HIGH()
+        instructions = ["// init (Stack starts at 0x8009)"]
+        instructions.append("#origin 0x8000")
+        instructions += self.SET_A_TO_ADDRESS_OF_SPP_LOW()
+        instructions.append("RAM = 9    ")
+        instructions += self.SET_A_TO_ADDRESS_OF_SPP_HIGH()
         instructions.append("RAM = 128")
         return instructions
 
@@ -71,15 +77,22 @@ class CodeGenerator:
     def generate_bin_operator(self, operator):
         instructions = ["// gen bin operator"]
 
-        instructions += self.SUBTRACT_FROM_STACK_POINTER(2)
-        instructions.append("B = RAM")
-        instructions += self.INCREMENT_STACK_POINTER()
+        instructions += self.DECREMENT_STACK_POINTER()
+        instructions += self.POINT_A_TO_TOP_OF_STACK()
         instructions.append("C = RAM")
-        instructions += self.INCREMENT_STACK_POINTER()
+        instructions += self.DECREMENT_STACK_POINTER()
+        instructions += self.POINT_A_TO_TOP_OF_STACK()
+        instructions.append("B = RAM")
+
         if operator == "ADD":
             instructions.append("RAM = (B+C)")
+        elif operator == "SUBTRACT":
+            instructions.append("RAM = (B-C)")
         else:
-            raise NotImplementedError
+            raise NotImplementedError(operator)
+        
+        instructions += self.INCREMENT_STACK_POINTER()
+
         return instructions
 
     def generate_local_var_dec(self, var_dec, local_symbol_table):
@@ -110,11 +123,11 @@ class CodeGenerator:
         }
 
         print(local_symbol_table)
-        self.stack_pointer_valid = False
-        instructions += self.ADD_TO_STACK_POINTER(
-            local_symbol_table["$local_variables"]
-        )
-        self.stack_pointer_valid = False
+        # self.stack_pointer_valid = False
+        # instructions += self.ADD_TO_STACK_POINTER(
+        #     local_symbol_table["$local_variables"]
+        # )
+        # self.stack_pointer_valid = False
         instructions += statement_instructions
         return instructions
 
@@ -132,19 +145,29 @@ class CodeGenerator:
         instructions = []
 
         # increment first byte
-        instructions += self.SET_A_TO_ADDRESS_OF_SP_LOW()
+        instructions += self.SET_A_TO_ADDRESS_OF_SPP_LOW()
         instructions.append("B = RAM")
         instructions.append("RAM = (B+1)")
 
         return instructions
+        # TODO increment second byte if carry
 
+    def DECREMENT_STACK_POINTER(self):
+        instructions = []
+
+        # increment first byte
+        instructions += self.SET_A_TO_ADDRESS_OF_SPP_LOW()
+        instructions.append("B = RAM")
+        instructions.append("RAM = (B-1)")
+
+        return instructions
         # TODO increment second byte if carry
 
     def ADD_TO_STACK_POINTER(self, n):
         instructions = []
 
         # increment first byte
-        instructions += self.SET_A_TO_ADDRESS_OF_SP_LOW()
+        instructions += self.SET_A_TO_ADDRESS_OF_SPP_LOW()
         instructions.append("B = RAM")
         instructions.append(f"C = {n}")
         instructions.append("RAM = (B+C)")
@@ -156,7 +179,7 @@ class CodeGenerator:
         instructions = []
 
         # increment first byte
-        instructions += self.SET_A_TO_ADDRESS_OF_SP_LOW()
+        instructions += self.SET_A_TO_ADDRESS_OF_SPP_LOW()
         instructions.append("B = RAM")
         instructions.append(f"C = {n}")
         instructions.append("RAM = (B-C)")
@@ -166,30 +189,28 @@ class CodeGenerator:
 
     def POINT_A_TO_TOP_OF_STACK(self):
         instructions = []
-        if not self.stack_pointer_valid:
-            # ALow = *SP.l
-            # AHigh = *SP.h
-            instructions.append("// point A to top of stack")
-            instructions.append("AHigh = STACK_POINTER_LOW.h")
-            instructions.append("ALow = STACK_POINTER_LOW.l")
-            instructions.append("B = RAM")
-            instructions.append("AHigh = STACK_POINTER_HIGH.h")
-            instructions.append("ALow = STACK_POINTER_HIGH.l")
-            instructions.append("AHigh = RAM")
-            instructions.append("ALow = B")
+        # ALow = *SP.l
+        # AHigh = *SP.h
+        instructions.append("// point A to top of stack")
+        instructions.append("AHigh = STACK_POINTER_LOW.h")
+        instructions.append("ALow = STACK_POINTER_LOW.l")
+        instructions.append("B = RAM")
+        instructions.append("AHigh = STACK_POINTER_HIGH.h")
+        instructions.append("ALow = STACK_POINTER_HIGH.l")
+        instructions.append("AHigh = RAM")
+        instructions.append("ALow = B")
 
-            # self.stack_pointer_valid = True
+        # self.stack_pointer_valid = True
         return instructions
 
-    def SET_A_TO_ADDRESS_OF_SP_LOW(self):
-        instructions = ["// Set A to to SP_LOW"]
-        instructions.append("#origin 0x8000")
+    def SET_A_TO_ADDRESS_OF_SPP_LOW(self):
+        instructions = ["// Set A to to &SP_LOW"]
         instructions.append("AHigh = STACK_POINTER_LOW.h")
         instructions.append("ALow = STACK_POINTER_LOW.l")
         return instructions
 
-    def SET_A_TO_ADDRESS_OF_SP_HIGH(self):
-        instructions = ["// Set A to to SP_LOW"]
+    def SET_A_TO_ADDRESS_OF_SPP_HIGH(self):
+        instructions = ["// Set A to &SP_HIGH"]
         instructions.append("AHigh = STACK_POINTER_HIGH.h")
         instructions.append("ALow = STACK_POINTER_HIGH.l")
         return instructions
@@ -204,3 +225,4 @@ if __name__ == "__main__":
     code_generator.generate()
 
 # TODO Cannot use B or C to store registers inbetween operations. Need to create another physical register to be able to move data around better
+# SP Point to topmost element or next free one?
