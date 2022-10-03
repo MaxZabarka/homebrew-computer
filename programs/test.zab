@@ -1,0 +1,10 @@
+#origin 0x8000
+halt2:
+ALow = halt2.l
+AHigh = halt2.h
+
+#origin 0
+halt:
+ALow = halt.l
+AHigh = halt.h
+#origin 0x8000

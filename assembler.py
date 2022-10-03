@@ -18,7 +18,7 @@ EXPRESSIONS = {
     "B-1": "111110",
     "B+1": "000000",
     "B-C": "011000",
-    "B-C-1": "011010"
+    "B-C-1": "011010",
 }
 
 
@@ -132,19 +132,20 @@ class Assembler:
             self.output += hex(int(high_byte, 2))[2:].zfill(2) + " "
 
     def assemble(self):
+        self.origin_set = False
         self.origin = 0
         self.tokenizer.current_token = 0
         self.output = ""
-        # self.output = "v3.0 hex words plain\n"
+
+        self.symbol_table["STACK_POINTER"] = 0
+
+        self.symbol_table["LOCAL_LOW"] = 2
+        self.symbol_table["LOCAL_HIGH"] = 3
+
+        self.symbol_table["ARGUMENT_LOW"] = 4
+        self.symbol_table["ARGUMENT_HIGH"] = 5
         while self.tokenizer.has_more_tokens():
             self.assemble_instruction()
-        self.symbol_table["STACK_POINTER"] = 0 + self.origin
-
-        self.symbol_table["LOCAL_LOW"] = 2 + self.origin
-        self.symbol_table["LOCAL_HIGH"] = 3 + self.origin
-
-        self.symbol_table["ARGUMENT_LOW"] = 4 + self.origin
-        self.symbol_table["ARGUMENT_HIGH"] = 5 + self.origin
 
     def assemble_instruction(self):
         self.compiled_instruction = list("0"*16)
@@ -193,6 +194,15 @@ class Assembler:
             raise Exception("Unexpected token: " +
                             self.tokenizer.token_value())
         self.origin = helpers.parse_number(self.tokenizer.token_value())
+        if (not self.origin_set):
+            self.symbol_table["STACK_POINTER"] += self.origin
+
+            self.symbol_table["LOCAL_LOW"] += self.origin
+            self.symbol_table["LOCAL_HIGH"] += self.origin
+
+            self.symbol_table["ARGUMENT_LOW"] += self.origin
+            self.symbol_table["ARGUMENT_HIGH"] += self.origin
+            self.origin_set = True
         self.tokenizer.advance()
 
     def assemble_move(self):
@@ -223,7 +233,7 @@ class Assembler:
             else:
                 self.compiled_instruction[4:7] = ENABLES["IRHigh"]
                 symbol_value = self.symbol_table[self.tokenizer.token_value()]
-                high_byte = bin(symbol_value & 0xFF00)[2:].zfill(8)
+                high_byte = bin((symbol_value & 0xFF00) >>  8)[2:].zfill(8)
                 low_byte = bin(symbol_value & 0x00FF)[2:].zfill(8)
                 if (self.tokenizer.future_token_value() != "."):
                     raise Exception("Unexpected token: " +

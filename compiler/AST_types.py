@@ -1,3 +1,7 @@
+class Expression:
+    pass
+
+
 class FunctionDec:
     def __init__(self, return_type, name, params, body):
         self.return_type = return_type
@@ -13,7 +17,7 @@ class VarDec:
         self.array_size = array_size
 
 
-class IntegerConstant:
+class IntegerConstant(Expression):
     def __init__(self, value):
         self.value = int(value)
 
@@ -24,7 +28,7 @@ class Assignment:
         self.source = source
 
 
-class UnOp:
+class UnOp(Expression):
     def __init__(self, op, a):
         self.a = a
         self.op = op
@@ -42,7 +46,7 @@ class CondBlock:
         self.body = body
 
 
-class BinOp:
+class BinOp(Expression):
     def __init__(self, op, a, b):
         self.a = a
         self.b = b
@@ -61,6 +65,7 @@ class Type:
     def __init__(self, type, pointer_amount):
         self.type = type
         self.pointer_amount = pointer_amount
+
     def __repr__(self):
         return f"<Type: {self.type}{'*'*self.pointer_amount}>"
 
@@ -71,7 +76,7 @@ class Parameter:
         self.identifier = identifier
 
 
-class Constant:
+class Constant(Expression):
     def __init__(self, value):
         self.value = value
 
@@ -81,7 +86,7 @@ class Return:
         self.value = value
 
 
-class FunctionCall:
+class FunctionCall(Expression):
     def __init__(self, name, arguments):
         self.name = name
         self.arguments = arguments

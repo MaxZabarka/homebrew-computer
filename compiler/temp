@@ -1,0 +1,18 @@
+label main
+push constant 10
+push constant 7
+subtract
+push constant 3
+add
+push constant 4
+push constant 1
+subtract
+add
+push constant 1
+subtract
+push constant 1
+add
+push constant 3
+add
+push constant 1
+subtract

@@ -1,3 +1,5 @@
 push constant 5
-push constant 3
+push constant 2
+subtract
+push constant 100
 add

@@ -1,0 +1,5 @@
+function test 1
+function main 1
+push constant 5
+call test 1
+add

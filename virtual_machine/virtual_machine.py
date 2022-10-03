@@ -1,13 +1,11 @@
 #!/usr/bin/env python3.10
-from check_file import check_file
-from helpers import remove_comments
-import argparse
 import sys
 import os
-
-
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
+from helpers import remove_comments
+import argparse
+from check_file import check_file
 
 parser = argparse.ArgumentParser(
     description='Compile a Jack Virtual Machine file into Hack Assembly')
@@ -15,10 +13,14 @@ parser.add_argument(
     "file", help='The virtual machine file or directory to assemble')
 parser.add_argument(
     "-o", "--output", help="Directs the output to a name of your choice")
+parser.add_argument("-r", "--ram", action="store_true", help="Generate code that will run in the memory space of the RAM instead of ROM")
+
 
 args = parser.parse_args()
 
-arithmetic = ["ADD", "SUBTRACT"]
+arithmetic = ["add", "subtract"]
+# operations that the computer can do in one hardware cycle
+built_in_arithmetic = ["add", "subtract"]
 
 
 class Parser:
@@ -53,7 +55,7 @@ class Parser:
 
     def command_type(self):
         command_list = self.current_command.split()
-        if command_list[0].upper() in arithmetic:
+        if command_list[0].lower() in arithmetic:
             return "C_ARITHMETIC"
         elif command_list[0] == "push":
             return "C_PUSH"
@@ -72,10 +74,10 @@ class Parser:
         elif command_list[0] == "function":
             return "C_FUNCTION"
         else:
-            raise NotImplementedError
+            raise NotImplementedError(command_list[0])
 
     def arg1(self):
-        if self.current_command.split()[0].upper() in arithmetic:
+        if self.current_command.split()[0] in arithmetic:
             # Return arithmetic operation
             return self.current_command.split()[0]
         else:
@@ -88,15 +90,49 @@ class Parser:
 
 
 class CodeWriter:
-    def __init__(self, filename):
+    def __init__(self, filename, is_ram=False, origin=0x8000):
         self.filename = filename
         if filename.endswith('.vm'):
             self.filename = filename[:-3]
         self.instructions_list = []
+        self.origin = origin
+        self.write_bootstrap()
         self.id = 0
+        self.is_ram = is_ram
 
     def write_arithmetic(self, op):
-        pass
+        if (op in built_in_arithmetic):
+            self.instructions_list += [
+                "AHigh = STACK_POINTER.h",  # SP--
+                "ALow = STACK_POINTER.l",
+                "B = RAM",
+                "RAM = (B-1)",
+                "ALow = (B-1)",  # C = arg1
+                "AHigh = 128",
+                "C=RAM",
+                "AHigh = STACK_POINTER.h",  # B = arg2
+                "ALow = STACK_POINTER.l",
+                "B = RAM",
+                "ALow = (B-1)",
+                "AHigh = 128",
+                "B = RAM",
+            ]
+            if op == "add":
+                self.instructions_list.append("RAM = (B+C)")
+            elif op == "subtract":
+                self.instructions_list.append("RAM = (B-C)")
+            else:
+                raise NotImplementedError
+        else:
+            raise NotImplementedError
+
+    def write_point_a(self):
+        self.instructions_list += [
+            "AHigh = STACK_POINTER.h",
+            "ALow = STACK_POINTER.l",
+            "AHigh = 128",
+            "ALow = RAM",
+        ]
 
     def write_push_pop(self, command, segment, index):
         if (command == "C_PUSH"):
@@ -108,10 +144,25 @@ class CodeWriter:
 
     def write_push(self, segment, index):
         if (segment == "constant"):
+            self.write_point_a()
             self.instructions_list += [
-                "AHigh = STACK_POINTER",
-                "ALow = S"
+
+                f"RAM={index}"
             ]
+            self.write_increment_sp()
+
+    def write_halt(self):
+        if (not self.is_ram):
+            self.instructions_list.append("#origin 0")
+        self.instructions_list += [
+            "halt:",
+            "AHigh = halt.h",
+            "ALow = halt.l",
+            "JMP"
+        ]
+        if (not self.is_ram):
+            self.instructions_list.append(f"#origin {self.origin}")
+
 
     def write_pop(self, segment, index):
         pass
@@ -135,7 +186,20 @@ class CodeWriter:
         pass
 
     def write_bootstrap(self):
-        pass
+        self.instructions_list += [
+            f"#origin {self.origin}",  # start of ram
+            "AHigh = STACK_POINTER.h",
+            "ALow = STACK_POINTER.l",
+            "RAM=9"  # Default stack pointer
+        ]
+
+    def write_increment_sp(self):
+        self.instructions_list += [
+            "AHigh = STACK_POINTER.h",
+            "ALow = STACK_POINTER.l",
+            "B=RAM",
+            "RAM=(B+1)"
+        ]
 
     def close(self):
         with open(self.filename + ".zab", "w") as f:
@@ -164,11 +228,11 @@ if args.output:
 elif args.file:
     output_filename = args.file
 
-code_writer = CodeWriter(output_filename)
+code_writer = CodeWriter(output_filename, args.ram)
 
 while True:
     if parser.command_type() == "C_ARITHMETIC":
-        code_writer.write_arithmetic(parser.arg1())
+        code_writer.write_arithmetic(parser.arg1().lower())
     elif parser.command_type() in ["C_PUSH", "C_POP"]:
         code_writer.write_push_pop(parser.command_type(),
                                    parser.arg1(),
@@ -189,4 +253,5 @@ while True:
         parser.advance()
     else:
         break
+code_writer.write_halt()
 code_writer.close()
