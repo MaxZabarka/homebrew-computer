@@ -39,6 +39,10 @@ class Computer {
   }
 
   loadROM(bin) {
+    if (bin.length > 1024) {
+      throw Error("ROM too large");
+    }
+
     for (let address = 0; address < bin.length; address++) {
       this.memory.ROM[address] = bin[address];
     }
@@ -90,16 +94,25 @@ class Computer {
   // }
 
   writeMemory(address, data) {
-    if (address >= Computer.START_ROM && address < Computer.START_ROM + Computer.ROM_SIZE) {
+    if (
+      address >= Computer.START_ROM &&
+      address < Computer.START_ROM + Computer.ROM_SIZE
+    ) {
       throw Error("Cannot write to ROM");
     }
 
-    if (address >= Computer.START_RAM && address < Computer.START_RAM + Computer.RAM_SIZE) {
+    if (
+      address >= Computer.START_RAM &&
+      address < Computer.START_RAM + Computer.RAM_SIZE
+    ) {
       this.memory.RAM[address - Computer.START_RAM] = data;
       return;
     }
 
-    if (address >= Computer.START_VRAM && address < Computer.START_VRAM + Computer.VRAM_SIZE) {
+    if (
+      address >= Computer.START_VRAM &&
+      address < Computer.START_VRAM + Computer.VRAM_SIZE
+    ) {
       this.memory.VRAM[address - Computer.START_VRAM] = data;
       return;
     }
@@ -107,15 +120,24 @@ class Computer {
   }
 
   readMemory(address) {
-    if (address >= Computer.START_ROM && address < Computer.START_ROM + Computer.ROM_SIZE) {
+    if (
+      address >= Computer.START_ROM &&
+      address < Computer.START_ROM + Computer.ROM_SIZE
+    ) {
       return this.memory.ROM[address - Computer.START_ROM];
     }
 
-    if (address >= Computer.START_RAM && address < Computer.START_RAM + Computer.RAM_SIZE) {
+    if (
+      address >= Computer.START_RAM &&
+      address < Computer.START_RAM + Computer.RAM_SIZE
+    ) {
       return this.memory.RAM[address - Computer.START_RAM];
     }
 
-    if (address >= Computer.START_VRAM && address < Computer.START_VRAM + Computer.VRAM_SIZE) {
+    if (
+      address >= Computer.START_VRAM &&
+      address < Computer.START_VRAM + Computer.VRAM_SIZE
+    ) {
       return this.memory.VRAM[address - Computer.START_VRAM];
     }
     throw Error("Memory location does not exist");

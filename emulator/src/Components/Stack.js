@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import Computer from "../core/Computer";
-import { combineBytes } from "../lib/combineBytes";
 import { ComputerContext } from "./Emulator";
 
 const Stack = () => {
@@ -8,7 +7,7 @@ const Stack = () => {
   //   console.log('computer.memory.RAM[0],computer.memory.RAM[1]', computer.memory.RAM[0],computer.memory.RAM[1])
   //   return <></>
   const stackItems =
-    combineBytes(computer.memory.RAM[1], computer.memory.RAM[0]) -
+    computer.memory.RAM[0] -
     Computer.START_RAM -
     Computer.STACK_START;
 

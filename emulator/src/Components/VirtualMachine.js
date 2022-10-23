@@ -7,15 +7,15 @@ import Value from "./Value";
 const VirtualMachine = () => {
   const computer = useContext(ComputerContext);
 
-  const stack = combineBytes(computer.memory.RAM[1], computer.memory.RAM[0]);
-  const argument = combineBytes(computer.memory.RAM[3], computer.memory.RAM[2]);
-  const local = combineBytes(computer.memory.RAM[5], computer.memory.RAM[4]);
+  const stack = computer.memory.RAM[0]
+  const local = computer.memory.RAM[1]
+  const argument = computer.memory.RAM[2]
 
   return (
     <Paper title="Virtual Machine">
       <Value title="Stack Pointer" value={stack} />
-      <Value title="Argument Pointer" value={argument} />
       <Value title="Local Pointer" value={local} />
+      <Value title="Argument Pointer" value={argument} />
     </Paper>
   );
 };

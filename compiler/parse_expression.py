@@ -4,12 +4,12 @@ import helpers
 UNARY_OPS = {
     "-": "ARITHMETIC_NEGATION",
     "~": "BITWISE_NEGATION",
-    "!": "LOGICAL_NEGATION",
+    "!": "NOT",
     "*": "DEREFERENCE",
     "&": "ADDRESS_OF",
 }
 
-OR = {"||": "OR"}
+OR = {"|": "OR"}
 AND = {"&&": "AND"}
 EQUALITY = {"==": "EQUAL", "!=": "INEQUAL"}
 RELATIONAL = {

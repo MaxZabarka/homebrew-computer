@@ -2,6 +2,7 @@
 
 import tempfile
 import os
+from arguments import parse_file_io
 from constants import ENABLES, JUMPS, LOADS, JUMP_NAMES
 import helpers
 import check_file
@@ -13,12 +14,15 @@ LOADS = {v: k for k, v in LOADS.items()}
 
 # B = C register
 # A = B register
+# s0 s1 s2 s3 M C
 EXPRESSIONS = {
     "B+C": "100110",
     "B-1": "111110",
     "B+1": "000000",
     "B-C": "011000",
     "B-C-1": "011010",
+    "B": "000010",
+    "B|C": "111001",
 }
 
 
@@ -37,7 +41,6 @@ class Tokenizer:
             token = ""
             while True:
                 c = f.read(1)
-
                 if c in self.SYMBOLS or c.isspace() or not c:
                     if (len(token) > 0):
                         if (token in self.KEYWORDS):
@@ -85,13 +88,14 @@ class Tokenizer:
 
 
 class Assembler:
-    def __init__(self, input_file, logisim_format=False):
+    def __init__(self, input_file, output_file, logisim_format=False):
         self.tokenizer = Tokenizer(input_file)
         self.input_file = input_file
+        self.output_file = output_file
         self.logisim_format = logisim_format
         self.symbol_table = {}
         self.current_byte = 0
-        
+
         # assemble everything twice to build symbol table lol
         self.step = 0
         self.assemble()
@@ -100,24 +104,18 @@ class Assembler:
         self.write_to_file()
 
     def write_to_file(self):
-        print(self.symbol_table)
-        if (self.logisim_format):
-            with open(os.path.splitext(self.input_file)[0]+'.txt', "w") as file:
-                file.write("v3.0 hex words plain\n")
-                file.write(self.output)
-        else:
-            with open(os.path.splitext(self.input_file)[0]+".bin", "wb") as file:
-                for hex_byte in self.output.strip().split(" "):
-                    print(hex_byte)
-                    # print(int(hex_byte, 16).to_bytes(1, byteorder="little"))
-                    file.write(int(hex_byte, 16).to_bytes(1, byteorder="little"))
+        with open(self.output_file, "wb") as file:
+            for hex_byte in self.output.strip().split(" "):
+                # print(hex_byte)
+                # print(int(hex_byte, 16).to_bytes(1, byteorder="little"))
+                file.write(int(hex_byte, 16).to_bytes(1, byteorder="little"))
 
     def write_instruction(self, bits):
         if len(bits) == 8:
             self.current_byte += 1
             if self.step == 0:
                 return
-            print(bits)
+            # print(bits)
 
             self.output += hex(int(bits, 2))[2:].zfill(2) + " "
         else:
@@ -126,7 +124,7 @@ class Assembler:
             high_byte = bits[8:16]
             if self.step == 0:
                 return
-            print(low_byte, high_byte)
+            # print(low_byte, high_byte)
 
             self.output += hex(int(low_byte, 2))[2:].zfill(2) + " "
             self.output += hex(int(high_byte, 2))[2:].zfill(2) + " "
@@ -138,12 +136,12 @@ class Assembler:
         self.output = ""
 
         self.symbol_table["STACK_POINTER"] = 0
+        self.symbol_table["LOCAL"] = 1
+        self.symbol_table["ARGUMENT"] = 2
+        self.symbol_table["TEMP_0"] = 3
+        self.symbol_table["TEMP_1"] = 4
+        self.symbol_table["TEMP_2"] = 5
 
-        self.symbol_table["LOCAL_LOW"] = 2
-        self.symbol_table["LOCAL_HIGH"] = 3
-
-        self.symbol_table["ARGUMENT_LOW"] = 4
-        self.symbol_table["ARGUMENT_HIGH"] = 5
         while self.tokenizer.has_more_tokens():
             self.assemble_instruction()
 
@@ -151,8 +149,8 @@ class Assembler:
         self.compiled_instruction = list("0"*16)
 
         if (self.tokenizer.token_type() == "keyword" and
-            self.tokenizer.token_value() in LOADS
-            ):
+                self.tokenizer.token_value() in LOADS
+                ):
             if self.tokenizer.future_token_value(2) != "(":
                 self.assemble_move()
             else:
@@ -196,12 +194,12 @@ class Assembler:
         self.origin = helpers.parse_number(self.tokenizer.token_value())
         if (not self.origin_set):
             self.symbol_table["STACK_POINTER"] += self.origin
+            self.symbol_table["LOCAL"] += self.origin
+            self.symbol_table["ARGUMENT"] += self.origin
+            self.symbol_table["TEMP_0"] += self.origin
+            self.symbol_table["TEMP_1"] += self.origin
+            self.symbol_table["TEMP_2"] += self.origin
 
-            self.symbol_table["LOCAL_LOW"] += self.origin
-            self.symbol_table["LOCAL_HIGH"] += self.origin
-
-            self.symbol_table["ARGUMENT_LOW"] += self.origin
-            self.symbol_table["ARGUMENT_HIGH"] += self.origin
             self.origin_set = True
         self.tokenizer.advance()
 
@@ -233,7 +231,7 @@ class Assembler:
             else:
                 self.compiled_instruction[4:7] = ENABLES["IRHigh"]
                 symbol_value = self.symbol_table[self.tokenizer.token_value()]
-                high_byte = bin((symbol_value & 0xFF00) >>  8)[2:].zfill(8)
+                high_byte = bin((symbol_value & 0xFF00) >> 8)[2:].zfill(8)
                 low_byte = bin(symbol_value & 0x00FF)[2:].zfill(8)
                 if (self.tokenizer.future_token_value() != "."):
                     raise Exception("Unexpected token: " +
@@ -308,13 +306,12 @@ class Assembler:
 
 
 parser = argparse.ArgumentParser(
-    description="Assemble a source file into machine code")
+    description="Assemble an assembly source file into machine code")
 
-parser.add_argument("file", help="The source file to assemble")
 parser.add_argument('-l', '--logisim', action='store_true',
                     help="Assemble into a format compatible with Logisim")
 
-args = parser.parse_args()
-
+args = parse_file_io(parser, "bin")
+# print(args.output)
 file_name = check_file.check_file(args.file)
-Assembler(file_name, args.logisim)
+Assembler(file_name, args.output, args.logisim)

@@ -1,5 +1,0 @@
-function test 0
-push constant 10
-return
-function main 0
-call test 0

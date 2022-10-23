@@ -1,5 +1,4 @@
 // Only use if stack needs to be more than 256 (unlikely)
-
 ALow = STACK_POINTER_LOW.l
 AHigh = STACK_POINTER_LOW.h
 RAM = 253

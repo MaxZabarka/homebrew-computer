@@ -1,6 +1,11 @@
+#!/usr/bin/env python3.10
 
 import sys
 import re
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
 from constants import ENABLES, LOADS, JUMPS
 
 # Control inputs
@@ -136,10 +141,10 @@ def generate_controls(input):
 # print(generate_bits(controls))
 # generate_bits(controls)
 
-# with open("./out/control_eeprom.txt", "w") as f:
-#     f.write("v3.0 hex words plain\n")
-#     for i in range(0, 2**15):
-#         input_bits = bin(i)[2:].zfill(15)
-#         f.write(hex(generate_bits(generate_controls(input_bits)))[2:] + " ")
+with open("./eeprom_out/control_eeprom.txt", "w") as f:
+    f.write("v3.0 hex words plain\n")
+    for i in range(0, 2**15):
+        input_bits = bin(i)[2:].zfill(15)
+        f.write(hex(generate_bits(generate_controls(input_bits)))[2:] + " ")
 
-print(bin(generate_bits(generate_controls("100000110010110"))))
+# print(bin(generate_bits(generate_controls("100000110010110"))))

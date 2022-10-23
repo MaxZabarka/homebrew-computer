@@ -31,7 +31,8 @@ JUMPS = {
     "0101": {"negative": False},
     "0110": {"carry": True},
     "0111": {"carry": False},
-    "1000": {}
+    "1000": {},
+    "1001": {"zero": False}
 }
 JUMP_NAMES = {
     "JLE":"0001",
@@ -42,4 +43,5 @@ JUMP_NAMES = {
     "JC":"0110",
     "JNC":"0111",
     "JMP":"1000",
+    "JNE":"1001",
 }

@@ -1,26 +1,24 @@
 #!/usr/bin/env python3.10
+
+
+import argparse
 import sys
 import os
+import tempfile
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-
-from helpers import remove_comments
-import argparse
+from arguments import parse_file_io
 from check_file import check_file
+from helpers import remove_comments
 
 parser = argparse.ArgumentParser(
-    description='Compile a Jack Virtual Machine file into Hack Assembly')
-parser.add_argument(
-    "file", help='The virtual machine file or directory to assemble')
-parser.add_argument(
-    "-o", "--output", help="Directs the output to a name of your choice")
-parser.add_argument("-r", "--ram", action="store_true", help="Generate code that will run in the memory space of the RAM instead of ROM")
+    description='Compile a virtual machine file into assembly')
+parser.add_argument("-r", "--ram", action="store_true",
+                    help="Generate code that will run in the memory space of the RAM instead of ROM")
+args = parse_file_io(parser, "zab")
 
-
-args = parser.parse_args()
-
-arithmetic = ["add", "subtract"]
+arithmetic = ["add", "subtract", "not", "equal", "or"]
 # operations that the computer can do in one hardware cycle
-built_in_arithmetic = ["add", "subtract"]
+built_in_arithmetic = ["add", "subtract", "or"]
 
 
 class Parser:
@@ -29,11 +27,13 @@ class Parser:
 
         self.input_file = open(file_name)
 
+        temp_file_name = tempfile.NamedTemporaryFile().name
+
         # Turn input_file into a list of instructions (vm_list)
-        with open("temp", 'w', encoding='utf-8') as f:
+        with open(temp_file_name, 'w', encoding='utf-8') as f:
             f.write(remove_comments(self.input_file.read()))
 
-        with open("temp", 'r', encoding='utf-8') as f:
+        with open(temp_file_name, 'r', encoding='utf-8') as f:
             self.vm_list = []
             for i in f.readlines():
                 to_append = i.replace("\n", "")
@@ -89,6 +89,9 @@ class Parser:
         return self.current_command.split()[2]
 
 
+segments = ["LOCAL", "ARGUMENT"]
+
+
 class CodeWriter:
     def __init__(self, filename, is_ram=False, origin=0x8000):
         self.filename = filename
@@ -96,9 +99,10 @@ class CodeWriter:
             self.filename = filename[:-3]
         self.instructions_list = []
         self.origin = origin
-        self.write_bootstrap()
         self.id = 0
         self.is_ram = is_ram
+        self.uid = 0
+        self.write_bootstrap()
 
     def write_arithmetic(self, op):
         if (op in built_in_arithmetic):
@@ -121,10 +125,86 @@ class CodeWriter:
                 self.instructions_list.append("RAM = (B+C)")
             elif op == "subtract":
                 self.instructions_list.append("RAM = (B-C)")
+            elif op == "or":
+                self.instructions_list.append("RAM = (B|C)")
             else:
                 raise NotImplementedError
         else:
-            raise NotImplementedError
+            if (op == "not"):
+                self.uid += 1
+                self.instructions_list += [
+                    # B = arg
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "B = RAM",
+
+                    f"AHigh = false_{self.uid}.h",
+                    f"ALow = false_{self.uid}.l",
+                    "(B), JEQ",
+
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "RAM = 0"]
+                self.write_goto(f"end_{self.uid}")
+
+                self.write_label(f"false_{self.uid}")
+                self.instructions_list += [
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "RAM = 1"
+                ]
+
+                self.write_label(f"end_{self.uid}")
+            elif (op == "equal"):
+                self.uid += 1
+                self.instructions_list += [
+                    # SP--
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "RAM = (B-1)",
+
+                    # C = arg1
+                    "ALow = RAM",
+                    "C = RAM",
+
+                    # B = arg2
+                    "AHigh = 128",  
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "AHigh = 128",
+                    "B = RAM",
+
+                    f"AHigh = equal_{self.uid}.h",
+                    f"ALow = equal_{self.uid}.l",
+                    "(B-C), JEQ",
+
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "RAM = 0"]
+                self.write_goto(f"end_{self.uid}")
+
+                self.write_label(f"equal_{self.uid}")
+                self.instructions_list += [
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "RAM = 1"
+                ]
+
+                self.write_label(f"end_{self.uid}")
+            else:
+                raise NotImplementedError(op)
 
     def write_point_a(self):
         self.instructions_list += [
@@ -151,6 +231,32 @@ class CodeWriter:
             ]
             self.write_increment_sp()
 
+        elif (segment in ["argument", "local"]):
+            self.instructions_list += [
+                f"C={index}",
+
+                # A = index + segment
+                "AHigh = 128",
+                f"ALow = {segment.upper()}.l",
+                "B=RAM",
+                "ALow=(B+C)",
+
+                # C = segment[index]
+                "C = RAM",
+
+                # RAM[SP] = C
+                "ALow = STACK_POINTER.l",
+                "ALow = RAM",
+                "RAM = C",
+
+                # SP++
+                "ALow = STACK_POINTER.l",
+                "B = RAM",
+                "RAM = (B+1)"
+            ]
+        else:
+            raise NotImplementedError(segment)
+
     def write_halt(self):
         if (not self.is_ram):
             self.instructions_list.append("#origin 0")
@@ -163,35 +269,231 @@ class CodeWriter:
         if (not self.is_ram):
             self.instructions_list.append(f"#origin {self.origin}")
 
-
     def write_pop(self, segment, index):
-        pass
+        if (segment in ["argument", "local"]):
+            self.instructions_list += [
+                # LCL/ARG = segment + index
+                f"ALow = {segment.upper()}.l",
+                f"C={index}",
+                "B=RAM",
+                "RAM=(B+C)",
+
+                # SP--
+                "AHigh = 128",
+                "ALow = STACK_POINTER.l",
+                "B=RAM",
+                "RAM=(B-1)",
+
+                # C = popped value
+                "ALow = RAM",
+                "C = RAM",
+
+                # segment[index] = C
+                f"ALow = {segment.upper()}.l",
+                "ALow = RAM",
+                "RAM = C",
+
+                # LCL/arg = segment - index
+                f"ALow = {segment.upper()}.l",
+                f"C={index}",
+                "B=RAM",
+                "RAM=(B-C)",
+
+            ]
+        else:
+            raise NotImplementedError(segment)
 
     def write_label(self, label):
-        pass
+        if (not self.is_ram):
+            self.instructions_list.append("#origin 0")
+
+        self.instructions_list.append(f"{label}:")
+
+        if (not self.is_ram):
+            self.instructions_list.append(f"#origin {self.origin}")
 
     def write_goto(self, label):
-        pass
+        self.instructions_list += [
+            f"AHigh = {label}.h",
+            f"ALow = {label}.l",
+            "JMP"
+        ]
 
     def write_function(self, name, local_variables):
-        pass
+        if (not self.is_ram):
+            self.instructions_list.append(f"#origin 0x0")
+        self.instructions_list.append(f"{name}:")
+        if (not self.is_ram):
+            self.instructions_list.append(f"#origin {self.origin}")
+        if (int(local_variables) > 0):
+            # make space for local variables
+            self.instructions_list += [
+                f"C={int(local_variables)}",
+                "AHigh = 128",
+                "ALow = STACK_POINTER.l",
+                "B = RAM",
+                "RAM = (B+C)"
+            ]
 
     def write_return(self):
-        pass
+        self.instructions_list += [
+            # TEMP_2 = FRAME
+            "AHigh = 128",
+            "ALow = LOCAL.l",
+            "B=RAM",
+            "ALow = TEMP_2.l",
+            "RAM=B",
+        ]
+
+        # TEMP_0 = high return byte
+        # TEMP_1 = low return byte
+        for return_byte in [0, 1]:
+            self.instructions_list += [
+                f"C={len(segments)+1+return_byte}",
+                "C=(B-C)",
+                "ALow = C",
+                "C = RAM",
+                f"ALow = TEMP_{return_byte}.l",
+                "RAM = C"
+            ]
+
+        # *ARG = pop()
+        # / ARG[0] = top of stack
+        self.instructions_list += [
+            "ALow = STACK_POINTER.l",
+            "B=RAM",
+            "RAM=(B-1)",
+            "ALow=RAM",
+            "C=RAM",
+            "ALow = ARGUMENT.l",
+            "ALow = RAM",
+            "RAM=C"
+        ]
+
+        # SP = ARG + 1
+        self.instructions_list += [
+            "ALow = ARGUMENT.l",
+            "B=RAM",
+            "ALow = STACK_POINTER.l",
+            "RAM=(B+1)"
+        ]
+
+        # Restore segments
+        # Argument = *(FRAME-1)
+        # Local = *(FRAME-2)
+        for i, segment in enumerate(segments[::-1]):
+            self.instructions_list += [
+                # B = *(FRAME-x)
+                "ALow = TEMP_2.l",
+                "B = RAM",
+                f"C = {i + 1}",
+                "B = (B-C)",
+                "ALow = B",
+                "B = RAM",
+
+                # Restore segment
+                f"ALow = {segment.upper()}.l",
+                "RAM=B"
+
+            ]
+
+        # Jump to return
+        self.instructions_list += [
+            "ALow = TEMP_1.l",
+            "B = RAM",
+            "ALow = TEMP_0.l",
+            "AHigh = RAM",
+            "ALow = B",
+            "JMP"
+        ]
 
     def write_call(self, name, arguments):
-        pass
+        ret = f"RETURN{name}{self.uid}"
+        self.uid += 1
+        # Push unique return address
+        self.write_point_a()
+        self.instructions_list += [
+            f"RAM={ret}.l",
+            "AHigh = 128",
+            "ALow = STACK_POINTER.l",
+            "B=RAM",
+            "RAM=(B+1)",
+            "ALow=RAM",
+            f"RAM={ret}.h",
+            "ALow = STACK_POINTER.l",
+            "B=RAM",
+            "RAM=(B+1)"
+        ]
+
+        # Push ARG
+        for segment in segments:
+            self.instructions_list += [
+                "AHigh = 128",
+                f"ALow = {segment}.l",
+                "B = RAM",
+                "ALow = STACK_POINTER.l",
+                "ALow = RAM",
+                "RAM = B",
+                "ALow = STACK_POINTER.l",
+                "B = RAM",
+                "RAM = (B+1)"
+            ]
+
+        # ARG = SP-arguments-segments-2
+        self.instructions_list += [
+            "ALow = STACK_POINTER.l",
+            "B=RAM",
+            f"C={int(arguments)+len(segments)+2}",
+            "B=(B-C)",
+            "ALow = ARGUMENT.l",
+            "RAM=B"
+        ]
+
+        # LCL = SP
+        self.instructions_list += [
+            "ALow = STACK_POINTER.l",
+            "B=RAM",
+            "ALow = LOCAL.l",
+            "RAM=B"
+        ]
+
+        # Jump to called function
+        self.instructions_list += [
+            f"AHigh = {name}.h",
+            f"ALow = {name}.l",
+            "JMP"
+        ]
+
+        # Return address
+        if (not self.is_ram):
+            self.instructions_list.append("#origin 0")
+
+        self.instructions_list.append(f"{ret}:")
+
+        if (not self.is_ram):
+            self.instructions_list.append(f"#origin {self.origin}")
 
     def write_if(self, label):
-        pass
+        self.instructions_list += [
+            "AHigh = 128",
+            "ALow = STACK_POINTER.l",
+            "B=RAM",
+            "RAM=(B-1)",
+            "ALow=RAM",
+            "B=RAM",
+            f"AHigh = {label}.h",
+            f"ALow = {label}.l",
+            "(B), JNE"
+        ]
 
     def write_bootstrap(self):
         self.instructions_list += [
             f"#origin {self.origin}",  # start of ram
             "AHigh = STACK_POINTER.h",
             "ALow = STACK_POINTER.l",
-            "RAM=9"  # Default stack pointer
+            "RAM=9",  # Default stack pointer
         ]
+        self.write_call("main", 0)
 
     def write_increment_sp(self):
         self.instructions_list += [
@@ -202,13 +504,10 @@ class CodeWriter:
         ]
 
     def close(self):
-        with open(self.filename + ".zab", "w") as f:
+        with open(self.filename, "w") as f:
             f.write("")
             for instruction in self.instructions_list:
                 f.write(instruction + "\n")
-
-    def write_constant(self, address, constant):
-        pass
 
     def eq_gt_lt(self, command):
         if command == "eq":
@@ -222,13 +521,8 @@ class CodeWriter:
 
 
 parser = Parser(args.file)
-output_filename = "out"
-if args.output:
-    output_filename = args.output
-elif args.file:
-    output_filename = args.file
 
-code_writer = CodeWriter(output_filename, args.ram)
+code_writer = CodeWriter(args.output, args.ram)
 
 while True:
     if parser.command_type() == "C_ARITHMETIC":

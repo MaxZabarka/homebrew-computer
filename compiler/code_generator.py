@@ -1,36 +1,49 @@
 #!/usr/bin/env python3.10
 from ast import Expression
-
-
 from lexer import Lexer
 from parser import Parser
 from AST_types import *
+import sys
+import os
+import argparse
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from arguments import parse_file_io
 
 
 class CodeGenerator:
-    def __init__(self, parser):
+    def __init__(self, parser, output_file):
         self.parser = parser
         self.global_var_symbol_table = {}
         self.function_symbol_table = {}
         self.instructions = []
+        self.output_file = output_file
+        self.uid = 0
 
     def generate(self):
         instructions = []
+        # instructions += self.generate_bootstrap()
         for child in self.parser.AST:
             if isinstance(child, FunctionDec):
                 instructions += self.generate_function_dec(child)
-        for instruction in instructions:
-            print(instruction)
 
         self.write_file(instructions)
 
     def write_file(self, instructions):
-        with open("out.vm", "w") as file:
+        with open(self.output_file, "w") as file:
             for instruction in instructions:
                 file.write(instruction + "\n")
 
-    def generate_file_var_dec(self):
+    # def generate_bootstrap(self):
+    #     return ["call main 0"]
+
+    def generate_global_var_dec(self):
         pass
+
+    def generate_statements(self, statements):
+        instructions = []
+        for statement in statements:
+            instructions += self.generate_statement(statement)
+        return instructions
 
     def generate_statement(self, statement):
         if isinstance(statement, VarDec):
@@ -39,12 +52,46 @@ class CodeGenerator:
         elif isinstance(statement, Expression):
             return self.generate_expression(statement)
         elif isinstance(statement, Return):
-            return  self.generate_return(statement)
+            return self.generate_return(statement)
+        elif isinstance(statement, Assignment):
+            return self.generate_assignment(statement)
+        elif isinstance(statement, IfStatement):
+            return self.generate_if(statement)
         else:
-            raise NotImplementedError
-    
+            raise NotImplementedError(statement)
+
+    def generate_if(self, if_statement):
+        self.uid += 1
+        uid = self.uid
+        instructions = []
+
+        for i, cond_block in enumerate(if_statement.cond_blocks):
+            instructions += self.generate_expression(cond_block.condition)
+            instructions += [f"if-goto _{uid}_BODY_{i}"]
+
+        if (hasattr(if_statement, "else_body")):
+            instructions += self.generate_statements(if_statement.else_body)
+
+        instructions += [f"goto _{uid}_end"]
+
+        for i, cond_block in enumerate(if_statement.cond_blocks):
+            instructions += [f"label _{uid}_BODY_{i}"]
+            instructions += self.generate_statements(cond_block.body)
+            if (not i == len(if_statement.cond_blocks) - 1):
+                instructions += [f"goto _{uid}_end"]
+
+        instructions += [f"label _{uid}_end"]
+        return instructions
+
     def generate_return(self, return_statement):
         return self.generate_expression(return_statement.value) + ["return"]
+
+    def generate_assignment(self, assignment):
+        instructions = []
+        instructions += self.generate_expression(assignment.source)
+        segment, index = self.get_segment_and_index(assignment.destination)
+        instructions += [f"pop {segment} {index}"]
+        return instructions
 
     def generate_expression(self, expression):
         if isinstance(expression, Constant):
@@ -53,14 +100,44 @@ class CodeGenerator:
             return self.generate_bin_operation(expression)
         elif isinstance(expression, FunctionCall):
             return self.generate_function_call(expression)
+        elif isinstance(expression, UnOp):
+            return self.generate_un_operation(expression)
+        elif isinstance(expression, str):
+            return self.generate_variable(expression)
         else:
             raise NotImplementedError
+
+    def generate_un_operation(self, un_op):
+        return self.generate_expression(un_op.a) + [un_op.op.lower()]
+
+    def generate_variable(self, identifier):
+        segment, index = self.get_segment_and_index(identifier)
+        return [f"push {segment} {index}"]
+
+    def get_segment_and_index(self, identifier):
+        symbol_table = self.function_symbol_table[self.current_function]
+        for local_variable in symbol_table["local_variables"]:
+            if (identifier == local_variable["name"]):
+                return ("local", local_variable["index"])
+
+        for argument_variable in symbol_table["argument_variables"]:
+            if (identifier == argument_variable["name"]):
+                return ("argument", argument_variable["index"])
+
+        raise Exception(f"{identifier} is not defined")
 
     def generate_function_call(self, function_call):
         if not function_call.name in self.function_symbol_table:
             raise Exception(function_call.name + " is not defined")
         symbol_table = self.function_symbol_table[function_call.name]
-        return [f"call {function_call.name} {len(symbol_table['argument_variables'])}"]
+        instructions = []
+
+        for argument in function_call.arguments:
+            instructions += self.generate_expression(argument)
+
+        return instructions + [
+            f"call {function_call.name} {len(symbol_table['argument_variables'])}"
+        ]
 
     def generate_constant(self, constant):
         return [f"push constant {constant.value}"]
@@ -75,7 +152,8 @@ class CodeGenerator:
     def generate_local_var_dec(self, var_dec):
         symbol_table = self.function_symbol_table[self.current_function]
         for variable in (
-            symbol_table["local_variables"] + symbol_table["argument_variables"]
+            symbol_table["local_variables"] +
+                symbol_table["argument_variables"]
         ):
             if variable["name"] == var_dec.name:
                 raise Exception(var_dec.name + " is already defined")
@@ -99,32 +177,23 @@ class CodeGenerator:
             "argument_variables": [],
         }
         symbol_table = self.function_symbol_table[self.current_function]
-        statement_instructions = []
-        
+
         for parameter in function_dec.params:
-            symbol_table["argument_variables"].append({
-                "name":parameter.identifier,
-                "type":parameter.type,
-                "index":len(symbol_table["argument_variables"])
-            })
+            symbol_table["argument_variables"].append(
+                {
+                    "name": parameter.identifier,
+                    "type": parameter.type,
+                    "index": len(symbol_table["argument_variables"]),
+                }
+            )
 
+        statement_instructions = self.generate_statements(function_dec.body)
 
-        for statement in function_dec.body:
-            statement_instructions += self.generate_statement(statement)
-
-        symbol_table[
-            "return_type"
-        ] = function_dec.return_type
+        symbol_table["return_type"] = function_dec.return_type
 
         instructions.append(
             f"function {function_dec.name} {len(symbol_table['local_variables'])}"
         )
-        print(self.function_symbol_table)
-        # self.stack_pointer_valid = False
-        # instructions += self.ADD_TO_STACK_POINTER(
-        #     local_symbol_table["$local_variables"]
-        # )
-        # self.stack_pointer_valid = False
         instructions += statement_instructions
         return instructions
 
@@ -133,9 +202,12 @@ class CodeGenerator:
 
 
 if __name__ == "__main__":
-    with open("./example.c") as f:
+    arg_parser = argparse.ArgumentParser(
+        description='Compile a high level source file into a virtual machine file')
+    args = parse_file_io(arg_parser, "vm")
+    with open(args.file) as f:
         lexer = Lexer(f)
     parser = Parser(lexer)
     parser.parse()
-    code_generator = CodeGenerator(parser)
+    code_generator = CodeGenerator(parser, args.output)
     code_generator.generate()

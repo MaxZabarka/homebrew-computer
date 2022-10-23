@@ -3,7 +3,7 @@ import { toBinary } from "../lib/toBinary";
 import "./Value.scss";
 
 const Value = (props) => {
-  const binary = toBinary(props.value, 16);
+  const binary = toBinary(props.value, 8);
   const hex = props.value.toString(16);
 
   return (

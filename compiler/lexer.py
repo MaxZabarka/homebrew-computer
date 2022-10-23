@@ -31,7 +31,7 @@ class Lexer:
         "!",
     }
 
-    TYPES = ["int", "int16", "char", "bool", "void"]
+    TYPES = ["int", "char", "bool", "void"]
     KEYWORDS = ["true", "false", "if", "void" "else", "while", "return", "struct"] + TYPES
 
 
