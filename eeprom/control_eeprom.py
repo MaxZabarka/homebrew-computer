@@ -115,16 +115,17 @@ def generate_controls(input):
         jump_bits = instruction[4:8]
         should_jump = False
         if jump_bits in JUMPS:
-            should_jump = True      
+            should_jump = False      
             condition = JUMPS[jump_bits]
             for flag, expected_value in condition.items():
-                if flag == "zero" and zero != expected_value:
-                    should_jump = False
-                if flag == "negative" and negative != expected_value:
-                    should_jump = False
-                if flag == "carry" and carry != expected_value:
-                    should_jump = False
-        print(should_jump)
+                if flag == "zero" and zero == expected_value:
+                    should_jump = True
+                if flag == "negative" and negative == expected_value:
+                    should_jump = True
+                if flag == "carry" and carry == expected_value:
+                    should_jump = True
+            if (len(condition.items())) == 0:
+                should_jump = True
         if should_jump:
             controls["loadPC"] = 1
     else:

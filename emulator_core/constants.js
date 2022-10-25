@@ -49,7 +49,9 @@ const EXPRESSIONS = {
  "011000": "B-C",
  "011010": "B-C-1",
  "000010": "B",
- "111001": "B|C"
+ "111001": "B|C",
+ "010110": "C",
+ "001100": "B+B"
 };
 
 module.exports = { ENABLES, LOADS, JUMPS, EXPRESSIONS, JUMP_NAMES };

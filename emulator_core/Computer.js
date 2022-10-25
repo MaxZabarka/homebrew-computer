@@ -6,7 +6,10 @@ const {
   JUMP_NAMES,
 } = require("./constants");
 const ALUCircuit = require("./ALUCircuit");
-const { toBinary } = require("../lib/toBinary");
+
+const toBinary = (n, pad = 8) => {
+  return n.toString(2).padStart(pad, "0");
+};
 
 class Computer {
   static STACK_START = 0x9;
@@ -46,6 +49,21 @@ class Computer {
     for (let address = 0; address < bin.length; address++) {
       this.memory.ROM[address] = bin[address];
     }
+  }
+
+  getStack() {
+    const numOfStackItems =
+      this.memory.RAM[0] - Computer.STACK_START;
+    const stack = this.memory.RAM.slice(
+      Computer.STACK_START,
+      numOfStackItems + Computer.STACK_START
+    );
+
+    return stack
+  }
+  getStackOnMain() {
+    const stack = this.getStack()
+    return stack.slice(4, stack.length)
   }
 
   clone() {
@@ -187,20 +205,22 @@ class Computer {
 
     // Jump logic here \/
     if (jumpCondition) {
-      let shouldJump = true;
+      let shouldJump = false;
       Object.entries(jumpCondition).forEach(([flag, expectedValue]) => {
-        if (flag === "zero" && ALUOut.zero !== expectedValue) {
-          shouldJump = false;
+        if (flag === "zero" && ALUOut.zero === expectedValue) {
+          shouldJump = true;
         }
-        if (flag === "negative" && ALUOut.negative !== expectedValue) {
-          shouldJump = false;
+        if (flag === "negative" && ALUOut.negative === expectedValue) {
+          shouldJump = true;
         }
-        if (flag === "carry" && ALUOut.carryOut !== expectedValue) {
-          shouldJump = false;
+        if (flag === "carry" && ALUOut.carryOut === expectedValue) {
+          shouldJump = true;
         }
       });
+      if (Object.entries(jumpCondition).length === 0) {
+        shouldJump = true;
+      }
       if (shouldJump) {
-        // console.log(this.A)
         this.programCounter = this.A;
       }
     }
@@ -215,7 +235,13 @@ class Computer {
     this.registers[load] = ALUOut.result;
   }
 
-  clock() {
+  clock(n = 1) {
+    while (n) {
+      this.clock_once();
+      n--;
+    }
+  }
+  clock_once() {
     this.nextInstruction();
     const instruction =
       toBinary(this.registers.IRLow) + toBinary(this.registers.IRHigh);

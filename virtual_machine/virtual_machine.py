@@ -6,6 +6,7 @@ import sys
 import os
 import tempfile
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
 from arguments import parse_file_io
 from check_file import check_file
 from helpers import remove_comments
@@ -16,10 +17,12 @@ parser.add_argument("-r", "--ram", action="store_true",
                     help="Generate code that will run in the memory space of the RAM instead of ROM")
 args = parse_file_io(parser, "zab")
 
-arithmetic = ["add", "subtract", "not", "equal", "or"]
+arithmetic = ["add", "subtract", "not",
+              "equal", "or", "greater_than", "less_than", "left_shift", "bitwise_and", "less_than_or_equal", "greater_than_or_equal", "inequal"]
 # operations that the computer can do in one hardware cycle
-built_in_arithmetic = ["add", "subtract", "or"]
+built_in_arithmetic = ["add", "subtract", "or", "bitwise_and", "left_shift"]
 
+STACK_START = 9
 
 class Parser:
     def __init__(self, file_name):
@@ -67,6 +70,8 @@ class Parser:
             return "C_GOTO"
         elif command_list[0] == "if-goto":
             return "C_IF"
+        elif command_list[0] == "if-not-goto":
+            return "C_IF_NOT"
         elif command_list[0] == "call":
             return "C_CALL"
         elif command_list[0] == "return":
@@ -127,6 +132,41 @@ class CodeWriter:
                 self.instructions_list.append("RAM = (B-C)")
             elif op == "or":
                 self.instructions_list.append("RAM = (B|C)")
+            elif op == "bitwise_and":
+                self.instructions_list.append("RAM = (B&C)")
+            elif op == "left_shift":
+                self.uid += 1
+                uid = self.uid
+
+                self.write_label(f"left_shift_{uid}")
+                self.instructions_list += [
+                    # if c == 0 goto end
+                    f"AHigh = end_{uid}.h",
+                    f"ALow = end_{uid}.l",
+                    "(C), JEQ",
+
+                    # C--
+                    "ALow = B",
+                    "B = 255",
+                    "C = (B+C)",
+                    "B = ALow",
+
+                    # B << 1
+                    "B = (B+B)",
+                    f"AHigh = left_shift_{uid}.h",
+                    f"ALow = left_shift_{uid}.l",
+                    "JMP",
+                ]
+                self.write_label(f"end_{uid}")
+                self.instructions_list += [
+                    "C = B",
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "RAM = C",
+                ]
+
             else:
                 raise NotImplementedError
         else:
@@ -161,7 +201,22 @@ class CodeWriter:
                 ]
 
                 self.write_label(f"end_{self.uid}")
-            elif (op == "equal"):
+            elif (op in ["equal", "greater_than", "less_than", "inequal", "greater_than_or_equal", "less_than_or_equal"]):
+                if op == "equal":
+                    command = "JEQ"
+                elif op == "greater_than":
+                    command = "JGT"
+                elif op == "less_than":
+                    command = "JLT"
+                elif op == "inequal":
+                    command = "JNE"
+                elif op == "greater_than_or_equal":
+                    command = "JGE"
+                elif op == "less_than_or_equal":
+                    command = "JLE"
+        
+
+
                 self.uid += 1
                 self.instructions_list += [
                     # SP--
@@ -175,7 +230,7 @@ class CodeWriter:
                     "C = RAM",
 
                     # B = arg2
-                    "AHigh = 128",  
+                    "AHigh = 128",
                     "ALow = STACK_POINTER.l",
                     "B = RAM",
                     "ALow = (B-1)",
@@ -184,7 +239,7 @@ class CodeWriter:
 
                     f"AHigh = equal_{self.uid}.h",
                     f"ALow = equal_{self.uid}.l",
-                    "(B-C), JEQ",
+                    f"(B-C), {command}",
 
                     "AHigh = 128",
                     "ALow = STACK_POINTER.l",
@@ -473,7 +528,8 @@ class CodeWriter:
         if (not self.is_ram):
             self.instructions_list.append(f"#origin {self.origin}")
 
-    def write_if(self, label):
+    def write_if(self, label, logic_not=False):
+        jump = "JEQ" if logic_not else "JNE"
         self.instructions_list += [
             "AHigh = 128",
             "ALow = STACK_POINTER.l",
@@ -483,7 +539,7 @@ class CodeWriter:
             "B=RAM",
             f"AHigh = {label}.h",
             f"ALow = {label}.l",
-            "(B), JNE"
+            f"(B), {jump}"
         ]
 
     def write_bootstrap(self):
@@ -491,7 +547,7 @@ class CodeWriter:
             f"#origin {self.origin}",  # start of ram
             "AHigh = STACK_POINTER.h",
             "ALow = STACK_POINTER.l",
-            "RAM=9",  # Default stack pointer
+            f"RAM={STACK_START}",  # Default stack pointer
         ]
         self.write_call("main", 0)
 
@@ -508,16 +564,6 @@ class CodeWriter:
             f.write("")
             for instruction in self.instructions_list:
                 f.write(instruction + "\n")
-
-    def eq_gt_lt(self, command):
-        if command == "eq":
-            op = "JEQ"
-        elif command == "gt":
-            op = "JLT"
-        elif command == "lt":
-            op = "JGT"
-        else:
-            raise NotImplementedError
 
 
 parser = Parser(args.file)
@@ -537,6 +583,8 @@ while True:
         code_writer.write_goto(parser.arg1())
     elif parser.command_type() == "C_IF":
         code_writer.write_if(parser.arg1())
+    elif parser.command_type() == "C_IF_NOT":
+        code_writer.write_if(parser.arg1(), True)
     elif parser.command_type() == "C_FUNCTION":
         code_writer.write_function(parser.arg1(), parser.arg2())
     elif parser.command_type() == "C_CALL":

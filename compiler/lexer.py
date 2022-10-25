@@ -29,6 +29,7 @@ class Lexer:
         "=",
         "~",
         "!",
+        "^"
     }
 
     TYPES = ["int", "char", "bool", "void"]

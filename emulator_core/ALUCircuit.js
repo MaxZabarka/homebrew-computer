@@ -103,11 +103,10 @@ const ALUCircuit = (a, b, controlBits) => {
   const high181Output = TTL74181(aHigh, bHigh, highControlBits);
 
   const result = low181Output.result + (high181Output.result << 4);
-  
   return {
     result,
     carryOut: !high181Output.carryOut,
-    negative: !!(high181Output & 0b1000),
+    negative: !!(high181Output.result & 0b1000),
     zero: result === 0,
   };
 };

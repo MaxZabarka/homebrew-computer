@@ -57,8 +57,22 @@ class CodeGenerator:
             return self.generate_assignment(statement)
         elif isinstance(statement, IfStatement):
             return self.generate_if(statement)
+        elif isinstance(statement, WhileLoop):
+            return self.generate_while(statement)
         else:
             raise NotImplementedError(statement)
+        
+    def generate_while(self, WhileLoop):
+        self.uid += 1
+        uid = self.uid
+        instructions = []
+        instructions += [f"label _{uid}_start"]
+        instructions += self.generate_expression(WhileLoop.condition)
+        instructions += [f"if-not-goto _{uid}_end"]
+        instructions += self.generate_statements(WhileLoop.body)
+        instructions += [f"goto _{uid}_start"]
+        instructions += [f"label _{uid}_end"]
+        return instructions
 
     def generate_if(self, if_statement):
         self.uid += 1

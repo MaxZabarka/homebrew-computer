@@ -1,5 +1,17 @@
 #!/usr/bin/env python3.10
 
+
+# TODO 
+# More operation
+# Pointers
+# Array subscripting
+# EEPROM I2C IO
+# Assembly optimization (remove redundant A assignments)
+# While loops
+# For loops
+# Multiplication and division
+
+
 import argparse
 from arguments import parse_file_io
 import subprocess

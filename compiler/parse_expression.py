@@ -6,9 +6,10 @@ UNARY_OPS = {
     "~": "BITWISE_NEGATION",
     "!": "NOT",
     "*": "DEREFERENCE",
-    "&": "ADDRESS_OF",
+    # "&": "ADDRESS_OF",
 }
 
+BITWISE_AND = {"&": "BITWISE_AND"}
 OR = {"|": "OR"}
 AND = {"&&": "AND"}
 EQUALITY = {"==": "EQUAL", "!=": "INEQUAL"}
@@ -18,10 +19,12 @@ RELATIONAL = {
     "<=": "LESS_THAN_OR_EQUAL",
     ">=": "GREATER_THAN_OR_EQUAL",
 }
+SHIFT = {"<<": "LEFT_SHIFT"}
 ADDITIVE = {"+": "ADD", "-": "SUBTRACT"}
 MULTIPLICATIVE = {"*": "MULTIPLY", "/": "DIVIDE"}
 
-PRECEDENCE = [OR, AND, EQUALITY, RELATIONAL, ADDITIVE, MULTIPLICATIVE]
+PRECEDENCE = [OR, BITWISE_AND, AND, EQUALITY,
+              RELATIONAL, SHIFT, ADDITIVE, MULTIPLICATIVE]
 
 
 def parse_factor(self):
@@ -39,12 +42,12 @@ def parse_factor(self):
         self.lexer.token_type() == "identifier"
         and self.lexer.future_token_value() == "("
     ):
-        return self.parse_function_call()    
-    elif ( 
+        return self.parse_function_call()
+    elif (
         self.lexer.token_type() == "identifier"
         and self.lexer.future_token_value() == "["
     ):
-        return self.parse_array_subscript()      
+        return self.parse_array_subscript()
     elif self.lexer.token_type() == "identifier":
         identifier = self.lexer.token_value()
         self.lexer.advance()
@@ -55,8 +58,6 @@ def parse_factor(self):
         self.lexer.advance()
         return Constant(helpers.parse_number(constant))
 
-
-    
 
 def generate_expression_parsers():
     expression_parsers = [parse_factor]
@@ -75,11 +76,15 @@ def generate_expression_parsers():
             expr = expression_parsers[i](self)
             while self.lexer.token_value() in first_chars:
                 op = self.lexer.token_value()
-                self.lexer.advance()
-                if self.lexer.token_value() in second_chars:
-                    op += self.lexer.token_value()
+                if self.lexer.future_token_value() in second_chars:
                     self.lexer.advance()
-                op = operations[op]
+                    op += self.lexer.token_value()
+                if (op in operations.keys()):                    
+                    op = operations[op]
+                else:
+                    return expr
+                self.lexer.advance()
+
                 expr_term = expression_parsers[i](self)
                 expr = BinOp(op, expr, expr_term)
             return expr

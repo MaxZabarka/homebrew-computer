@@ -1,22 +1,19 @@
-function mult 0
-push argument 1
-push constant 0
-equal
-if-goto _1_BODY_0
-goto _1_end
-label _1_BODY_0
-push constant 0
-return
-label _1_end
-push argument 0
-push argument 0
-push argument 1
-push constant 1
-subtract
-call mult 2
-add
-return
 function main 0
+push constant 6
 push constant 5
-push constant 30
-call mult 2
+greater_than_or_equal
+push constant 5
+push constant 5
+greater_than_or_equal
+push constant 4
+push constant 5
+greater_than_or_equal
+push constant 6
+push constant 5
+less_than_or_equal
+push constant 5
+push constant 5
+less_than_or_equal
+push constant 4
+push constant 5
+less_than_or_equal

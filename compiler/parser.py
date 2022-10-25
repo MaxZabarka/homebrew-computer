@@ -192,10 +192,8 @@ class Parser:
             raise Exception(
                 f"Unexpected token at line {self.lexer.token_line()} : {self.lexer.token_value()}"
             )
-
-
 if __name__ == "__main__":
-    with open("./example.c") as f:
+    with open("./programs/example.c") as f:
         lexer = Lexer(f)
     parser = Parser(lexer)
     parser.parse()

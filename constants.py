@@ -17,11 +17,7 @@ ENABLES = {
 }
 
 
-# get instruction, mask, then if the result is greater than 0 jump
-# cnz
-# c = carry
-# n = negative
-# z = zero
+
 
 JUMPS = {
     "0001": {"zero": True, "negative": True},

@@ -14,7 +14,7 @@ LOADS = {v: k for k, v in LOADS.items()}
 
 # B = C register
 # A = B register
-# s0 s1 s2 s3 M C
+# s0 s1 s2 s3 C M
 EXPRESSIONS = {
     "B+C": "100110",
     "B-1": "111110",
@@ -23,11 +23,14 @@ EXPRESSIONS = {
     "B-C-1": "011010",
     "B": "000010",
     "B|C": "111001",
+    "C": "101001",
+    "B+B": "110010",
+    "B&C": "101101",
 }
 
 
 class Tokenizer:
-    SYMBOLS = ["=", ",", "(", ")", "+", "-", "~", "|", "^", "^", ":", "."]
+    SYMBOLS = ["=", ",", "(", ")", "+", "-", "~", "|", "^", "^", ":", ".", "&"]
     KEYWORDS = ["AHigh", "ALow", "B", "C", "RAM", "IRHigh", "JEQ",
                 "JLT", "JNE", "JEQ", "JGT", "JGE", "JC", "JNC", "JMP", "l", "h", "#origin"]
 
