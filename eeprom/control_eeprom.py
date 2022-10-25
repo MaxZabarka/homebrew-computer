@@ -6,7 +6,10 @@ import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
-from constants import ENABLES, LOADS, JUMPS
+from constants import ENABLES, LOADS, SHOULD_JUMP, JUMP_NAMES
+
+
+JUMP_NAMES = {v: k for k, v in JUMP_NAMES.items()}
 
 # Control inputs
 # aaaaaaaa xx znc mm
@@ -113,19 +116,7 @@ def generate_controls(input):
         carry = not bool(int(alu_flags[2]))
         print(zero, negative, carry)
         jump_bits = instruction[4:8]
-        should_jump = False
-        if jump_bits in JUMPS:
-            should_jump = False      
-            condition = JUMPS[jump_bits]
-            for flag, expected_value in condition.items():
-                if flag == "zero" and zero == expected_value:
-                    should_jump = True
-                if flag == "negative" and negative == expected_value:
-                    should_jump = True
-                if flag == "carry" and carry == expected_value:
-                    should_jump = True
-            if (len(condition.items())) == 0:
-                should_jump = True
+        should_jump = SHOULD_JUMP(jump_bits, negative, zero, carry)
         if should_jump:
             controls["loadPC"] = 1
     else:

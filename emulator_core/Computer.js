@@ -1,9 +1,9 @@
 const {
   ENABLES,
   LOADS,
-  JUMPS,
   EXPRESSIONS,
   JUMP_NAMES,
+  SHOULD_JUMP,
 } = require("./constants");
 const ALUCircuit = require("./ALUCircuit");
 
@@ -43,7 +43,7 @@ class Computer {
 
   loadROM(bin) {
     if (bin.length > 1024) {
-      throw Error("ROM too large");
+      throw Error("ROM too large - " + bin.length + " !< 1024");
     }
 
     for (let address = 0; address < bin.length; address++) {
@@ -52,18 +52,17 @@ class Computer {
   }
 
   getStack() {
-    const numOfStackItems =
-      this.memory.RAM[0] - Computer.STACK_START;
+    const numOfStackItems = this.memory.RAM[0] - Computer.STACK_START;
     const stack = this.memory.RAM.slice(
       Computer.STACK_START,
       numOfStackItems + Computer.STACK_START
     );
 
-    return stack
+    return stack;
   }
   getStackOnMain() {
-    const stack = this.getStack()
-    return stack.slice(4, stack.length)
+    const stack = this.getStack();
+    return stack.slice(4, stack.length);
   }
 
   clone() {
@@ -195,35 +194,40 @@ class Computer {
 
   processComputationInstruction(instruction) {
     const load = LOADS[instruction.slice(1, 4)];
-    const jumpCondition = JUMPS[instruction.slice(4, 8)];
+    // const jumpCondition = JUMPS[instruction.slice(4, 8)];
     const ALUOperation = instruction.slice(8, 14);
     const ALUOut = ALUCircuit(
       this.registers.B,
       this.registers.C,
       parseInt(ALUOperation, 2)
     );
-
+    const shouldJump = SHOULD_JUMP(
+      instruction.slice(4, 8),
+      ALUOut.negative,
+      ALUOut.zero,
+      ALUOut.carryOut
+    );
     // Jump logic here \/
-    if (jumpCondition) {
-      let shouldJump = false;
-      Object.entries(jumpCondition).forEach(([flag, expectedValue]) => {
-        if (flag === "zero" && ALUOut.zero === expectedValue) {
-          shouldJump = true;
-        }
-        if (flag === "negative" && ALUOut.negative === expectedValue) {
-          shouldJump = true;
-        }
-        if (flag === "carry" && ALUOut.carryOut === expectedValue) {
-          shouldJump = true;
-        }
-      });
-      if (Object.entries(jumpCondition).length === 0) {
-        shouldJump = true;
-      }
-      if (shouldJump) {
-        this.programCounter = this.A;
-      }
+    // if (jumpCondition) {
+    //   let shouldJump = false;
+    //   Object.entries(jumpCondition).forEach(([flag, expectedValue]) => {
+    //     if (flag === "zero" && ALUOut.zero === expectedValue) {
+    //       shouldJump = true;
+    //     }
+    //     if (flag === "negative" && ALUOut.negative === expectedValue) {
+    //       shouldJump = true;
+    //     }
+    //     if (flag === "carry" && ALUOut.carryOut === expectedValue) {
+    //       shouldJump = true;
+    //     }
+    //   });
+    //   if (Object.entries(jumpCondition).length === 0) {
+    //     shouldJump = true;
+    //   }
+    if (shouldJump) {
+      this.programCounter = this.A;
     }
+    // }
 
     if (!load) {
       return;

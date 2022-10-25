@@ -47,7 +47,10 @@ const deleteFile = (fileName) => {
 };
 
 const testStack = (fileName, expectedStack) => {
-  expect(computer.getStack().slice(-expectedStack.length)).toEqual(expectedStack);
+  const computer = run(fileName);
+  expect(computer.getStack().slice(-expectedStack.length)).toEqual(
+    expectedStack
+  );
 };
 
 test("constants", () => {
@@ -74,46 +77,54 @@ test("while loop", () => {
   testStack("while.c", [5, 4, 3, 2, 1]);
 });
 
-test.only("recursive multiplication", () => {
+test("recursive multiplication", () => {
   testStack("recursive_mult.c", [30]);
 });
 
-test.only("iterative multiplication", () => {
+test("iterative multiplication", () => {
   testStack("iterative_mult.c", [30]);
 });
 
 test("fast multiplication", () => {
-  testStack("fast_mult.c", [1, 2, 3, 4, 5]);
+  testStack("fast_mult.c", [1]);
 });
 
 test("local variables", () => {
-  testStack("local.c", [1, 2, 3, 4, 5]);
+  testStack("local.c", [1, 2, 3, 4, 5, 6]);
 });
 
 test("argument variables", () => {
-  testStack("argument.c", [1, 2, 3, 4, 5]);
+  testStack("argument.c", [1, 2, 3]);
 });
 
 test("order of operations", () => {
-  testStack("order_of_operations.c", [1, 2, 3, 4, 5]);
+  testStack("order_of_operations.c", [13]);
 });
 
 test("additive operations", () => {
-  testStack("additive.c", [1, 2, 3, 4, 5]);
+  testStack("additive.c", [1, 2, 3]);
 });
 
 test("left shift", () => {
-  testStack("left_shift.c", [1, 2, 3, 4, 5]);
+  testStack("left_shift.c", [0, 4, 8, 1, 2, 4, 32, 64, 128]);
 });
 
-// test("relational operators", () => {
-//   testStack("relational.c", [1, 2, 3, 4, 5]);
-// });
+test("relational operators (>, <)", () => {
+  testStack("relational.c", [5, 0, 0, 5]);
+});
 
-// test("logical operators", () => {
-//   testStack("logical.c", [1, 2, 3, 4, 5]);
-// });
+test("relational operators 2 (=<, >=)", () => {
+  testStack("relational_2.c", [1, 1, 0, 0, 1, 1]);
+});
 
-// test("function call", () => {
-//   testStack("function_call.c", [1, 2, 3, 4, 5]);
+test("equality operators", () => {
+  testStack("equality.c", [0, 1, 1, 0]);
+});
+
+test("function call", () => {
+  testStack("function_call.c", [1, 2, 3]);
+});
+
+// test("bitwise operators", () => {
+//   testStack("bitwise.c", []);
 // });

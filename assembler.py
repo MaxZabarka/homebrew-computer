@@ -3,7 +3,7 @@
 import tempfile
 import os
 from arguments import parse_file_io
-from constants import ENABLES, JUMPS, LOADS, JUMP_NAMES
+from constants import ENABLES, LOADS, JUMP_NAMES
 import helpers
 import check_file
 import argparse

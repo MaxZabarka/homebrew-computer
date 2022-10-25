@@ -1,19 +1,22 @@
 function main 0
-push constant 6
 push constant 5
-greater_than_or_equal
+push constant 88
+add
+push constant 55
+push constant 88
+add
+bitwise_and
+push constant 55
+push constant 2
+add
 push constant 5
-push constant 5
-greater_than_or_equal
-push constant 4
-push constant 5
-greater_than_or_equal
-push constant 6
-push constant 5
-less_than_or_equal
-push constant 5
-push constant 5
-less_than_or_equal
-push constant 4
-push constant 5
-less_than_or_equal
+subtract
+push constant 1
+add
+push constant 0
+push constant 1
+add
+inequal
+push constant 1
+equal
+or

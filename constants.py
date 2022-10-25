@@ -16,28 +16,36 @@ ENABLES = {
     # "111": "ALU"
 }
 
-
-
-
-JUMPS = {
-    "0001": {"zero": True, "negative": True},
-    "0010": {"negative": True},
-    "0011": {"zero": True},
-    "0100": {"zero": False, "negative": False},
-    "0101": {"negative": False},
-    "0110": {"carry": True},
-    "0111": {"carry": False},
-    "1000": {},
-    "1001": {"zero": False}
-}
 JUMP_NAMES = {
-    "JLE":"0001",
-    "JLT":"0010",
-    "JEQ":"0011",
-    "JGT":"0100",
-    "JGE":"0101",
-    "JC":"0110",
-    "JNC":"0111",
-    "JMP":"1000",
-    "JNE":"1001",
+    "JLE": "0001",
+    "JLT": "0010",
+    "JEQ": "0011",
+    "JGT": "0100",
+    "JGE": "0101",
+    "JC": "0110",
+    "JNC": "0111",
+    "JMP": "1000",
+    "JNE": "1001",
 }
+
+
+def SHOULD_JUMP(jumpBits, negative, zero, carry):
+    if jumpBits == JUMP_NAMES["JLE"]:
+        return negative or zero
+    elif jumpBits == JUMP_NAMES["JLT"]:
+        return negative and (not zero)
+    elif jumpBits == JUMP_NAMES["JEQ"]:
+        return zero
+    elif jumpBits == JUMP_NAMES["JGT"]:
+        return (not negative) and (not zero)
+    elif jumpBits == JUMP_NAMES["JGE"]:
+        return (not negative) or zero
+    elif jumpBits == JUMP_NAMES["JC"]:
+        return carry
+    elif jumpBits == JUMP_NAMES["JNC"]:
+        return not carry
+    elif jumpBits == JUMP_NAMES["JMP"]:
+        return True
+    elif jumpBits == JUMP_NAMES["JNE"]:
+        return not zero
+    return False
