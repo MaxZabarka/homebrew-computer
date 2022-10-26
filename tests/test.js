@@ -125,6 +125,10 @@ test("function call", () => {
   testStack("function_call.c", [1, 2, 3]);
 });
 
-// test("bitwise operators", () => {
-//   testStack("bitwise.c", []);
-// });
+test("bitwise operators", () => {
+  testStack("bitwise.c", [16, 127]);
+});
+
+// test("pointers", () => {
+//   testStack("pointers.c", [1, 2, 3, 4, 5, 6]);
+// })

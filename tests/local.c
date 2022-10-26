@@ -3,8 +3,8 @@ int main() {
     int b = 2;
     int c = 3;
     
-    a+0;
-    b+0;
+    a;
+    b;
     a+b;
     b+b;
     b+b+1;

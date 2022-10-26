@@ -6,7 +6,7 @@ UNARY_OPS = {
     "~": "BITWISE_NEGATION",
     "!": "NOT",
     "*": "DEREFERENCE",
-    # "&": "ADDRESS_OF",
+    "&": "ADDRESS_OF",
 }
 
 BITWISE_AND = {"&": "BITWISE_AND"}

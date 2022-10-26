@@ -9,6 +9,12 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "py"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MaxZabarka/homebrew-computer.git"

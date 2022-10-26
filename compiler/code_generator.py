@@ -1,5 +1,7 @@
 #!/usr/bin/env python3.10
 from ast import Expression
+
+from numpy import isin
 from lexer import Lexer
 from parser import Parser
 from AST_types import *
@@ -59,6 +61,8 @@ class CodeGenerator:
             return self.generate_if(statement)
         elif isinstance(statement, WhileLoop):
             return self.generate_while(statement)
+        elif isinstance(statement, str):
+            return self.generate_expression(statement)
         else:
             raise NotImplementedError(statement)
         
@@ -122,6 +126,12 @@ class CodeGenerator:
             raise NotImplementedError
 
     def generate_un_operation(self, un_op):
+        if (un_op.op == "ADDRESS_OF"):
+            if (not isinstance(un_op.a, str)):
+                raise Exception("& addressof operator must take a variable as argument")
+            segment, index = self.get_segment_and_index(un_op.a)
+            return [f"push address-of-{segment} {index}"]
+
         return self.generate_expression(un_op.a) + [un_op.op.lower()]
 
     def generate_variable(self, identifier):

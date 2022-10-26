@@ -18,7 +18,7 @@ parser.add_argument("-r", "--ram", action="store_true",
 args = parse_file_io(parser, "zab")
 
 arithmetic = ["add", "subtract", "not",
-              "equal", "or", "greater_than", "less_than", "left_shift", "bitwise_and", "less_than_or_equal", "greater_than_or_equal", "inequal"]
+              "equal", "or", "greater_than", "less_than", "left_shift", "bitwise_and", "less_than_or_equal", "greater_than_or_equal", "inequal", "dereference"]
 # operations that the computer can do in one hardware cycle
 built_in_arithmetic = ["add", "subtract", "or", "bitwise_and", "left_shift"]
 
@@ -258,6 +258,39 @@ class CodeWriter:
                 ]
 
                 self.write_label(f"end_{self.uid}")
+            elif (op == "dereference"):
+                self.instructions_list += [
+                    # C = low byte
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "B = (B-1)",
+                    "ALow = (B)",
+                    "C = RAM",
+
+                    # B = high byte
+                    "ALow = (B-1)",
+                    "B = RAM",
+                    "ALow = (B-1)",
+                    "RAM = B",
+
+                    # C = *arg
+                    "ALow = C",
+                    "AHigh = B",
+                    "C = RAM",
+                    
+                    # SP--
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B=RAM",
+                    "B = (B-1)",
+                    "RAM = B",
+
+                    # RAM[SP-1] = C
+                    "B = (B-1)",
+                    "ALow = B",
+                    "RAM = C"
+                ]
             else:
                 raise NotImplementedError(op)
 
@@ -308,6 +341,33 @@ class CodeWriter:
                 "ALow = STACK_POINTER.l",
                 "B = RAM",
                 "RAM = (B+1)"
+            ]
+        elif (segment in ["address-of-local", "address-of-argument"]):
+            self.instructions_list += [
+                f"C={index}",
+
+                # C = &<variable>
+                "AHigh = 128",
+                f"ALow = {segment.split('-')[2].upper()}.l",
+                "B=RAM",
+                "C=(B+C)",
+
+                # RAM[SP] = 0
+                # All variables are shared on the stack so high byte is always 128 because that is the start of ram and stack only goes up to 255
+                "ALow = STACK_POINTER.l",
+                "ALow = RAM",
+                "RAM = 128",
+
+                # RAM[SP+1] = C
+                "B = ALow",
+                "ALow = (B+1)",
+                "RAM = C",
+
+                # SP += 2
+                "ALow = STACK_POINTER.l",
+                "B = RAM",
+                "C = 2",
+                "RAM = (B+C)"
             ]
         else:
             raise NotImplementedError(segment)
