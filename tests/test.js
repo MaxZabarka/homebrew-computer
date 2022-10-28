@@ -90,7 +90,7 @@ test("fast multiplication", () => {
 });
 
 test("local variables", () => {
-  testStack("local.c", [1, 2, 3, 4, 5, 6]);
+  testStack("local.c", [1, 2, 3, 4, 5, 6, 7]);
 });
 
 test("argument variables", () => {

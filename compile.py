@@ -13,6 +13,14 @@
 # For loops
 # Multiplication and division
 
+# pop pointer-16-8 (put an 8 bit value into a 16 bit address)
+# pop local-16 (put an 16 bit value into a two local variables)
+# push local-16 (push a 16 bit local variable)
+# pop argument-16-8 (^)
+# push argument-16-8 (^)
+# # push constant-16
+
+
 import argparse
 from arguments import parse_file_io
 import subprocess

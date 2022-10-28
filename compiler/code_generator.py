@@ -107,8 +107,18 @@ class CodeGenerator:
     def generate_assignment(self, assignment):
         instructions = []
         instructions += self.generate_expression(assignment.source)
-        segment, index = self.get_segment_and_index(assignment.destination)
-        instructions += [f"pop {segment} {index}"]
+        if (isinstance(assignment.destination, str)):
+            segment, index = self.get_segment_and_index(assignment.destination)
+            instructions += [f"pop {segment} {index}"]
+        elif isinstance(assignment.destination, UnOp):
+            if (assignment.destination.op == "DEREFERENCE"):
+                # pass
+                instructions += self.generate_expression(assignment.destination.a)
+                instructions += ["pop pointer"]
+            else:
+                raise Exception("Invalid assignment")
+        else:
+            raise Exception("Invalid assignment")
         return instructions
 
     def generate_expression(self, expression):

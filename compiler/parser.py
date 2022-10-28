@@ -48,7 +48,8 @@ class Parser:
         self.verify(self.lexer.token_type() == "identifier")
         name = self.lexer.token_value()
         if self.lexer.future_token_value() == "=":
-            return [VarDec(type, name), self.parse_assignment()]
+            self.lexer.advance()
+            return [VarDec(type, name), self.parse_assignment(name)]
         else:
             self.lexer.advance()
             if self.lexer.token_value() == "[":
@@ -126,20 +127,25 @@ class Parser:
             rv = [self.parse_while()]
         elif self.lexer.token_value() == "return":
             rv = [self.parse_return()]
-        elif (
-            self.lexer.token_type() == "identifier"
-            and self.lexer.future_token_value() == "="
-            and self.lexer.future_token_value(2) != "="
-        ):
-            rv = [self.parse_assignment()]
+        # elif (
+        #     self.lexer.token_type() == "identifier"
+        #     and self.lexer.future_token_value() == "="
+        #     and self.lexer.future_token_value(2) != "="
+        # ):
+        #     rv = [self.parse_assignment()]
         else:
             rv = [parse_expression(self)]
-            self.eat(";")
+            if (
+                self.lexer.token_value() == "="
+            ):
+                rv = [self.parse_assignment(rv[0])]
+            else:
+                self.eat(";")
         return rv
 
-    def parse_assignment(self):
-        destination = self.lexer.token_value()
-        self.lexer.advance()
+    def parse_assignment(self, destination):
+        # destination = self.lexer.token_value()
+        # self.lexer.advance()
         self.eat("=")
         source = parse_expression(self)
         self.eat(";")

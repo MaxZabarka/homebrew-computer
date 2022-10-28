@@ -415,6 +415,33 @@ class CodeWriter:
                 "RAM=(B-C)",
 
             ]
+        elif segment == "pointer":
+            self.instructions_list += [
+                # SP--
+                "AHigh = 128",
+                "ALow = STACK_POINTER.l",
+                "B=RAM",
+                "B = (B-1)",
+                "RAM=B",
+
+                # C = low byte
+                "ALow = RAM",
+                "C = RAM",
+
+                # TEMP_0 = high byte
+                "RAM = (B-1)",
+                "ALow = RAM",
+                "B = RAM",
+                "ALow = TEMP_0.l",
+                "RAM = B",
+
+                
+
+                # segment[index] = C
+                f"ALow = {segment.upper()}.l",
+                "ALow = RAM",
+                "RAM = C",
+            ]
         else:
             raise NotImplementedError(segment)
 
