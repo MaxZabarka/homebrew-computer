@@ -1,0 +1,16 @@
+.IconButton {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 3px;
+    border:none;
+    background: #797979;
+    color:white;
+    svg {
+        font-size: 1.5rem;
+    }
+}

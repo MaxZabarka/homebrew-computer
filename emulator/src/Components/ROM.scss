@@ -1,18 +1,64 @@
 .ROM {
     width: 20rem;
     ol {
-        padding: 1rem;
+        padding-right: 1rem;
         list-style: none;
         height: 60vh;
         overflow-y: auto;
         li {
-            &.active {
-                outline:1px solid yellow;
+            position: relative;
+             &.focused-top, &.focused-bottom {
+                border-color:yellow;
+                background: rgba(255, 251, 0, 0.25);
+             }
+            &.focused-top {
+                border-bottom-color: transparent;
+
             }
-            border-bottom: 1px solid rgb(114, 114, 114);
+            &.focused-bottom {
+                border-top-color: rgba(114, 114, 114, 0.5);
+
+            }
+            &.breakpoint {
+                button.breakpoint-button {
+                    opacity: 1;
+                }
+            }
+            &:hover > .breakpoint-button {
+                opacity: 0.5;
+            }
+            .breakpoint-button {
+                opacity: 0;
+                position: absolute;
+                background: none;
+                border:none;
+                left:0;
+                top:0;
+                width: 1.3rem;
+                height: 100%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+   
+                div {
+                    width: 0.7rem;
+                    height: 0.7rem;
+                    border-radius: 50%;
+                    background: rgb(255, 17, 17);
+                }
+            }
+            border:1px solid transparent;
+            border-bottom: 1px solid rgba(114, 114, 114, 0.5);
             display: flex;
             justify-content: space-between;
             padding: 1rem;
+            padding-left: 1.5rem;
+            font-family: monospace;
+            font-size: 1rem;
+            .value {
+                font-weight: 900;
+            }
         }
     }
 }

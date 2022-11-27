@@ -1,0 +1,9 @@
+function add 0
+push argument 0
+push argument 1
+add
+return
+function main 0
+push constant 1
+push constant 2
+call add 2

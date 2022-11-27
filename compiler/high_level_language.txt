@@ -4,7 +4,6 @@ symbols: "{", "}", "(", ")", "[", "]", "." ",", ";", "+", "-", "*", "/", "&", "|
 
 file: (functionDec | varDec)*
 
-
 declarations:
     varDec: varDecWithoutValue | varDecWithValue
     varDecWithoutValue: type varName ';'

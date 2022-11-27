@@ -3,16 +3,26 @@ import { toBinary } from "../lib/toBinary";
 import "./Value.scss";
 
 const Value = (props) => {
-  const binary = toBinary(props.value, 8);
-  const hex = props.value.toString(16);
-
+  let binary = "N/A";
+  let hex = "N/A";
+  let decimal = "N/A";
+  
+  if (!(props.value === null || props.value === undefined)) {
+    if (props.bit16) {
+      binary = toBinary(props.value, 16);
+    } else {
+      binary = toBinary(props.value, 8);
+    }
+     hex = props.value.toString(16);
+     decimal = props.value;
+  }
   return (
     <div className="Value">
       <h2>{props.title}</h2>
-      <div className="row">
+      <div className={"row " + (props.wide && "wide")}>
         <div>
           <p className="label">Decimal</p>
-          <p className="num">{props.value}</p>
+          <p className="num">{decimal}</p>
         </div>
         <div className="binary">
           <p className="label">Binary</p>

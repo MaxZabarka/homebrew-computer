@@ -1,0 +1,14 @@
+.Emulator {
+
+    main {
+        margin: 1rem;
+        display: flex;
+        gap:1rem;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .disabled {
+        opacity: 0.5;
+    }
+}

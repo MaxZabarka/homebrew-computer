@@ -3,7 +3,7 @@ import Computer from "../core/Computer";
 import { ComputerContext } from "./Emulator";
 
 const Stack = () => {
-  const computer = useContext(ComputerContext);
+  const [computer] = useContext(ComputerContext);
   //   console.log('computer.memory.RAM[0],computer.memory.RAM[1]', computer.memory.RAM[0],computer.memory.RAM[1])
   //   return <></>
   const stackItems =

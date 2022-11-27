@@ -10,9 +10,15 @@ const ALUCircuit = require("./ALUCircuit");
 const toBinary = (n, pad = 8) => {
   return n.toString(2).padStart(pad, "0");
 };
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 class Computer {
   static STACK_START = 0x9;
+
   static START_RAM = 0x8000;
   static RAM_SIZE = 0x8000;
   static START_ROM = 0x0;
@@ -20,7 +26,7 @@ class Computer {
   static START_VRAM = 0x1000;
   static VRAM_SIZE = 0x1000;
 
-  constructor() {
+  constructor(randomizeRam = false) {
     this.programCounter = 0;
     this.registers = {
       IRHigh: 0,
@@ -31,7 +37,11 @@ class Computer {
       C: 0,
     };
     this.memory = {
-      ROM: Array(2 ** 10).fill(0),
+      ROM: randomizeRam
+        ? Array(2 ** 10)
+            .fill()
+            .map(() => getRandomInt(0, 255))
+        : Array(2 ** 10).fill(0),
       RAM: Array(2 ** 15).fill(0),
       VRAM: Array(2 ** 12).fill(0),
     };
@@ -72,6 +82,9 @@ class Computer {
   }
 
   disassemble(lowByte, highByte) {
+    if (lowByte + highByte === 0) {
+      return "NOP";
+    }
     const lowByteBits = toBinary(lowByte);
     const highByteBits = toBinary(highByte);
 

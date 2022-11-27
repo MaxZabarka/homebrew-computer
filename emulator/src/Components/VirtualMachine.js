@@ -5,7 +5,7 @@ import Paper from "./Paper";
 import Value from "./Value";
 
 const VirtualMachine = () => {
-  const computer = useContext(ComputerContext);
+  const [computer, _] = useContext(ComputerContext);
 
   const stack = computer.memory.RAM[0]
   const local = computer.memory.RAM[1]

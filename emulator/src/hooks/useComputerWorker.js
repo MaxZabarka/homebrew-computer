@@ -1,16 +1,23 @@
 import Computer from "../core/Computer";
 
-const { useEffect, useRef, useCallback } = require("react");
+const { useEffect, useRef, useCallback, useState } = require("react");
 
 if (!window.crossOriginIsolated) {
   throw new Error(
-    "Cross Origin Isolation must be enabled for useComputerWorker.js"
+    "Cross Origin Isolation must be enabled for useComputerWorker"
   );
 }
 
-export const useComputerWorker = ({ ROM, onChange }) => {
+export const useComputerWorker = ({ ROM, onChange, throttle }) => {
   const sharedRef = useRef(null);
   const workerRef = useRef(null);
+  const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+    if (workerRef.current) {
+      workerRef.current.postMessage({ action: "throttle" });
+    }
+  }, [throttle]);
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
@@ -20,9 +27,13 @@ export const useComputerWorker = ({ ROM, onChange }) => {
     );
 
     workerRef.current.onmessage = (e) => {
-      const newComputer = { ...e.data };
+      const newComputer = { ...e.data.computer };
       Object.setPrototypeOf(newComputer, Computer.prototype);
-      onChange(newComputer);
+      if (e.data.error) {
+        alert(e.data.error)
+      }
+      setRunning(sharedRef.current[0] === 1);
+      onChange(newComputer, e.data.reachedBreakpoint);
     };
   }, [onChange, ROM]);
 
@@ -31,6 +42,7 @@ export const useComputerWorker = ({ ROM, onChange }) => {
       action: "run",
       shouldRun: sharedRef.current,
     });
+    setRunning(true);
   };
 
   const stop = () => {
@@ -38,13 +50,17 @@ export const useComputerWorker = ({ ROM, onChange }) => {
   };
 
   const clock = () => {
-    console.log("cloc");
     workerRef.current.postMessage({
       action: "clock",
     });
   };
 
+  const updateBreakpoints = (breakpoints) => {
+    workerRef.current.postMessage({ action: "updateBreakpoints", breakpoints });
+  };
+
   const reset = () => {
+    stop();
     workerRef.current.postMessage({ action: "reset" });
   };
 
@@ -52,5 +68,5 @@ export const useComputerWorker = ({ ROM, onChange }) => {
     workerRef.current.postMessage({ action: "loadROM", ROM });
   }, []);
 
-  return { run, stop, clock, reset, loadROM };
+  return { run, stop, clock, reset, loadROM, updateBreakpoints, running };
 };

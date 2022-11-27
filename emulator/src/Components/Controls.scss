@@ -1,0 +1,38 @@
+.Controls {
+  display: flex;
+  background: #454545;
+  padding: 1rem;
+  justify-content: space-between;
+  div {
+    display: flex;
+    gap: 1rem;
+  }
+  button {
+    font-weight: bold;
+    background: #727272;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    &:hover {
+        filter:brightness(120%);
+    }
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    svg {
+      * {
+        stroke: white;
+      }
+      font-size: 150%;
+    }
+  }
+}

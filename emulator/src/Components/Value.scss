@@ -7,6 +7,12 @@
     margin-top: 0.5rem;
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
+    &.wide > div {
+      &.binary {
+        width: 14rem;
+      }
+    }
     & > div {
       width: 7rem;
       // &.binary {

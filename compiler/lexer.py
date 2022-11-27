@@ -89,6 +89,8 @@ class Lexer:
                     continue
                 token += c
             self.currentToken = 0
+            for token in self.tokens:
+                print(token)
         os.remove(temp_file)
 
     def has_more_tokens(self):
