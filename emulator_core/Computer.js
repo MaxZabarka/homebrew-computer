@@ -37,12 +37,12 @@ class Computer {
       C: 0,
     };
     this.memory = {
-      ROM: randomizeRam
-        ? Array(2 ** 10)
+      ROM: Array(2 ** 10).fill(0),
+      RAM: randomizeRam
+        ? Array(2 ** 15)
             .fill()
             .map(() => getRandomInt(0, 255))
-        : Array(2 ** 10).fill(0),
-      RAM: Array(2 ** 15).fill(0),
+        : Array(2 ** 15).fill(0),
       VRAM: Array(2 ** 12).fill(0),
     };
   }
@@ -112,16 +112,9 @@ class Computer {
         return `(${computation}), ${jump}`;
       }
 
-      return highByte + " " + lowByte;
+      return highByteBits + " " + lowByteBits;
     }
   }
-
-  // loadROM(filePath) {
-  //   const bin = fs.readFileSync(filePath);
-  //   for (let address = 0; address < bin.length; address++) {
-  //     this.memory.ROM[address] = bin[address];
-  //   }
-  // }
 
   writeMemory(address, data) {
     if (
@@ -207,7 +200,6 @@ class Computer {
 
   processComputationInstruction(instruction) {
     const load = LOADS[instruction.slice(1, 4)];
-    // const jumpCondition = JUMPS[instruction.slice(4, 8)];
     const ALUOperation = instruction.slice(8, 14);
     const ALUOut = ALUCircuit(
       this.registers.B,
@@ -220,27 +212,10 @@ class Computer {
       ALUOut.zero,
       ALUOut.carryOut
     );
-    // Jump logic here \/
-    // if (jumpCondition) {
-    //   let shouldJump = false;
-    //   Object.entries(jumpCondition).forEach(([flag, expectedValue]) => {
-    //     if (flag === "zero" && ALUOut.zero === expectedValue) {
-    //       shouldJump = true;
-    //     }
-    //     if (flag === "negative" && ALUOut.negative === expectedValue) {
-    //       shouldJump = true;
-    //     }
-    //     if (flag === "carry" && ALUOut.carryOut === expectedValue) {
-    //       shouldJump = true;
-    //     }
-    //   });
-    //   if (Object.entries(jumpCondition).length === 0) {
-    //     shouldJump = true;
-    //   }
+
     if (shouldJump) {
       this.programCounter = this.A;
     }
-    // }
 
     if (!load) {
       return;

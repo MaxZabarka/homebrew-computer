@@ -1,11 +1,9 @@
 import React, {
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
-import Computer from "../core/Computer";
 import { useFilePicker } from "use-file-picker";
 import ROM from "./ROM";
 import { useComputerWorker } from "../hooks/useComputerWorker";
@@ -19,6 +17,8 @@ export const ComputerContext = React.createContext();
 export const Emulator = () => {
   const [computer, setComputer] = useState(null);
   const [breakpoints, setBreakpoints] = useState(new Set());
+  const [speed, setSpeed] = useState(1);
+  const throttle = (1 - speed)*500
   const lastLoadedFileRef = useRef(null);
   const romRef = useRef(null);
 
@@ -29,24 +29,29 @@ export const Emulator = () => {
   });
 
   const onComputerChange = useCallback(
-    (newComputer, reachedBreakpoint) => {
+    (newComputer, reachedBreakpoint, sharp = false) => {
       setComputer(newComputer);
       if (reachedBreakpoint) {
-        scrollActiveIntoView();
+        const smooth = throttle > 150;
+        romRef.current.scrollActiveIntoView(smooth);
+
+        // scrollActiveIntoView(!sharp);
       }
     },
-    [setComputer]
+    [setComputer, throttle]
   );
 
-  const scrollActiveIntoView = () => {
+
+
+  const scrollActiveIntoView = (smooth) => {
     setTimeout(() => {
-      romRef.current.scrollActiveIntoView();
+      romRef.current.scrollActiveIntoView(smooth);
     }, 50);
   };
 
   const computerWorker = useComputerWorker({
     onChange: onComputerChange,
-    throttle: 0,
+    throttle: throttle
   });
 
   const run = () => {
@@ -71,8 +76,8 @@ export const Emulator = () => {
   const clearBreakpoints = () => {
     setBreakpoints(new Set());
   };
+  const { loadROM, updateBreakpoints, running, speed:actualSpeed } = computerWorker;
 
-  const { loadROM, updateBreakpoints, running } = computerWorker;
   useEffect(() => {
     if (!filesContent[0]) {
       return;
@@ -99,8 +104,12 @@ export const Emulator = () => {
         clock={clock}
         reset={reset}
         clearBreakpoints={clearBreakpoints}
+        onSpeedChange={setSpeed}
+        speed={speed}
+        fileName={filesContent[0]?.name}
+        actualSpeed={actualSpeed}
       />
-      <main className={running ? "disabled" : ""}>
+      <main className={running && parseFloat(speed) === 1 ? "disabled" : ""}>
         {computer && (
           <ComputerContext.Provider value={[computer, setComputer]}>
             <ROM

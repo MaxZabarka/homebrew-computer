@@ -12,35 +12,50 @@ export const useComputerWorker = ({ ROM, onChange, throttle }) => {
   const sharedRef = useRef(null);
   const workerRef = useRef(null);
   const [running, setRunning] = useState(false);
-
-  useEffect(() => {
-    if (workerRef.current) {
-      workerRef.current.postMessage({ action: "throttle" });
-    }
-  }, [throttle]);
+  const [speed, setSpeed] = useState(null);
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
-    sharedRef.current = new Int8Array(new SharedArrayBuffer(1));
+    sharedRef.current = new Int16Array(new SharedArrayBuffer(4));
+    sharedRef.current[0] = 0; // 0 = stop, 1 = run
+
     workerRef.current = new Worker(
       new URL("./computerWorker.js", import.meta.url)
     );
+  }, [])
 
+  useEffect(() => {
     workerRef.current.onmessage = (e) => {
-      const newComputer = { ...e.data.computer };
-      Object.setPrototypeOf(newComputer, Computer.prototype);
-      if (e.data.error) {
-        alert(e.data.error)
+      if (e.data.computer) {
+        const newComputer = { ...e.data.computer };
+        Object.setPrototypeOf(newComputer, Computer.prototype);
+        if (e.data.error) {
+          alert(e.data.error);
+        }
+        onChange(newComputer, e.data.reachedBreakpoint, e.data.sharp);
+      }
+      if (e.data.speed) {
+        setSpeed(e.data.speed)
+        console.log('speed (Hz):>> ', (e.data.speed));
+
+        console.log('speed (mHZ):>> ', (e.data.speed/1_000_000));
       }
       setRunning(sharedRef.current[0] === 1);
-      onChange(newComputer, e.data.reachedBreakpoint);
     };
-  }, [onChange, ROM]);
+  }, [onChange]);
+
+  useEffect(() => {
+    sharedRef.current[1] = throttle;
+  }, [throttle]);
+
+  useEffect(() => {
+    setSpeed(null);
+  }, [running]);
 
   const run = () => {
     workerRef.current.postMessage({
       action: "run",
-      shouldRun: sharedRef.current,
+      shared: sharedRef.current,
     });
     setRunning(true);
   };
@@ -68,5 +83,5 @@ export const useComputerWorker = ({ ROM, onChange, throttle }) => {
     workerRef.current.postMessage({ action: "loadROM", ROM });
   }, []);
 
-  return { run, stop, clock, reset, loadROM, updateBreakpoints, running };
+  return { run, stop, clock, reset, loadROM, updateBreakpoints, running, speed };
 };

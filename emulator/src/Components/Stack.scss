@@ -1,0 +1,101 @@
+.Stack {
+  align-self: stretch;
+  width: 27rem;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  justify-content: space-between;
+  position: relative;
+
+  .wrapper {
+    overflow-y: scroll;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    // justify-content: flex-end;
+    // align-items: flex-start;
+    align-items: center;
+
+    ul {
+      // width: 20rem;
+      //   height: 100%;
+      //   margin-top: 1rem;
+      list-style: none;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      // justify-content: center;
+      li {
+        // margin: 0 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-right-width: 2px;
+        border-bottom: none;
+        text-align: center;
+        padding: 1rem;
+        width: 5rem;
+        font-size: 1.25rem;
+        font-family: monospace;
+        position: relative;
+        // animation: forwards fadeIn 0.5s linear;
+        &.local {
+          box-shadow: 0 4px 0 0 red;
+          // border-bottom: 3px solid red;
+          // background: red;
+          .lcl-arrow {
+            opacity: 1;
+          }
+        }
+        &.argument {
+          // background: green;
+          border-bottom: 3px solid rgba(0,255,0);
+          .arg-arrow {
+            opacity: 1;
+          }
+        }
+        .lcl-arrow,
+        .arg-arrow {
+          // font-family: sans-serif;
+          font-family: monospace;
+          display: flex;
+          align-items: center;
+          gap:0.5rem;
+          font-weight: bold;
+          white-space: nowrap;
+
+          position: absolute;
+          bottom: -0.84rem;
+          opacity: 0;
+          transition: 0.3s ease opacity;
+        }
+        .lcl-arrow {
+          color: red;
+          right: 110%;
+          svg {
+            transform: scaleX(-1);
+          }
+
+        }
+        .arg-arrow {
+          color: rgb(0, 255, 0);
+          left: 110%;
+
+        }
+      }
+    }
+    .bottom {
+      width: 12rem;
+      // margin: 0 auto;
+      // width: 80%;
+      border-top: 8px solid rgb(92, 92, 92);
+    }
+  }
+}
+@keyframes fadeIn {
+  0% {
+    transform: translateX(-100%) translateY(-50%);
+  }
+  100% {
+    transform: none;
+  }
+}

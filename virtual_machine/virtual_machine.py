@@ -7,14 +7,16 @@ import os
 import tempfile
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
-from arguments import parse_file_io
-from check_file import check_file
 from helpers import remove_comments
+from check_file import check_file
+from arguments import parse_file_io
 
 parser = argparse.ArgumentParser(
     description='Compile a virtual machine file into assembly')
 parser.add_argument("-r", "--ram", action="store_true",
                     help="Generate code that will run in the memory space of the RAM instead of ROM")
+parser.add_argument("-s", "--standalone", action="store_true",
+                    help="Do not jump to main")
 args = parse_file_io(parser, "zab")
 
 arithmetic = ["add", "subtract", "not",
@@ -23,6 +25,7 @@ arithmetic = ["add", "subtract", "not",
 built_in_arithmetic = ["add", "subtract", "or", "bitwise_and", "left_shift"]
 
 STACK_START = 9
+
 
 class Parser:
     def __init__(self, file_name):
@@ -98,7 +101,7 @@ segments = ["LOCAL", "ARGUMENT"]
 
 
 class CodeWriter:
-    def __init__(self, filename, is_ram=False, origin=0x8000):
+    def __init__(self, filename, is_ram=False, standalone=False, origin=0x8000):
         self.filename = filename
         if filename.endswith('.vm'):
             self.filename = filename[:-3]
@@ -106,6 +109,7 @@ class CodeWriter:
         self.origin = origin
         self.id = 0
         self.is_ram = is_ram
+        self.standalone = standalone
         self.uid = 0
         self.write_bootstrap()
 
@@ -214,8 +218,6 @@ class CodeWriter:
                     command = "JGE"
                 elif op == "less_than_or_equal":
                     command = "JLE"
-        
-
 
                 self.uid += 1
                 self.instructions_list += [
@@ -278,7 +280,7 @@ class CodeWriter:
                     "ALow = C",
                     "AHigh = B",
                     "C = RAM",
-                    
+
                     # SP--
                     "AHigh = 128",
                     "ALow = STACK_POINTER.l",
@@ -435,7 +437,7 @@ class CodeWriter:
                 "ALow = TEMP_0.l",
                 "RAM = B",
 
-                
+
 
                 # segment[index] = C
                 f"ALow = {segment.upper()}.l",
@@ -636,7 +638,8 @@ class CodeWriter:
             "ALow = STACK_POINTER.l",
             f"RAM={STACK_START}",  # Default stack pointer
         ]
-        self.write_call("main", 0)
+        if (not self.standalone):
+            self.write_call("main", 0)
 
     def write_increment_sp(self):
         self.instructions_list += [
@@ -655,7 +658,7 @@ class CodeWriter:
 
 parser = Parser(args.file)
 
-code_writer = CodeWriter(args.output, args.ram)
+code_writer = CodeWriter(args.output, args.ram, args.standalone)
 
 while True:
     if parser.command_type() == "C_ARITHMETIC":

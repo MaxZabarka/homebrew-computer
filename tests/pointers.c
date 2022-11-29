@@ -1,4 +1,5 @@
 int main() {
     int a = 123;
-    &a;
+    int* b = 88;
+    b = (&a);
 }

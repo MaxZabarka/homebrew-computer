@@ -3,34 +3,19 @@ const { execSync } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 
-// const endsWith = (array, suffix) => {
-//   if (suffix.length > array.length || !suffix.length) {
-//     return false
-//   }
-//   const clonedArray = [...array];
-//   const clonedSuffix = [...suffix];
-//   while (clonedSuffix.length > 0) {
-//     if (clonedArray.pop() !== clonedSuffix.pop()) {
-//       return false;
-//     }
-//   }
-//   return true;
-// };
-
 const run = (fileName) => {
   const compiler = path.resolve(__dirname, "../compile.py");
   const input = path.resolve(__dirname, fileName);
   const output = path.resolve(__dirname, path.parse(fileName).name);
 
   try {
-    const computer = new Computer();
+    const computer = new Computer(true);
     execSync(`${compiler} ${input} -o ${output}.bin`);
     const ROM = fs.readFileSync(output + ".bin");
     computer.loadROM(ROM);
     computer.clock(200000);
     return computer;
   } finally {
-    // deleteFile(output + ".bin");
     deleteFile(output + ".zab");
     deleteFile(output + ".vm");
   }

@@ -225,8 +225,15 @@ class CodeGenerator:
 
         symbol_table["return_type"] = function_dec.return_type
 
+        size_of_local_variables = 0
+        for variable in symbol_table["local_variables"]:
+            if variable.type.pointer_amount >= 1:
+                size_of_local_variables += 2
+            else:
+                size_of_local_variables += 1
+
         instructions.append(
-            f"function {function_dec.name} {len(symbol_table['local_variables'])}"
+            f"function {function_dec.name} {size_of_local_variables}"
         )
         instructions += statement_instructions
         return instructions

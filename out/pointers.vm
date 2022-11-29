@@ -1,0 +1,7 @@
+function main 2
+push constant 123
+pop local 0
+push constant 88
+pop local 1
+push address-of-local 0
+pop local 1

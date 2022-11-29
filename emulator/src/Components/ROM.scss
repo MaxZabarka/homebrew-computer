@@ -1,10 +1,16 @@
 .ROM {
     width: 20rem;
+    // flex:1;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
     ol {
         padding-right: 1rem;
         list-style: none;
-        height: 60vh;
-        overflow-y: auto;
+        flex:1;
+        // height: 60vh;
+        overflow-y: scroll;
+
         li {
             position: relative;
              &.focused-top, &.focused-bottom {

@@ -3,9 +3,14 @@
   background: #454545;
   padding: 1rem;
   justify-content: space-between;
-  div {
+  & > div {
     display: flex;
     gap: 1rem;
+    align-items: center;
+    .filename {
+        opacity: 0.5;
+    }
+
   }
   button {
     font-weight: bold;
@@ -35,4 +40,28 @@
       font-size: 150%;
     }
   }
+  .slider {
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    input {
+      width: 90%;
+    }
+    .speed {
+      display: flex;
+      flex-direction: column;
+      & > div {
+        height: 1.2rem;
+        display: flex;
+        align-items: center;
+      }
+      .light {
+        opacity: 0.7;
+      }
+      // gap:0.5rem;
+    }
+  }
+
 }
