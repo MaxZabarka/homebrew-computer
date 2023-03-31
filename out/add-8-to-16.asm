@@ -1,0 +1,61 @@
+#origin 32768
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+RAM=9
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+AHigh = 128
+ALow = RAM
+RAM=10
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+B=RAM
+RAM=(B+1)
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+AHigh = 128
+ALow = RAM
+RAM=255
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+B=RAM
+RAM=(B+1)
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+AHigh = 128
+ALow = RAM
+RAM=12
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+B=RAM
+RAM=(B+1)
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+AHigh = 128
+ALow = RAM
+RAM=1
+AHigh = STACK_POINTER.h
+ALow = STACK_POINTER.l
+B=RAM
+RAM=(B+1)
+AHigh = 128
+ALow = STACK_POINTER.l
+B = RAM
+RAM = (B-1)
+ALow = RAM
+C = RAM
+AHigh = 128
+ALow = STACK_POINTER.l
+B = RAM
+B = (B-1)ALow = (B-1)
+B = RAM
+RAM = (B+C)
+#origin 0
+no_carry_1:
+#origin 32768
+#origin 0
+halt:
+AHigh = halt.h
+ALow = halt.l
+JMP
+#origin 32768

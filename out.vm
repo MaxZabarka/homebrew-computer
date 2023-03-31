@@ -1,0 +1,24 @@
+function mult 1
+push constant 0
+pop local 0
+label _1_start
+push argument 0
+if-not-goto _1_end
+push local 0
+push argument 1
+add
+pop local 0
+push argument 0
+push constant 1
+subtract
+pop argument 0
+goto _1_start
+label _1_end
+push local 0
+return
+function main 0
+push constant 2
+push constant 3
+call mult 2
+push constant 5
+call mult 2

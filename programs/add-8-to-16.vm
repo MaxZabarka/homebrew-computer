@@ -1,0 +1,5 @@
+push constant 10
+push constant 255
+push constant 12
+push constant 1
+add-16

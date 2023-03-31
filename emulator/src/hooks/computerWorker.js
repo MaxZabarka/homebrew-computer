@@ -28,7 +28,6 @@ onmessage = (e) => {
         try {
           computer.clock();
           const currentTime = performance.now();
-          console.log("currentTime - lastClock :>> ", currentTime - lastClock);
           postMessage({
             speed: 1 / ((currentTime - lastClock) / MILLI_TO_SEC),
           });
@@ -93,7 +92,6 @@ onmessage = (e) => {
         break;
       }
     }
-    console.log("error :>> ", error);
     postMessage({ computer, reachedBreakpoint, error });
   }
 
@@ -115,8 +113,15 @@ onmessage = (e) => {
   }
 
   if (action === "loadROM") {
-    computer = new Computer();
-    computer.loadROM(data.ROM);
+    try{
+      computer = new Computer();
+      computer.loadROM(data.ROM);
+    } catch (e) {
+      console.log(e);
+      postMessage({ error: e });
+      return;
+    }
+
     postMessage({ computer });
   }
 

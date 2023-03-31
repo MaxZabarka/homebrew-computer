@@ -12,9 +12,11 @@ C = (B+1)
 ALow = STACK_POINTER_LOW.l
 AHigh = STACK_POINTER_LOW.h
 RAM = C
+
 ALow = nocarry.l
 AHigh = 0
 (B+1), JNC
+
 // if there is a carry
 ALow = STACK_POINTER_HIGH.l
 AHigh = STACK_POINTER_HIGH.h

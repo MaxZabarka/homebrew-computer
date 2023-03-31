@@ -69,7 +69,10 @@ class Parser:
         while self.lexer.token_value() == "*":
             pointer_amount += 1
             self.lexer.advance()
-        return Type(type, pointer_amount)
+        size = 1
+        if (pointer_amount >= 1):
+            size = 2
+        return Type(type, pointer_amount, size)
 
     def parse_param_list(self):
         param_list = []
@@ -108,7 +111,7 @@ class Parser:
         self.eat("[")
         index = parse_expression(self)
         self.eat("]")
-        return UnOp("DEREFERENCE", BinOp("ADD", name, index))
+        return UnOp("DEREFERENCE", BinOp("ADD-16", name, index))
 
     def parse_statements(self):
         statements = []

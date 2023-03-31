@@ -1,7 +1,26 @@
-function main 2
+function test 0
+push argument 2
+push argument 0
+push argument 1
+poke
+push constant 0
+return
+function main 3
 push constant 123
 pop local 0
-push constant 88
-pop local 1
 push address-of-local 0
+push address-of-local 0
+dereference
+push address-of-local 0
+pop local 2
 pop local 1
+push local 1
+push local 2
+push constant 10
+call test 3
+push local 0
+push local 1
+push local 2
+push constant 20
+call test 3
+push local 0

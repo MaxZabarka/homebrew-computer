@@ -7,9 +7,9 @@ import os
 import tempfile
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
-from helpers import remove_comments
-from check_file import check_file
 from arguments import parse_file_io
+from check_file import check_file
+from helpers import remove_comments
 
 parser = argparse.ArgumentParser(
     description='Compile a virtual machine file into assembly')
@@ -20,7 +20,12 @@ parser.add_argument("-s", "--standalone", action="store_true",
 args = parse_file_io(parser, "zab")
 
 arithmetic = ["add", "subtract", "not",
-              "equal", "or", "greater_than", "less_than", "left_shift", "bitwise_and", "less_than_or_equal", "greater_than_or_equal", "inequal", "dereference"]
+              "equal", "or", "greater_than", "less_than", "left_shift", "bitwise_and", "less_than_or_equal", "greater_than_or_equal", "inequal", "dereference", "poke",
+              #   "add-8-to-16", "sub-8-to-16"
+              "8-to-16",
+              "add-16",
+              "sub-16",
+              ]
 # operations that the computer can do in one hardware cycle
 built_in_arithmetic = ["add", "subtract", "or", "bitwise_and", "left_shift"]
 
@@ -262,7 +267,7 @@ class CodeWriter:
                 self.write_label(f"end_{self.uid}")
             elif (op == "dereference"):
                 self.instructions_list += [
-                    # C = low byte
+                    # C = high byte
                     "AHigh = 128",
                     "ALow = STACK_POINTER.l",
                     "B = RAM",
@@ -270,15 +275,14 @@ class CodeWriter:
                     "ALow = (B)",
                     "C = RAM",
 
-                    # B = high byte
+                    # B = low byte
                     "ALow = (B-1)",
                     "B = RAM",
-                    "ALow = (B-1)",
                     "RAM = B",
 
                     # C = *arg
-                    "ALow = C",
-                    "AHigh = B",
+                    "ALow = B",
+                    "AHigh = C",
                     "C = RAM",
 
                     # SP--
@@ -293,6 +297,148 @@ class CodeWriter:
                     "ALow = B",
                     "RAM = C"
                 ]
+            elif (op == "poke"):
+                self.instructions_list += [
+                    # C = high byte
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    # SP --
+                    "RAM = (B-1)",
+                    "B = (B-1)",
+                    "ALow = B",
+                    "C = RAM",
+
+                    # B = low byte
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    # SP --
+                    "RAM = (B-1)",
+                    "B = (B-1)",
+                    "ALow = (B)",
+                    "B = RAM",
+
+                    # Temp_0 = high byte
+                    "AHigh = TEMP_0.h",
+                    "ALow = TEMP_0.l",
+                    "RAM = C",
+
+                    # Temp_1 = low byte
+                    "AHigh = TEMP_1.h",
+                    "ALow = TEMP_1.l",
+                    "RAM = B",
+
+                    # C = data
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    # SP --
+                    "RAM = (B-1)",
+                    "B = (B-1)",
+                    "ALow = B",
+                    "C = RAM",
+
+                    # do the poke
+                    "AHigh = TEMP_1.h",
+                    "ALow = TEMP_1.l",
+                    "B = RAM",
+                    "ALow = TEMP_0.l",
+                    "AHigh = TEMP_0.h",
+                    "ALow = B",
+                    "RAM = C"
+                ]
+            elif (op == "add-8-to-16") or (op == "sub-8-to-16"):
+                # Does not support negative numbers
+                sign = None
+                if op == "add-8-to-16":
+                    sign = "+"
+                elif op == "sub-8-to-16":
+                    sign = "-"
+
+                self.uid += 1
+                no_carry_address = f"no_carry_{self.uid}"
+                self.instructions_list += [
+                    # SP--
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "RAM = (B-1)",
+
+                    # C = 8 bit int
+                    "ALow = RAM",
+                    "C = RAM",
+
+                    # Add/sub 8 bit int to low byte of 16 bit int
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "B = (B-1)"
+                    "ALow = (B-1)",
+                    "B = RAM",
+                    f"RAM = (B{sign}C)",
+                    f"AHigh = {no_carry_address}.h",
+                    f"ALow = {no_carry_address}.l",
+                    f"(B{sign}C), {'JNC' if sign == '+' else 'JC'}",
+
+                    # A carry occured and the high byte must be incremented/decremented
+                    "AHigh = 128",
+                    "ALow = STACK_POINTER.l",
+                    "B = RAM",
+                    "B = (B-1)"
+                    "ALow = B",
+                    "B = RAM",
+                    f"RAM = (B{sign}1)"
+
+                ]
+                self.write_label(no_carry_address)
+            elif (op == "add-16" or op == "sub-16"):
+                    sign = None
+                    if op == "add-16":
+                        sign = "+"
+                    elif op == "sub-16":
+                        sign = "-"
+
+                    self.uid += 1
+                    no_carry_address = f"no_carry_{self.uid}"
+                    self.instructions_list += [
+                        # SP--
+                        "AHigh = 128",
+                        "ALow = STACK_POINTER.l",
+                        "B = RAM",
+                        "RAM = (B-1)",
+
+                        # C = High byte of arg2
+                        "ALow = RAM",
+                        "C = RAM",
+
+                        # Add/sub high bytes
+                        "AHigh = 128",
+                        "ALow = STACK_POINTER.l",
+                        "B = RAM",
+                        "B = (B-1)"
+                        "ALow = (B-1)",
+                        "B = RAM",
+                        f"RAM = (B{sign}C)",
+                        # f"AHigh = {no_carry_address}.h",
+                        # f"ALow = {no_carry_address}.l",
+                        # f"(B{sign}C), {'JNC' if sign == '+' else 'JC'}",
+
+                        # # A carry occured and the high byte must be incremented/decremented
+                        # "AHigh = 128",
+                        # "ALow = STACK_POINTER.l",
+                        # "B = RAM",
+                        # "B = (B-1)"
+                        # "ALow = B",
+                        # "B = RAM",
+                        # f"RAM = (B{sign}1)"
+                    ]
+                    self.write_label(no_carry_address)
+                    # add/sub high bytes
+                    self.instructions_list += [
+                        
+                    ]
+
+
             else:
                 raise NotImplementedError(op)
 
@@ -354,16 +500,16 @@ class CodeWriter:
                 "B=RAM",
                 "C=(B+C)",
 
-                # RAM[SP] = 0
+                # RAM[SP] = C
                 # All variables are shared on the stack so high byte is always 128 because that is the start of ram and stack only goes up to 255
                 "ALow = STACK_POINTER.l",
                 "ALow = RAM",
-                "RAM = 128",
+                "RAM = C",
 
-                # RAM[SP+1] = C
+                # RAM[SP+1] = 128
                 "B = ALow",
                 "ALow = (B+1)",
-                "RAM = C",
+                "RAM = 128",
 
                 # SP += 2
                 "ALow = STACK_POINTER.l",

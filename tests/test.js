@@ -3,13 +3,15 @@ const { execSync } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 
+const RANDOMIZE = false;
+
 const run = (fileName) => {
   const compiler = path.resolve(__dirname, "../compile.py");
   const input = path.resolve(__dirname, fileName);
   const output = path.resolve(__dirname, path.parse(fileName).name);
 
   try {
-    const computer = new Computer(true);
+    const computer = new Computer(RANDOMIZE);
     execSync(`${compiler} ${input} -o ${output}.bin`);
     const ROM = fs.readFileSync(output + ".bin");
     computer.loadROM(ROM);
@@ -114,6 +116,9 @@ test("bitwise operators", () => {
   testStack("bitwise.c", [16, 127]);
 });
 
-// test("pointers", () => {
-//   testStack("pointers.c", [1, 2, 3, 4, 5, 6]);
-// })
+test("pointers", () => {
+  testStack("pointers.c", [13, 128, 123, 0, 10, 0, 20]);
+});
+test("array subscripts", () => {
+  testStack("array_subscripts.c", [1, 2, 3]);
+});

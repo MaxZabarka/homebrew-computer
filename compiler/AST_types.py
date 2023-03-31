@@ -62,9 +62,10 @@ class IfStatement:
 
 
 class Type:
-    def __init__(self, type, pointer_amount):
+    def __init__(self, type, pointer_amount, size=1):
         self.type = type
         self.pointer_amount = pointer_amount
+        self.size = size;
 
     def __repr__(self):
         return f"<Type: {self.type}{'*'*self.pointer_amount}>"

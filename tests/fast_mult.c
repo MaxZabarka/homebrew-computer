@@ -1,7 +1,7 @@
 int mult(int x, int y)
 {
     // UB! this is not initialized to zero because there is not enough space in the ROM. If it happens to be anything but a zero the program will not work
-    int sum; 
+    int sum;
     int i = 8;
     while (i)
     {

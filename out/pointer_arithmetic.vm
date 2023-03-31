@@ -1,0 +1,31 @@
+function main 4
+push constant 1
+pop local 0
+push constant 2
+pop local 1
+push address-of-local 0
+pop local 3
+pop local 2
+push local 2
+push local 3
+push constant 0
+add-8-to-16
+dereference
+push local 2
+push local 3
+push constant 1
+add-8-to-16
+dereference
+push local 2
+push local 3
+push constant 0
+add-8-to-16
+dereference
+push constant 2
+add
+push local 2
+push local 3
+push constant 0
+add-8-to-16
+poke
+push local 0

@@ -104,17 +104,36 @@ class CodeGenerator:
     def generate_return(self, return_statement):
         return self.generate_expression(return_statement.value) + ["return"]
 
+    def get_variable_size(self, identifier):
+        symbol_table = self.function_symbol_table[self.current_function]
+        var = None
+        try:
+            var = next(var for var in symbol_table["local_variables"] if var["name"] == identifier)
+        except StopIteration:
+            var = next(var for var in symbol_table["argument_variables"] if var["name"] == identifier)
+        if (var == None):
+            raise Exception(f"Variable {identifier} not defined")
+        return var["type"].size
+
+
+
     def generate_assignment(self, assignment):
         instructions = []
         instructions += self.generate_expression(assignment.source)
+
         if (isinstance(assignment.destination, str)):
+            size = self.get_variable_size(assignment.destination)
             segment, index = self.get_segment_and_index(assignment.destination)
-            instructions += [f"pop {segment} {index}"]
+            pops = []
+            for i in range(size):
+                # instructions += [f"pop {segment} {index + i}"]
+                pops = [f"pop {segment} {index + i}"] + pops
+            instructions += pops
+
         elif isinstance(assignment.destination, UnOp):
             if (assignment.destination.op == "DEREFERENCE"):
-                # pass
                 instructions += self.generate_expression(assignment.destination.a)
-                instructions += ["pop pointer"]
+                instructions += ["poke"]
             else:
                 raise Exception("Invalid assignment")
         else:
@@ -146,7 +165,13 @@ class CodeGenerator:
 
     def generate_variable(self, identifier):
         segment, index = self.get_segment_and_index(identifier)
-        return [f"push {segment} {index}"]
+        size = self.get_variable_size(identifier)
+        instructions = []
+        for i in range(size):
+            instructions += [f"push {segment} {index + i}"] 
+            # instructions = [f"push {segment} {index + i}"] + instructions
+        print(instructions)
+        return instructions
 
     def get_segment_and_index(self, identifier):
         symbol_table = self.function_symbol_table[self.current_function]
@@ -170,7 +195,7 @@ class CodeGenerator:
             instructions += self.generate_expression(argument)
 
         return instructions + [
-            f"call {function_call.name} {len(symbol_table['argument_variables'])}"
+            f"call {function_call.name} {self.symbol_table_size(symbol_table['argument_variables'])}"
         ]
 
     def generate_constant(self, constant):
@@ -192,13 +217,24 @@ class CodeGenerator:
             if variable["name"] == var_dec.name:
                 raise Exception(var_dec.name + " is already defined")
 
+        
+
         symbol_table["local_variables"].append(
             {
                 "name": var_dec.name,
                 "type": var_dec.type,
-                "index": len(symbol_table["local_variables"]),
+                "index": self.symbol_table_size(symbol_table["local_variables"]),
             }
         )
+
+    def symbol_table_size(self, symbol_table):
+        size = 0
+        for variable in symbol_table:
+            if variable["type"].pointer_amount >= 1:
+                size += 2
+            else:
+                size += 1
+        return size
 
     def generate_function_dec(self, function_dec):
         instructions = []
@@ -217,7 +253,7 @@ class CodeGenerator:
                 {
                     "name": parameter.identifier,
                     "type": parameter.type,
-                    "index": len(symbol_table["argument_variables"]),
+                    "index": self.symbol_table_size(symbol_table["argument_variables"]),
                 }
             )
 
@@ -225,12 +261,7 @@ class CodeGenerator:
 
         symbol_table["return_type"] = function_dec.return_type
 
-        size_of_local_variables = 0
-        for variable in symbol_table["local_variables"]:
-            if variable.type.pointer_amount >= 1:
-                size_of_local_variables += 2
-            else:
-                size_of_local_variables += 1
+        size_of_local_variables = self.symbol_table_size(symbol_table["local_variables"])
 
         instructions.append(
             f"function {function_dec.name} {size_of_local_variables}"

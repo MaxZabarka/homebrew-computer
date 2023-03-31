@@ -26,12 +26,13 @@ export const useComputerWorker = ({ ROM, onChange, throttle }) => {
 
   useEffect(() => {
     workerRef.current.onmessage = (e) => {
+      if (e.data.error) {
+        alert(e.data.error);
+        console.error(e.data.error)
+      }
       if (e.data.computer) {
         const newComputer = { ...e.data.computer };
         Object.setPrototypeOf(newComputer, Computer.prototype);
-        if (e.data.error) {
-          alert(e.data.error);
-        }
         onChange(newComputer, e.data.reachedBreakpoint, e.data.sharp);
       }
       if (e.data.speed) {
