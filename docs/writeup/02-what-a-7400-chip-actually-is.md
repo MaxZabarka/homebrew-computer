@@ -1,22 +1,20 @@
 # What a 7400 chip actually is
 
-Before we look at the machine, we should agree on what it is made of. If you have never held one, "chip" probably means something like a CPU: a mysterious black square with a billion transistors, doing things no person fully understands. The 7400 series is the opposite of that, and the whole project rests on the difference.
+Before we get to the machine, it helps to be clear about what it is made of. If you have never held one, the word "chip" probably brings to mind something like a CPU, a black square with a billion transistors inside doing work that nobody fully understands. A 7400-series part is almost the opposite: a small black rectangle with fourteen to twenty-four metal legs, running on five volts, that mostly does one small job. They look like caterpillars. That gap, a handful of transistors you can account for against the billion you take on faith, is the whole reason a person can build a computer this way and understand every part of it.
 
 ## A family of small, honest parts
 
-The 7400 series is a family of logic chips introduced in the 1960s. Each one is a small black rectangle with somewhere between 14 and 24 metal legs, it runs on 5 volts, and it does exactly one thing. They look like caterpillars. The original 7400 contains four NAND gates. That is the entire chip. Four gates, fourteen pins, and a datasheet a few pages long that tells you everything there is to know.
+These chips date to the 1960s. The original 7400 the series is numbered after is four NAND gates and nothing else: sixteen transistors on the die, and a datasheet you can read end to end in a few minutes. There is no firmware and nothing to configure, and the logic is plain enough that someone with no engineering background could follow everything the chip does in that same sitting.
 
 ![The 7400's four NAND gates, and the chip itself](../media/7400-chip.png)
 
-The family grew from there, and the numbering scheme just counts upward: 7404 is six inverters, 7474 is two flip-flops, 74161 is a 4-bit counter. The parts I care about sit further up the catalog, where single chips start doing register-sized and ALU-sized jobs. But every member of the family keeps the same promise: you can read the datasheet in one sitting, you can understand the chip completely, and you can poke its pins with a wire and watch it respond. There is no firmware, no configuration, no hidden state. Voltage in, voltage out.
+The numbering counts roughly upward from there: 7404 is six inverters, 7474 is two flip-flops, 74161 is a 4-bit counter. The parts I lean on sit higher up the catalog, where one chip does register-sized or ALU-sized work, but the same rules hold all the way up. That is why every control signal here ends at a pin I can point to, and when I say later that a control line enables a register, I mean a wire touching the leg of a chip.
 
-That promise is why I built from these parts. A machine made of 7400 chips has no black boxes anywhere in it. Every control signal in this design ends at a physical pin of a part you can buy, and when I say in later chapters that "a control line enables a register", that is a literal wire touching a literal leg.
-
-## The main players in this machine
+## The parts that do the work
 
 ![The 7400-series parts this machine is built from](../media/fig-7400-family.png)
 
-Five family members do almost all the work here:
+Five parts do almost all the work in this machine:
 
 | Part | What it is | Job in this machine |
 | --- | --- | --- |
@@ -26,10 +24,10 @@ Five family members do almost all the work here:
 | 74181 | 4-bit ALU slice | two of them chained form the whole ALU |
 | 74682 | 8-bit comparator | detects when the ALU result is zero |
 
-The 74181 is the star, and it gets its own chapter. It is a complete 4-bit arithmetic and logic unit in one package, from an era when a "CPU" was a cabinet and this chip was one slice of its math section. The others are supporting cast, but the 74245 deserves a moment now, because you will meet it constantly. It is a set of eight switches. When its enable pin is low, eight signals pass through; when high, the chip electrically disappears. That one behavior is what lets many registers share one bus without fighting.
+The 74181 does the most, and it gets its own chapter later. It is a complete 4-bit arithmetic and logic unit in a single package, from a time when a CPU filled a cabinet and this chip was one slice of its math section. The 74245 is worth pausing on now, because it turns up on nearly every page from here on. Think of it as eight switches in a row. When its enable pin is held low the eight signals pass straight through, and when the pin goes high the chip electrically disappears from the bus. That second state is what lets a dozen registers share one set of wires without all of them talking over each other.
 
-Three memory parts round out the machine, and they are cousins rather than family members: the 62256 (32KB of static RAM), the IDT7134 (4KB of dual-port static RAM, a strange part I will get to in chapter 8), and the AT28C256 EEPROM, a 32KB memory you program once and read forever. Remember the EEPROM. In chapter 7 it stops being a memory chip and becomes the machine's brain.
+Three memory parts fill out the machine. The 62256 holds 32KB of static RAM, the IDT7134 is a stranger 4KB dual-port RAM that I come back to in chapter 8, and the AT28C256 is a 32KB EEPROM, a memory you program once and then read from forever. That last one is worth keeping in mind. In chapter 7 the EEPROM stops being a memory chip at all and becomes the part that decides what the machine does next.
 
-These parts sound friendly, and as objects to think with they are. Working with them in the physical world is another matter: what they cost, how long they take to arrive, and what wiring hundreds of them actually means. That story gets its full telling in chapter 7, at the moment it forced the machine's strangest decision. First, the machine these parts add up to.
+On paper these parts are easy to like, and as objects to reason about they really are simple. Building with them in the physical world is harder, once you account for what they cost, how long they take to arrive, and what it means to wire hundreds of them by hand. I get to that in chapter 7, where it ends up forcing the oddest decision in the whole design. For now, the shape all these parts add up to.
 
 Next: [The shape of the machine](03-the-shape-of-the-machine.md)
