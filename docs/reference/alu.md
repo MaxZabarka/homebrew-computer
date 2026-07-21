@@ -26,7 +26,7 @@ This is exactly the structure of `ALUCircuit` in `emulator_core/ALUCircuit.js`: 
 
 ## The expression table
 
-The six ALU bits in a compute instruction map straight onto the 74181 control pins: four select lines, carry in, and mode. The assembler does not expose all 32 combinations. It has a fixed table of the useful ones, in `EXPRESSIONS` in `assembler.py`:
+The six ALU bits in a compute instruction map straight onto the 74181 (4-bit ALU slice) control pins: four select lines, carry in, and mode. The assembler does not expose all 32 combinations. It has a fixed table of the useful ones, in `EXPRESSIONS` in `assembler.py`:
 
 | Expression | s0 s1 s2 s3 C M |
 | --- | --- |
@@ -41,7 +41,7 @@ The six ALU bits in a compute instruction map straight onto the 74181 control pi
 | B\|C | 111001 |
 | B&C | 101101 |
 
-Any of these can appear in parentheses in assembly, with an optional destination and an optional jump: `RAM = (B+C)`, `C = (B-1)`, `(B-C), JLT`. A naming trap to be aware of: the assembler comments note that the register the 74181 datasheet calls A is wired to this machine's B register, and datasheet B is wired to register C.
+Any of these can appear in parentheses in assembly, with an optional destination and an optional jump: `RAM = (B+C)`, `C = (B-1)`, `(B-C), JLT`. A naming trap to be aware of: the assembler comments note that the register the 74181 (4-bit ALU slice) datasheet calls A is wired to this machine's B register, and datasheet B is wired to register C.
 
 ## How flags feed jumps
 

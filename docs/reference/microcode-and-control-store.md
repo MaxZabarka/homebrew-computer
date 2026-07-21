@@ -6,7 +6,7 @@ The control unit of this machine is a lookup table. Two Python scripts in `eepro
 
 `eeprom/control_eeprom.py` builds a table with 2^15 = 32768 entries. The 15 address bits are the machine's entire visible state:
 
-![Address layout and real decoded rows from the control table](media/fig-microcode-decode.png)
+![Address layout and real decoded rows from the control table](../media/fig-microcode-decode.png)
 
 The eight instruction bits are the low byte of the instruction register, which holds the format bit, the load field, and either the enable or the jump field. The three flag bits come from the ALU, with zero and carry wired in inverted form (the script reads them as `not zero` and `not carry`, per the comments at the top of `generate_controls`). The two microstep bits come from a small counter.
 
@@ -30,7 +30,7 @@ The jump decision is not circuitry. `control_eeprom.py` imports `SHOULD_JUMP` fr
 
 Both scripts run from the repository root and write Logisim-format hex files. This is real output on a fresh clone:
 
-![Running both EEPROM generators](media/term-microcode.png)
+![Running both EEPROM generators](../media/term-microcode.png)
 
 The `False True True` lines are the script printing each flag decode as it evaluates jump conditions. Both regenerated tables are byte-identical to the committed copies in `eeprom_out/`. One path quirk: `control_eeprom.py` writes into `eeprom_out/`, while `memory_control_eeprom.py` writes into `out/`, so its output has to be copied into `eeprom_out/` by hand.
 

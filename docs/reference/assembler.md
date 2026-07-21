@@ -34,7 +34,7 @@ Six symbols are predefined before either pass so the VM's fixed addresses always
 
 `programs/mult.zab` is a hand-written loop that multiplies 30 by 5 through repeated addition, using labels, expressions, and conditional jumps. Assembling it:
 
-![Assembling mult.zab and dumping the binary](media/term-assemble-mult.png)
+![Assembling mult.zab and dumping the binary](../media/term-assemble-mult.png)
 
 The output is 64 bytes, each instruction a byte pair with the low byte first. Every construct in the table above appears somewhere in those bytes.
 

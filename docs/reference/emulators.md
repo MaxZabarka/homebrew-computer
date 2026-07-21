@@ -11,13 +11,13 @@ There are two emulators and one core. `emulator_core/` is a headless JavaScript 
 3. A move resolves the load and enable fields against the register file, with RAM accesses going through `readMemory` and `writeMemory` at the address in A. An enable of IRHigh yields the immediate byte.
 4. A compute feeds B, C, and the six ALU bits to `ALUCircuit`, evaluates `SHOULD_JUMP` against the returned flags, loads the program counter from A on a taken jump, and stores the result if a load target was given.
 
-The core is instruction-stepped. It does not model the three microcode steps of the hardware fetch cycle, and flags exist only inside a single `clock()` call, matching the hardware's combinational flags. The gate-accurate part is the ALU: `ALUCircuit.js` is the 74181 as boolean equations exported from the Logisim design, chained twice, so arithmetic and flag behavior match the circuit gate for gate (see [The ALU](alu.md)).
+The core is instruction-stepped. It does not model the three microcode steps of the hardware fetch cycle, and flags exist only inside a single `clock()` call, matching the hardware's combinational flags. The gate-accurate part is the ALU: `ALUCircuit.js` is the 74181 (4-bit ALU slice) as boolean equations exported from the Logisim design, chained twice, so arithmetic and flag behavior match the circuit gate for gate (see [The ALU](alu.md)).
 
 The core also carries the memory map constants, a `disassemble` method that turns byte pairs back into assembly for display, a `getStack` helper that reads the VM's stack region, and an optional randomized-RAM mode used by the test suite to catch code that relies on zeroed memory. The disassembler's expression table in `emulator_core/constants.js` covers the common ALU functions and shows raw bits for patterns it does not know.
 
 ## The React app
 
-![The emulator with fib.bin loaded](media/emu-loaded.png)
+![The emulator with fib.bin loaded](../media/emu-loaded.png)
 
 `emulator/src/Components/Emulator.js` is the shell. The pieces:
 
@@ -33,21 +33,21 @@ The machine runs inside a Web Worker (`src/hooks/computerWorker.js`) so the inte
 
 The speed slider maps to a delay of (1 - speed) x 500ms per instruction, from two instructions per second up to uncapped. Uncapped, the worker clocks the core in a tight loop and reports its measured rate. On the machine used for these figures it holds close to 12MHz:
 
-![The speed readout during an uncapped run](media/emu-fullspeed.png)
+![The speed readout during an uncapped run](../media/emu-fullspeed.png)
 
 ## Watching a program run
 
 At 10 instructions per second, fib.bin's execution is legible. The ROM listing tracks the program counter, and the stack fills with arguments and return addresses as `fib` recurses:
 
-![The emulator running fib.bin](media/emulator-run.gif)
+![The emulator running fib.bin](../media/emulator-run.gif)
 
-A higher quality capture of the same run: [emulator-run.mp4](media/emulator-run.mp4).
+A higher quality capture of the same run: [emulator-run.mp4](../media/emulator-run.mp4).
 
 Clicking any even ROM row toggles a breakpoint. The worker checks the set after every instruction and stops when the program counter lands on one:
 
-![Stopped at a breakpoint at address 440](media/emu-breakpoint.png)
+![Stopped at a breakpoint at address 440](../media/emu-breakpoint.png)
 
-![Mid-run with the stack populated](media/emu-running.png)
+![Mid-run with the stack populated](../media/emu-running.png)
 
 ## Running it yourself
 

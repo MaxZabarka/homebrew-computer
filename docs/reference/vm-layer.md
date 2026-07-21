@@ -31,7 +31,7 @@ The five operations in `built_in_arithmetic` (add, subtract, or, bitwise_and, le
 
 ## What expansion looks like
 
-![How the VM translator expands stack code](media/fig-vm-to-zab.png)
+![How the VM translator expands stack code](../media/fig-vm-to-zab.png)
 
 Every operation follows the same shape: point A at the stack pointer, load it, move A to the stack top, read or write, and adjust the pointer. Nothing is cached between operations, which is why the 25 lines of `fib.vm` become 545 lines of `fib.zab`.
 

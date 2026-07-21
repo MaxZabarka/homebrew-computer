@@ -1,6 +1,6 @@
 # Hardware
 
-The machine exists as a complete Logisim Evolution design, `pcb_computer.circ`, drawn around parts that can be bought and soldered. Three modules of it were built as physical PCBs, and a bit-banged I2C transmitter exists as a prototype for talking to peripherals.
+The machine exists as a complete Logisim Evolution design, `pcb_computer.circ`, drawn around parts that can be bought and wired on breadboards, plus the generated EEPROM images that program it. A physical build from 7400-series parts is the goal the design was shaped around, and the wiring difficulty of that build drove many of its decisions. A bit-banged I2C transmitter exists as a prototype for talking to peripherals.
 
 ## The Logisim design
 
@@ -18,15 +18,11 @@ The design is organized as subcircuits that each correspond to a physical chip o
 | `RAM_62256` | 32K x 8 static RAM | 1, the main RAM |
 | `EEPROM_ROM` | the 1KB program ROM | 1 |
 
-Two Logisim ROM components in `main` hold the generated control tables from [Microcode and the control store](microcode-and-control-store.md), standing in for the AT28C256 EEPROMs of a physical build. The `Bus16` and `AddressSelector` circuits arbitrate who drives the shared bus, and the 74245 transceivers are what makes that possible: every register connects to the bus through one, and its enable line is a control store output.
+Two Logisim ROM components in `main` hold the generated control tables from [Microcode and the control store](microcode-and-control-store.md), standing in for the AT28C256 (32KB EEPROM) chips of a physical build. The `Bus16` and `AddressSelector` circuits arbitrate who drives the shared bus, and the 74245 transceivers are what makes that possible: every register connects to the bus through one, and its enable line is a control store output.
 
-## The physical PCB modules
+## The board partitioning
 
-Three modules made it to fabricated boards: a clock, a counter, and a display. The video shows them working together, the counter stepping under the clock with the display showing the count:
-
-[pcb-demo.mp4](media/pcb-demo.mp4)
-
-The modular approach matches the control word layout. `eeprom/control_eeprom.py` groups its control lines by board ("Each section represents a unique physical PCB" in the source), so a module can be built and tested against the generated table before the next one exists.
+The design is partitioned for physical assembly. `eeprom/control_eeprom.py` groups its control lines by board ("Each section represents a unique physical PCB" in the source), so each module of the machine has a defined interface to the control store and could be built and tested against the generated table before the next module exists.
 
 ## The I2C experiment
 

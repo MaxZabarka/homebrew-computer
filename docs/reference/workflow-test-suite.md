@@ -8,7 +8,7 @@ There are two ways to check the suite: recompile everything and diff against the
 
 A short throwaway runner compiles every `tests/*.c` with `compile.py` and byte-compares the output with the committed `.bin`. These are the results on a fresh clone:
 
-![Recompiling all 24 test programs and diffing](media/term-tests.png)
+![Recompiling all 24 test programs and diffing](../media/term-tests.png)
 
 The honest summary: 21 of 22 comparable programs produce byte-identical binaries. The exceptions:
 
@@ -20,7 +20,7 @@ The honest summary: 21 of 22 comparable programs produce byte-identical binaries
 
 A byte diff cannot tell a regression from a compiler improvement, so the next check loads both binaries into the headless core (`emulator_core/Computer.js`), runs 200000 clocks, and compares the final stacks:
 
-![Running both array_subscripts binaries in the emulator core](media/term-tests-behavior.png)
+![Running both array_subscripts binaries in the emulator core](../media/term-tests-behavior.png)
 
 Both binaries leave the identical stack, ending in the `[1, 2, 3]` the Jest suite expects. The committed binary is stale, and the current compiler produces a smaller program with the same behavior.
 

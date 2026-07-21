@@ -29,11 +29,11 @@ int main()
 }
 ```
 
-![AST of example.c rendered by draw_ast.py](media/ast-example.png)
+![AST of example.c rendered by draw_ast.py](../media/ast-example.png)
 
 Blue ovals are leaf values, black ovals are node types, and edge labels are field names. The same renderer on a full test program produces trees like this one, from the test suite:
 
-![AST of a larger test program](media/ast.png)
+![AST of a larger test program](../media/ast.png)
 
 ## Code generator
 

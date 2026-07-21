@@ -22,12 +22,12 @@ flowchart LR
     BIN --> REACT
     BIN --> LOGISIM
     EEPROM["eeprom/<br>microcode generators"] -- "control tables" --> LOGISIM
-    LOGISIM -. "AT28C256 EEPROMs,<br>PCB modules" .-> HW["physical hardware"]
+    LOGISIM -. "AT28C256 EEPROM images" .-> HW["physical hardware"]
 ```
 
 One number makes the expansion concrete: `tests/fib.c` is a dozen lines of C, becomes 25 lines of stack code, then 545 lines of assembly, and assembles to 508 instructions in a 1016-byte binary.
 
-![The four stages of the toolchain for fib.c](media/fig-pipeline.png)
+![The four stages of the toolchain for fib.c](../media/fig-pipeline.png)
 
 ## The memory map
 

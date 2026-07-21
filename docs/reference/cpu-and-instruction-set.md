@@ -16,11 +16,11 @@ The register set, the load and enable select codes, and the jump table are defin
 
 ## The two formats
 
-![The two 16-bit instruction formats with a decoded example](media/fig-encoding.png)
+![The two 16-bit instruction formats with a decoded example](../media/fig-encoding.png)
 
 A move instruction (`0lll eeex dddd dddd`) selects one register to drive the bus (`e`, the enable field) and one register to load from it (`l`, the load field). When the enable field selects IRHigh, the top eight bits of the instruction itself become the value, which is how constants get into registers: `AHigh = 128` assembles to `0x1c 0x80`.
 
-A compute instruction (`1lll jjjj aaaa aaxx`) runs the ALU over B and C. The `a` field feeds the 74181 function select lines directly (see [The ALU](alu.md)), the `l` field optionally loads the result into a register, and the `j` field names a jump condition checked against the ALU flags. A conditional jump therefore costs nothing extra. It rides along with any computation.
+A compute instruction (`1lll jjjj aaaa aaxx`) runs the ALU over B and C. The `a` field feeds the 74181 (4-bit ALU slice) function select lines directly (see [The ALU](alu.md)), the `l` field optionally loads the result into a register, and the `j` field names a jump condition checked against the ALU flags. A conditional jump therefore costs nothing extra. It rides along with any computation.
 
 | Field code | Load targets | Enable sources |
 | --- | --- | --- |

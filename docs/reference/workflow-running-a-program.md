@@ -22,25 +22,25 @@ int main()
 
 `compile.py` chains all three stages and writes `out.vm`, `out.zab`, and `out.bin` next to each other:
 
-![Compiling tests/fib.c in one command](media/term-compile-fib.png)
+![Compiling tests/fib.c in one command](../media/term-compile-fib.png)
 
 The `['push argument 0']` lines are debug prints from the code generator. The result is a 1016-byte binary, 508 instructions. The rest of this page runs the same pipeline one stage at a time.
 
 ## Stage 1: C to stack code
 
-![Compiling fib.c to VM commands](media/term-stage-compiler.png)
+![Compiling fib.c to VM commands](../media/term-stage-compiler.png)
 
 `compiler/code_generator.py` emits one `.vm` line per stack operation. The whole program is 25 lines. This stage also draws the AST to `output.png` as a side effect (see [The compiler](compiler.md)).
 
 ## Stage 2: stack code to assembly
 
-![Translating fib.vm to assembly](media/term-stage-translator.png)
+![Translating fib.vm to assembly](../media/term-stage-translator.png)
 
 `virtual_machine/virtual_machine.py` expands each stack operation into register moves, 545 lines in total. The head of the file shows the bootstrap (stack pointer to 9, then the expansion of `call main 0`) described in [The VM layer](vm-layer.md).
 
 ## Stage 3: assembly to machine code
 
-![Assembling fib.zab to a binary](media/term-stage-assembler.png)
+![Assembling fib.zab to a binary](../media/term-stage-assembler.png)
 
 `assembler.py` resolves the labels in two passes and emits instruction pairs, low byte first. The first word, `1c80`, is `AHigh = 128`, the start of the bootstrap.
 
@@ -54,7 +54,7 @@ cd emulator && npm start
 
 Load `fib.bin` with the Select ROM button, drag the speed slider down to a few instructions per second, and press Run:
 
-![fib.bin running in the emulator](media/emulator-run.gif)
+![fib.bin running in the emulator](../media/emulator-run.gif)
 
 The highlight walks the bootstrap, jumps into `main`, and the stack grows and shrinks through the recursion, with the argument and local pointers tracking each frame. The same binary can also run headlessly:
 
